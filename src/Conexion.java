@@ -2,6 +2,13 @@ import java.sql.*;
 import java.util.*;
 
 public class Conexion{
+        // Códigos ANSI para colores
+        public static final String RESET = "\u001B[0m";
+        public static final String ROJO = "\u001B[31m";
+        public static final String VERDE = "\u001B[32m";
+        public static final String AMARILLO = "\u001B[33m";
+        public static final String AZUL = "\u001B[34m";
+        public static final String FONDO_AZUL = "\u001B[44m";
     public static void main(String[] args) {
         String url = "jdbc:mysql://25.7.162.154:3306/bdbiblioteca";
         String user = "admin";
@@ -44,7 +51,7 @@ public class Conexion{
                     break;
     
                 default:
-                    Function.mensa("Elige una de las opciones que se dan.\n");
+                    Function.mensa(ROJO+"Elige una de las opciones que se dan.\n"+RESET);
                     break;
             }
         }
