@@ -40,7 +40,7 @@ public class Conexion{
                     break;
     
                 case 9:
-                    Function.mensa("Gracias por usar la aplicación!!!!");
+                    Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
                     break;
     
                 default:
