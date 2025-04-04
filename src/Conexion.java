@@ -1,12 +1,12 @@
 import java.sql.*;
-import java.util.Scanner;
-import java.sql.Connection;
+import java.util.*;
 
 public class Conexion{
     public static void main(String[] args) {
         String url = "jdbc:mysql://25.7.162.154:3306/bdbiblioteca";
         String user = "admin";
         String password = "1234";
+        Connection conn = null;
         Scanner teclado=new Scanner(System.in);
 
         System.out.println("*********************************************************************");
@@ -20,9 +20,9 @@ public class Conexion{
         switch (eleccion) {
             case 1:
                 // Conexión a la base de datos
-                conn = BaseDeDatos.ConexionBaseDeDatos(url, user, password);
+                conn = ConexionBaseDeDatos.ConexionBaseDeDatos(url, user, password);
                 if (conn == null) {
-                    BaseDeDatos.mensa("No se pudo establecer la conexión");
+                    ConexionBaseDeDatos.mensa("No se pudo establecer la conexión");
                     return;
                 }
                 System.out.println("Conexión exitosa a la base de datos.");
@@ -30,11 +30,11 @@ public class Conexion{
         
 
             case 4:
-                BaseDeDatos.cerrarConexion(conn);
-                BaseDeDatos.mensa("Conexión cerrada exitosamente!");
+                ConexionBaseDeDatos.cerrarConexion(conn);
+                ConexionBaseDeDatos.mensa("Conexión cerrada exitosamente!");
                 break;
             default:
-                BaseDeDatos.mensa("Elige una de las opciones que se dan.");
+                ConexionBaseDeDatos.mensa("Elige una de las opciones que se dan.");
                 break;
         }
     }
