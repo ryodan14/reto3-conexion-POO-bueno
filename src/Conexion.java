@@ -16,7 +16,7 @@ public class Conexion{
             LocalDateTime fechaHoraActual = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            System.out.println("                                                          " + fechaHoraActual.format(formato));
+            System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
             System.out.println("*********************************************************************\n");
