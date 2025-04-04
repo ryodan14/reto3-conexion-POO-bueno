@@ -2,7 +2,8 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "c:\\Users\\Diego\\Desktop\\mysql-connector-j-9.2.0.jar",
-        "c:\\DAM3\\PROGRAMACION\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0.jar"
+        "c:\\DAM3\\PROGRAMACION\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0.jar",
+        "c:\\Users\\asuri\\Downloads\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0\\mysql-connector-j-9.2.0.jar"
     ],
     "java.debug.settings.onBuildFailureProceed": true
 }
