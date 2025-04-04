@@ -14,7 +14,7 @@ public class Conexion{
 
         while (eleccion!=9) {
             LocalDateTime fechaHoraActual = LocalDateTime.now();
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
