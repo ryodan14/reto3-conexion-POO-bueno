@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class ConexionBaseDeDatos {
+public class Function {
 
     public static void mensa(String mensaje){
         System.out.println(mensaje);

@@ -20,9 +20,9 @@ public class Conexion{
         switch (eleccion) {
             case 1:
                 // Conexión a la base de datos
-                conn = ConexionBaseDeDatos.ConexionBaseDeDatos(url, user, password);
+                conn = Function.ConexionBaseDeDatos(url, user, password);
                 if (conn == null) {
-                    ConexionBaseDeDatos.mensa("No se pudo establecer la conexión");
+                    Function.mensa("No se pudo establecer la conexión");
                     break;
                 }
                 System.out.println("Conexión exitosa a la base de datos.");
@@ -30,11 +30,11 @@ public class Conexion{
         
 
             case 4:
-                ConexionBaseDeDatos.cerrarConexion(conn);
-                ConexionBaseDeDatos.mensa("Conexión cerrada exitosamente!");
+                Function.cerrarConexion(conn);
+                Function.mensa("Conexión cerrada exitosamente!");
                 break;
             default:
-                ConexionBaseDeDatos.mensa("Elige una de las opciones que se dan.");
+                Function.mensa("Elige una de las opciones que se dan.");
                 break;
         }
 
