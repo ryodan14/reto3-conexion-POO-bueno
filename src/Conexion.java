@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Conexion{
     public static void main(String[] args) {
@@ -11,6 +13,10 @@ public class Conexion{
         int eleccion=0;
 
         while (eleccion!=9) {
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            System.out.println("                                                          " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
             System.out.println("*********************************************************************\n");
