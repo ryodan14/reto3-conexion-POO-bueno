@@ -7,7 +7,7 @@ public class Conexion{
         String user = "admin";
         String password = "1234";
         Connection conn = null;
-        Scanner teclado=new Scanner(System.in);
+        Scanner teclado = new Scanner(System.in);
 
         System.out.println("*********************************************************************");
         System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
@@ -23,7 +23,7 @@ public class Conexion{
                 conn = ConexionBaseDeDatos.ConexionBaseDeDatos(url, user, password);
                 if (conn == null) {
                     ConexionBaseDeDatos.mensa("No se pudo establecer la conexión");
-                    return;
+                    break;
                 }
                 System.out.println("Conexión exitosa a la base de datos.");
                 break;
@@ -37,5 +37,7 @@ public class Conexion{
                 ConexionBaseDeDatos.mensa("Elige una de las opciones que se dan.");
                 break;
         }
+
+        teclado.close();
     }
 }

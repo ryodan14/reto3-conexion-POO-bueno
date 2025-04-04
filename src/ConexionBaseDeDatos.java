@@ -1,9 +1,6 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
-public class BaseDeDatos {
+public class ConexionBaseDeDatos {
 
     public static void mensa(String mensaje){
         System.out.println(mensaje);
