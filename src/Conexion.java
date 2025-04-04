@@ -20,6 +20,7 @@ public class Conexion{
         int eleccion=0;
 
         while (eleccion!=9) {
+            Function.cls();
             LocalDateTime fechaHoraActual = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
