@@ -8,34 +8,44 @@ public class Conexion{
         String password = "1234";
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
+        int eleccion=0;
 
-        System.out.println("*********************************************************************");
-        System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
-        System.out.println("*********************************************************************\n");
-        System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
-
-
-        int eleccion = teclado.nextInt();
-
-        switch (eleccion) {
-            case 1:
-                // Conexión a la base de datos
-                conn = Function.ConexionBaseDeDatos(url, user, password);
-                if (conn == null) {
-                    Function.mensa("No se pudo establecer la conexión");
+        while (eleccion!=9) {
+            System.out.println("*********************************************************************");
+            System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
+            System.out.println("*********************************************************************\n");
+            System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
+            System.out.println("                                          9-Salir de la aplicación\n");
+            System.out.println("Elige la opción:");
+    
+    
+            eleccion = teclado.nextInt();
+    
+            switch (eleccion) {
+                case 1:
+                    // Conexión a la base de datos
+                    conn = Function.ConexionBaseDeDatos(url, user, password);
+                    if (conn == null) {
+                        Function.mensa("No se pudo establecer la conexión");
+                        break;
+                    }
+                    System.out.println("Conexión exitosa a la base de datos.");
                     break;
-                }
-                System.out.println("Conexión exitosa a la base de datos.");
-                break;
-        
-
-            case 4:
-                Function.cerrarConexion(conn);
-                Function.mensa("Conexión cerrada exitosamente!");
-                break;
-            default:
-                Function.mensa("Elige una de las opciones que se dan.");
-                break;
+            
+    
+                case 4:
+                    Function.cerrarConexion(conn);
+                    Function.mensa("Conexión cerrada exitosamente!");
+                    break;
+    
+                case 9:
+                    Function.mensa("Gracias por usar la aplicación!!!!");
+                    break;
+    
+                default:
+                    Function.mensa("Elige una de las opciones que se dan.");
+                    break;
+            }
         }
 
         teclado.close();
