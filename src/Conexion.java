@@ -64,4 +64,17 @@ public class Conexion{
 
         teclado.close();
     }
+    public static int insertUsuarios(Connection conn,String _nombre,String _dni,String _apel){
+        int nCambios=0;
+        String swId;
+        swId=""+(int)(Math.random()*1000);
+        String sql="INSERT INTO TUSUARIOS(USUCOD,USUNOM,USUDNI,USUAPEL) VALUES ('"+swId+"','"+_nombre+"','"+_apel+"','"+_dni+"')";
+        try {
+            Statement stmt=conn.createStatement();
+            nCambios=stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("\nProblema al crear tabla usuarios\n"+e.getErrorCode()+" "+e.getMessage());
+        }
+        return nCambios;
+    }
 }
