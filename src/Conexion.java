@@ -22,7 +22,7 @@ public class Conexion{
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
             System.out.println("*********************************************************************\n");
             System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
-            System.out.println("                                          9-Salir de la aplicación\n");
+            System.out.println("       5-Añadir Insert                    9-Salir de la aplicación\n");
             System.out.println("                                          10-Cambiar el color\n");
             System.out.println("Elige la opción:");
     
@@ -48,7 +48,7 @@ public class Conexion{
                     break;
 
                     case 5:
-                    Function.InsertManual(conn);
+                    Insert.InsertManual(conn);
                     Function.mensa("insert correcta");
                     break;
     
@@ -82,4 +82,5 @@ public class Conexion{
         }
         return nCambios;
     }
+    
 }
