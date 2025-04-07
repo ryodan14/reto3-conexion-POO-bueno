@@ -89,46 +89,4 @@ public class Function {
         }
         return dev;
     }
-
-    public class InsertManual {
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-    
-            System.out.print("Nombre: ");
-            String nombre = sc.nextLine();
-    
-            System.out.print("Apellido: ");
-            String apellido = sc.nextLine();
-    
-            System.out.println("DNI");
-            String dni =sc.nextLine();
-    
-            System.out.print("Dirección: ");
-            String direccion = sc.nextLine();
-    
-            System.out.print("Teléfono: ");
-            String telefono = sc.nextLine();
-    
-            System.out.print("Correo: ");
-            String correo = sc.nextLine();
-    
-            System.out.print("Usuario: ");
-            String usuario = sc.nextLine();
-    
-            System.out.print("Contraseña: ");
-            String contraseña = sc.nextLine();
-    
-            System.out.print("Seguridad Social: ");
-            String seguridad_social = sc.nextLine();
-    
-            String sql = String.format(
-                "INSERT INTO usuarios (nombre, apellido, direccion, telefono, correo, usuario, contraseña, seguridad_social) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
-                nombre, apellido, direccion, telefono, correo, usuario, contraseña, seguridad_social
-            );
-    
-            System.out.println("\nSentencia SQL generada:");
-            System.out.println(sql);
-        }
-}
 }

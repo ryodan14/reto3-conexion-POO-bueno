@@ -11,11 +11,11 @@ public class Conexion{
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
         int eleccion=0;
+        LocalDateTime fechaHoraActual = LocalDateTime.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         while (eleccion!=9) {
             Function.cls();
-            LocalDateTime fechaHoraActual = LocalDateTime.now();
-            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
@@ -36,23 +36,27 @@ public class Conexion{
                     conn = Function.ConexionBaseDeDatos(url, user, password);
                     if (conn == null) {
                         Function.mensa("No se pudo establecer la conexión");
+                        System.out.println("--");
+                        System.out.println("--");
                         break;
                     }
                     System.out.println("Conexión exitosa a la base de datos.\n");
+                    System.out.println("--");
+                    System.out.println("--");
                     break;
             
     
-                case 4:
+                case 4://cerrar conexion
                     Function.cerrarConexion(conn);
                     Function.mensa("Conexión cerrada exitosamente!\n");
                     break;
 
-                    case 5:
+                    case 5://insert
                     Insert.InsertManual(conn);
                     Function.mensa("insert correcta");
                     break;
     
-                case 9:
+                case 9://cerrar conexion y programa
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
                     break;
     
