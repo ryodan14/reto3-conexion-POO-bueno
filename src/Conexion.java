@@ -46,6 +46,11 @@ public class Conexion{
                     Function.cerrarConexion(conn);
                     Function.mensa("Conexión cerrada exitosamente!\n");
                     break;
+
+                    case 5:
+                    Function.InsertManual(conn);
+                    Function.mensa("insert correcta");
+                    break;
     
                 case 9:
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
