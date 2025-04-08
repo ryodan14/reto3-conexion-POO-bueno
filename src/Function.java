@@ -77,6 +77,18 @@ public class Function {
         System.out.println(mensaje);
     }
 
+    public static boolean validarDNI(String swDNI){
+        if (swDNI==null) {
+            return false;
+        }
+        String letrasValidas = "TRWAGMYFPDXBNJZSQVHLCKE";
+        int num=Integer.parseInt(swDNI.substring(0,8));
+        int calculo=num%23;
+        return false;
+
+        //TODO
+    }
+
     public static Connection ConexionBaseDeDatos(String url, String user, String password){
         Connection conn = null;
         try {
