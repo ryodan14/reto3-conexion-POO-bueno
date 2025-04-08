@@ -22,8 +22,8 @@ public class Conexion{
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
             System.out.println("*********************************************************************\n");
             System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
-            System.out.println("       5-Añadir Insert                    9-Salir de la aplicación\n");
-            System.out.println("                                          10-Cambiar el color\n");
+            System.out.println("       5-Añadir  Usuario                  9-Salir de la aplicación\n");
+            System.out.println("       6-Borrar Usuario                   10-Cambiar el color\n");
             System.out.println("Elige la opción:");
     
     
