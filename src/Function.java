@@ -68,14 +68,14 @@ public class Function {
     public static Connection ConexionBaseDeDatos(String url, String user, String password){
         Connection conn = null;
         try {
-            // Conexión a la base de datos
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("No se encontró el driver JDBC.");
+            return null;
         } catch (SQLException e) {
-            //Printea el error SQL
-            e.printStackTrace();
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+            return null;
         }
         return conn;
     }

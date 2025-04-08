@@ -16,7 +16,7 @@ public class Conexion{
 
         while (eleccion!=9) {
             Function.cls();
-
+            
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
@@ -24,8 +24,9 @@ public class Conexion{
             System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
             System.out.println("       5-Añadir  Usuario                  9-Salir de la aplicación\n");
             System.out.println("       6-Borrar Usuario                   10-Cambiar el color\n");
+            System.out.println("       7-Mostrar socios paginando                                 \n");
             System.out.println("Elige la opción:");
-    
+            
     
             eleccion = teclado.nextInt();
     
@@ -36,13 +37,15 @@ public class Conexion{
                     conn = Function.ConexionBaseDeDatos(url, user, password);
                     if (conn == null) {
                         Function.mensa("No se pudo establecer la conexión");
-                        System.out.println("--");
-                        System.out.println("--");
+                        System.out.println("Presiona Enter para continuar...");
+                        teclado.nextLine(); // Limpia el \n después de nextInt
+                        teclado.nextLine(); // Espera que el usuario pulse Enter
                         break;
                     }
                     System.out.println("Conexión exitosa a la base de datos.\n");
-                    System.out.println("--");
-                    System.out.println("--");
+                    System.out.println("Presiona Enter para continuar...");
+                    teclado.nextLine(); // Limpia el \n
+                    teclado.nextLine(); // Espera Enter
                     break;
             
     
@@ -55,7 +58,9 @@ public class Conexion{
                     Insert.InsertManual(conn);
                     Function.mensa("insert correcta");
                     break;
-    
+                    
+                    case 6://borrar usuario
+                    
                 case 9://cerrar conexion y programa
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
                     break;
