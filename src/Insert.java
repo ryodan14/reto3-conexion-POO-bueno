@@ -59,7 +59,7 @@ public class Insert {
 
             int filas = pstmt.executeUpdate();
 
-            if (filas >= 9) {
+            if (filas > 0) {
                 System.out.println("Usuario insertado correctamente.");
             } else {
                 System.out.println("No se pudo insertar el usuario.");

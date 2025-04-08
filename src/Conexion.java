@@ -56,7 +56,7 @@ public class Conexion{
 
                     case 5://insert
                     Insert.InsertManual(conn);
-                    Function.mensa("insert correcta");
+                    Function.mensa("Usuario añadido correctamente");
                     System.out.println("Presiona Enter para continuar...");
                     teclado.nextLine(); // Limpia el \n después de nextInt
                     teclado.nextLine(); // Espera que el usuario pulse Enter
@@ -64,7 +64,7 @@ public class Conexion{
                     
                 case 6://borrar usuario
                     Delete.DeleteManual(conn);
-                    Function.mensa("borrado correctamente");
+                    Function.mensa("Borrado correctamente");
                     System.out.println("Presiona Enter para continuar...");
                     teclado.nextLine(); // Limpia el \n después de nextInt
                     teclado.nextLine(); // Espera que el usuario pulse Enter
