@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -54,6 +55,17 @@ public class Function {
                 break;
         }
         escanea.close();
+    }
+
+    public static void tamañoCMD(){
+        try {
+            // Cambia columnas (ancho) y líneas (alto)
+            String comando = "cmd /c mode con: cols=200 lines=60";
+            Runtime.getRuntime().exec(comando);
+            System.out.println("Tamaño de consola cambiado a 120x40");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void cls() {

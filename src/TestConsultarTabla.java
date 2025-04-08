@@ -8,19 +8,19 @@ public class TestConsultarTabla {
         Connection conn = null;
 
         // Conexión a la base de datos
-        conn = Io.getConexion(url,user,pass);
+        conn = Function.ConexionBaseDeDatos(url,user,password);
         if (conn== null){
             System.out.println("Fallo en la conexion");
             return;
         }
         System.out.println("Exito en la conexion");
         System.out.println("Se han visualizado " + mostrarTabla(conn) + " registros");
-        Io.cerrarConexion(conn);
+        Function.cerrarConexion(conn);
     }
 
     public static int mostrarTabla(Connection conn){
         int kont = 0;
-        String sql="SELECT FROM socios";
+        String sql="SELECT * FROM socios";
         System.out.println(sql);
         try{
             Statement stmt= conn.createStatement();
@@ -46,6 +46,4 @@ public class TestConsultarTabla {
         }
         return kont;
     }
-}
-
 }

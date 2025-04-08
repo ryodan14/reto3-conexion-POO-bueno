@@ -15,16 +15,15 @@ public class Conexion{
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         while (eleccion!=9) {
-            Function.cls();
-            
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
             System.out.println("*********************************************************************\n");
             System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
-            System.out.println("       5-Añadir  Usuario                  9-Salir de la aplicación\n");
-            System.out.println("       6-Borrar Usuario                   10-Cambiar el color\n");
-            System.out.println("       7-Mostrar socios paginando                                 \n");
+            System.out.println("       2-Consultar la tabla               3-Cambiar tamaño cmd");
+            System.out.println("       5-Añadir  Usuario                  9-Salir de la aplicación");
+            System.out.println("       6-Borrar Usuario                   10-Cambiar el color");
+            System.out.println("       7-Mostrar socios paginando                                 ");
             System.out.println("Elige la opción:");
             
     
@@ -47,20 +46,30 @@ public class Conexion{
                     teclado.nextLine(); // Limpia el \n
                     teclado.nextLine(); // Espera Enter
                     break;
+
+                case 2:
+                    Function.mensa("Consultando tabla...");
+                    TestConsultarTabla.mostrarTabla(conn);
+                    teclado.nextLine(); // Limpia el \n
+                    teclado.nextLine(); // Espera Enter
+                    break;
             
+                case 3:
+                    Function.tamañoCMD();
+                    break;
     
                 case 4://cerrar conexion
                     Function.cerrarConexion(conn);
                     Function.mensa("Conexión cerrada exitosamente!\n");
                     break;
 
-                    case 5://insert
+                case 5://insert
                     Insert.InsertManual(conn);
                     Function.mensa("Usuario añadido correctamente");
                     System.out.println("Presiona Enter para continuar...");
                     teclado.nextLine(); // Limpia el \n después de nextInt
                     teclado.nextLine(); // Espera que el usuario pulse Enter
-                    break;
+                break;
                     
                 case 6://borrar usuario
                     Delete.DeleteManual(conn);
@@ -75,7 +84,6 @@ public class Conexion{
     
                 case 10:
                     Function.Color();
-                    //TODO 
                     break;
 
                 default:
