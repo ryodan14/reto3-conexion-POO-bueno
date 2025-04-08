@@ -69,5 +69,6 @@ public class Insert {
         } catch (SQLException e) {
             System.out.println("Error al insertar el usuario: " + e.getMessage());
         }
+        sc.close();
     }
 }

@@ -69,5 +69,6 @@ public class Delete {
         } catch (SQLException e) {
             System.out.println("Error al borrar el usuario: " + e.getMessage());
         }
+        sc.close();
     }
 }
