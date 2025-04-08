@@ -63,7 +63,12 @@ public class Conexion{
                     break;
                     
                 case 6://borrar usuario
-                    
+                    Delete.DeleteManual(conn);
+                    Function.mensa("borrado correctamente");
+                    System.out.println("Presiona Enter para continuar...");
+                    teclado.nextLine(); // Limpia el \n después de nextInt
+                    teclado.nextLine(); // Espera que el usuario pulse Enter
+                    break;
                 case 9://cerrar conexion y programa
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
                     break;
