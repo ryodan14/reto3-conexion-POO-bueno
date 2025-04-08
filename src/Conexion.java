@@ -59,7 +59,7 @@ public class Conexion{
                     Function.mensa("insert correcta");
                     break;
                     
-                    case 6://borrar usuario
+                case 6://borrar usuario
                     
                 case 9://cerrar conexion y programa
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
