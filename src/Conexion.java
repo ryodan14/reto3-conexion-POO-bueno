@@ -49,6 +49,7 @@ public class Conexion{
 
                 case 2:
                     Function.mensa("Consultando tabla...");
+                    
                     TestConsultarTabla.mostrarTabla(conn);
                     teclado.nextLine(); // Limpia el \n
                     teclado.nextLine(); // Espera Enter
