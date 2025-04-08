@@ -27,7 +27,7 @@ public class Insert {
         String direccion = sc.nextLine();
 
         System.out.print("Teléfono: ");
-        String telefono = sc.nextLine();
+        String tlfn = sc.nextLine();
 
         System.out.print("Correo: ");
         String correo = sc.nextLine();
@@ -51,7 +51,7 @@ public class Insert {
             pstmt.setString(3, nombre);
             pstmt.setString(4, apellido);
             pstmt.setString(5, direccion);
-            pstmt.setString(6, telefono);
+            pstmt.setString(6, tlfn);
             pstmt.setString(7, correo);
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
