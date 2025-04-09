@@ -27,8 +27,10 @@ public class Insert {
             dni = sc.nextLine();
             if (Function.validarDNI(dni)) {
                 dniCorrecto=true;
+                System.out.println("DNI válido");
             }else{
                 dniCorrecto=false;
+                System.out.println("DNI no válido");
             }
         }
 
