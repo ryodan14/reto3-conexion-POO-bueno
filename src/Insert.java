@@ -20,8 +20,17 @@ public class Insert {
         System.out.print("Apellido: ");
         String apellido = sc.nextLine();
 
+        boolean dniCorrecto=false;
         System.out.print("DNI: ");
-        String dni = sc.nextLine();
+        String dni="";
+        while (dniCorrecto==false) {
+            dni = sc.nextLine();
+            if (Function.validarDNI(dni)) {
+                dniCorrecto=true;
+            }else{
+                dniCorrecto=false;
+            }
+        }
 
         System.out.print("Dirección: ");
         String direccion = sc.nextLine();
@@ -69,6 +78,6 @@ public class Insert {
         } catch (SQLException e) {
             System.out.println("Error al insertar el usuario: " + e.getMessage());
         }
-        sc.close();
+        sc.close(); 
     }
 }

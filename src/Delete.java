@@ -34,7 +34,16 @@ public class Delete {
 
                 case "2":
                     System.out.print("Introduce el DNI del socio: ");
-                    String dni = sc.nextLine();
+                    boolean dniCorrecto=false;
+                    String dni="";
+                    while (dniCorrecto==false) {
+                        dni = sc.nextLine();
+                        if (Function.validarDNI(dni)) {
+                            dniCorrecto=true;
+                        }else{
+                            dniCorrecto=false;
+                        }
+                    }
                     sql = "DELETE FROM socios WHERE dni = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, dni);

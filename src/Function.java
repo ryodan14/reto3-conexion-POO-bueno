@@ -81,12 +81,15 @@ public class Function {
         if (swDNI==null) {
             return false;
         }
-        String letrasValidas = "TRWAGMYFPDXBNJZSQVHLCKE";
+        char[] letras = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
+        char letra = swDNI.charAt(8);
         int num=Integer.parseInt(swDNI.substring(0,8));
         int calculo=num%23;
+        char letraCorrecta = letras[calculo];
+        if (letra==letraCorrecta) {
+            return true;
+        }
         return false;
-
-        //TODO
     }
 
     public static Connection ConexionBaseDeDatos(String url, String user, String password){
