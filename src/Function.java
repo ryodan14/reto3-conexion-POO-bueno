@@ -92,6 +92,14 @@ public class Function {
         return false;
     }
 
+    public static boolean validarTelf(int telf){
+        if (telf==null){
+            mensa("Escriba un teléfono porfavor");
+            return false;
+        }
+        return false;
+    }
+
     public static Connection ConexionBaseDeDatos(String url, String user, String password){
         Connection conn = null;
         try {
