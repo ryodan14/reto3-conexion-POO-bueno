@@ -39,7 +39,6 @@ public class Conexion{
                         System.out.println("Presiona Enter para continuar...");
                         teclado.nextLine(); // Limpia el \n después de nextInt
                         teclado.nextLine(); // Espera que el usuario pulse Enter
-                        break;
                     }
                     System.out.println("Conexión exitosa a la base de datos.\n");
                     System.out.println("Presiona Enter para continuar...");
@@ -155,8 +154,8 @@ public class Conexion{
                         
                             default:
                                 break;
-                        }
-                break;
+                        };}
+                
                     
                 case 9://cerrar conexion y programa
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
@@ -188,4 +187,5 @@ public class Conexion{
         return nCambios;
     }
     
-}
+    }
+

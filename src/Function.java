@@ -92,8 +92,8 @@ public class Function {
         return false;
     }
 
-    public static boolean validarTelf(int telf){
-        if (telf==null){
+    public static boolean validarTelf(Integer tlfn){
+        if (tlfn == null){
             mensa("Escriba un teléfono porfavor");
             return false;
         }
