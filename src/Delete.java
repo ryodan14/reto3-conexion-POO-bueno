@@ -92,7 +92,7 @@ public class Delete {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("¿Cómo quieres borrar el usuario?");
+        System.out.println("¿Cómo quieres borrar el libro?");
         System.out.println("1. Por ID");
         System.out.println("2. Por Titulo");
         System.out.println("3. Por ISBN");
@@ -158,59 +158,33 @@ public class Delete {
             
                     Scanner sc = new Scanner(System.in);
             
-                    System.out.println("¿Cómo quieres borrar el usuario?");
-                    System.out.println("1. Por ID");
-                    System.out.println("2. Por Titulo");
-                    System.out.println("3. Por ISBN");
-                    System.out.print("Elige opción: ");
-                    String opcion = sc.nextLine();
             
                     String sql = "";
                     try {
                         PreparedStatement pstmt = null;
-            
-                        switch (opcion) {
-                            case "1":
+
                                 System.out.print("Introduce el ID del libro: ");
                                 String id = sc.nextLine();
-                                sql = "DELETE FROM libros WHERE id_libro = ?";
+                                System.out.println(" introduce la fecha de entrega: ");
+                                String fecha_devolucion = sc.nextLine();
+                                sql = "DELETE FROM libros WHERE id_libro = ? AND fecha_devolucion = ?";
                                 pstmt = conn.prepareStatement(sql);
                                 pstmt.setString(1, id);
-                                break;
-            
-                            case "2":
-                                System.out.print("Introduce el titulo del libro: ");
-                                String titulo = sc.nextLine();
-                                sql = "DELETE FROM libros WHERE titulo = ?";
-                                pstmt = conn.prepareStatement(sql);
-                                pstmt.setString(1, titulo);
-                                break;
-            
-                            case "3":
-                                System.out.print("Introduce el ISBN: ");
-                                String isbn = sc.nextLine();
-                                sql = "DELETE FROM libros WHERE isbn = ? ";
-                                pstmt = conn.prepareStatement(sql);
-                                pstmt.setString(1, isbn);
-                                break;
-            
-                            default:
-                                System.out.println("Opción no válida.");
-                                return;
-                        }
+                                pstmt.setString(2, fecha_devolucion);
+
             
                         int filas = pstmt.executeUpdate();
             
                         if (filas > 0) {
-                            System.out.println("libro borrado correctamente.");
+                            System.out.println("prestamo borrado correctamente.");
                         } else {
-                            System.out.println("No se encontró ningún libro con ese dato.");
+                            System.out.println("No se encontró ningún prestamo con ese dato.");
                         }
             
                         pstmt.close();
             
                     } catch (SQLException e) {
-                        System.out.println("Error al borrar el libro: " + e.getMessage());
+                        System.out.println("Error al borrar el prestamo: " + e.getMessage());
                     }
                     sc.close();
                 }
