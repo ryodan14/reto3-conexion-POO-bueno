@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Function {
-    // Códigos ANSI para colores
+    // Códigos ANSI para colores HAY QUE ARREGLARLO
     public static final String RESET = "\u001B[0m";
     public static final String ROJO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";
@@ -56,7 +56,7 @@ public class Function {
         }
         escanea.close();
     }
-
+        //arreglar
     public static void tamañoCMD(){
         try {
             // Cambia columnas (ancho) y líneas (alto)
@@ -76,7 +76,7 @@ public class Function {
     public static void mensa(String mensaje){
         System.out.println(mensaje);
     }
-
+        //mmetodo para validar DNI
     public static boolean validarDNI(String swDNI) {
         if (swDNI == null || swDNI.length() != 9) {
             return false;
@@ -99,7 +99,7 @@ public class Function {
     }
     
 
-
+        //METODO VALIDAR TELEFONO
     public static boolean validarTelf(String telefono){
         if (telefono == null || telefono.length() != 9) {
             return false;
@@ -113,6 +113,7 @@ public class Function {
         }
         return true;
     }
+        //METODO VALIDAR CORREO
 
     public static boolean validarCorreo(String correo){
         if (correo == null || correo.isEmpty()) {
@@ -130,6 +131,7 @@ public class Function {
         return false;
     }
 
+    //METODO PARA VALIDAR EL NÚMERO DE LA SEGURIDAD SOCIAL
     public static boolean validarSs(Integer swSs){
         if (swSs == null) {
             return false;
