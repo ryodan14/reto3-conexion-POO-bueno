@@ -21,7 +21,7 @@ public class Conexion{
             System.out.println("*********************************************************************\n");
             System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
             System.out.println("       2-Consultar la tabla               3-Cambiar tamaño cmd");
-            System.out.println("       5-Añadir  Usuario                  9-Salir de la aplicación");
+            System.out.println("       5-Añadir/Borrar datos              9-Salir de la aplicación");
             System.out.println("       6-Borrar Usuario                   10-Cambiar el color");
             System.out.println("       7-Mostrar socios paginando                                 ");
             System.out.println("Elige la opción:");
