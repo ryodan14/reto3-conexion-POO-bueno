@@ -136,25 +136,29 @@ public class Insert {
         System.out.print("Fecha de inicio: ");
         String fecha_inicio = sc.nextLine();
 
-        System.out.print("Fecha de devolución: ");
-        String fecha_devolucion = sc.nextLine();
+        System.out.print("¿Entregado? (sí/no): ");
+        String entregado = sc.nextLine();
+        
+        while (!entregado.equalsIgnoreCase("S") && !entregado.equalsIgnoreCase("N")) {
+            System.out.println("Respuesta no válida. Por favor, introduzca 'si=S' o 'no=N'.");
+            System.out.print("¿Entregado? (S/N): ");
+            entregado = sc.nextLine();
+        }
+        
+        // Convertir a "1" o "0"
+        if (entregado.equalsIgnoreCase("S")) {
+            entregado = "1";
+            System.out.print("Fecha de devolución: ");
+            String fecha_devolucion = sc.nextLine();
+        } else {
+            entregado = "0";
+        }
+        
+
 
         // OJO: 'entregado' es un booleano, pero se guarda como String en la base de datos
         // y se convierte a booleano en la consulta SQL
-        System.out.print("¿Entregado? (sí/no): ");
-        String entregado = sc.nextLine();
-        while (entregado!="si" && entregado!="no") {
-            System.out.print("¿Entregado? (sí/no): ");
-            entregado = sc.nextLine();
-            if (entregado.equalsIgnoreCase("sí")) {
-                entregado = "1";
-            } else if (entregado.equalsIgnoreCase("no")) {
-                entregado = "0";
-            } else {
-                System.out.println("Respuesta no válida. Por favor, introduzca 'sí' o 'no'.");
-            }
-            
-        }
+
 
 
         System.out.print("ID del socio: ");

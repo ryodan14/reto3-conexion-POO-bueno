@@ -74,7 +74,7 @@ public class Conexion{
                         System.out.println("       3-Insertar Prestamos                 8-Borrar Prestamos");
                         System.out.println("       4-Insertar Autores                   9-Borrar Autores");
                         System.out.println("       5-Insertar Penalizaciones            10-Borrar Penalizaciones");
-                        System.out.println("       11-Salir de la aplicación             ");
+                        System.out.println("       11-Volver al inicio             ");
                         System.out.println("Elige la opción:");
                         eleccion = teclado.nextInt();
                         switch (eleccion) {
