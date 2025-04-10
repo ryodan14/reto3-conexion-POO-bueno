@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class Insert {
 
-    public static void InsertManual(Connection conn) {
+    public static void InsertSocios(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
             return;
@@ -79,6 +79,97 @@ public class Insert {
             pstmt.close();
         } catch (SQLException e) {
             System.out.println("Error al insertar el usuario: " + e.getMessage());
+        }
+        sc.close(); 
+    }
+    public static void InsertLibros(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("ID: ");
+        String id_libro = sc.nextLine();
+
+        System.out.print("Titulo: ");
+        String titulo = sc.nextLine();
+
+        System.out.print("Isbn: ");
+        String isbn= sc.nextLine();
+
+        String sql = "INSERT INTO socios (id_libro,titulo,isbn) " +
+                    "VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id_libro);
+            pstmt.setString(2, titulo);
+            pstmt.setString(3, isbn);
+
+
+            int filas = pstmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Libro insertado correctamente.");
+            } else {
+                System.out.println("No se pudo insertar el libro.");
+            }
+
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el libro: " + e.getMessage());
+        }
+        sc.close(); 
+    }
+    public static void InsertPrestamos(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Codigo: ");
+        String codigo = sc.nextLine();
+
+        System.out.print("Fecha de inicio: ");
+        String fecha_inicio = sc.nextLine();
+
+        System.out.print("Fecha de devolución: ");
+        String fecha_devolucion= sc.nextLine();
+
+        System.out.print("entregado: ");
+        String entregado= sc.nextLine();
+
+        System.out.print("Socio: ");
+        String socio = sc.nextLine();
+
+        String sql = "INSERT INTO socios (codigo,fecha_inicio,fecha_devolucion,entregado,socio) " +
+                    "VALUES (?, ?, ?,?,?)";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, codigo);
+            pstmt.setString(2, fecha_inicio);
+            pstmt.setString(3, fecha_devolucion);
+            pstmt.setString(4, entregado);
+            pstmt.setString(5, socio);
+
+
+
+            int filas = pstmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Prestamo insertado correctamente.");
+            } else {
+                System.out.println("No se pudo insertar el prestamo.");
+            }
+
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el prestamo: " + e.getMessage());
         }
         sc.close(); 
     }
