@@ -77,29 +77,31 @@ public class Function {
         System.out.println(mensaje);
     }
 
-    public static boolean validarDNI(String swDNI){
-        if (swDNI==null) {
+    public static boolean validarDNI(String swDNI) {
+        if (swDNI == null || swDNI.length() != 9) {
             return false;
         }
+    
         char[] letras = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
-        char letra = swDNI.charAt(8);
-        int num=Integer.parseInt(swDNI.substring(0,8));
-        int calculo=num%23;
-        char letraCorrecta = letras[calculo];
-        if (letra==letraCorrecta) {
-            return true;
+    
+        String numeroParte = swDNI.substring(0, 8);
+        char letra = Character.toUpperCase(swDNI.charAt(8)); // por si ponen la letra en minúscula
+    
+        // Comprobar que los 8 primeros son dígitos
+        if (!numeroParte.matches("\\d{8}")) {
+            return false;
         }
-        return false;
+    
+        int num = Integer.parseInt(numeroParte);
+        char letraCorrecta = letras[num % 23];
+    
+        return letra == letraCorrecta;
     }
+    
 
-<<<<<<< HEAD
+
     public static boolean validarTelf(String telefono){
         if (telefono == null || telefono.length() != 9) {
-=======
-    public static boolean validarTelf(Integer tlfn){
-        if (tlfn == null){
-            mensa("Escriba un teléfono porfavor");
->>>>>>> 4131b3bd53d1fb217701d8849bcdf2e1b80d780e
             return false;
         }
     
@@ -112,6 +114,43 @@ public class Function {
         return true;
     }
 
+    public static boolean validarCorreo(String correo){
+        if (correo == null || correo.isEmpty()) {
+            return false;
+        }
+
+        int arroba = correo.indexOf('@');
+        int punto = correo.lastIndexOf('.');
+
+        // Debe tener una @, un punto después de la @ y algo antes y después del punto
+        if (arroba > 0 && punto > arroba + 1 && punto < correo.length() - 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean validarSS(Integer swSs){
+        if (swSs == null) {
+            return false;
+        }
+        if (swSs<=1000000000000) {
+            return true;
+        }
+        return false;
+    }
+/* 
+    public static boolean validarFechaDev(String fechaDev, String fechaInicio, char letra){
+
+        //Parseamos las fechas
+        int devolucion=Integer.parseInt(fechaDev);
+        int inicio=Integer.parseInt(fechaInicio);
+        if (devolucion-inicio<=21 && letra=="S") {
+            return true;
+        }
+        return false;
+    }
+*/
     public static Connection ConexionBaseDeDatos(String url, String user, String password){
         Connection conn = null;
         try {
@@ -135,5 +174,20 @@ public class Function {
             dev=false;
         }
         return dev;
+    }
+
+    //comprobacion id socios
+    public static boolean comprobarIdSocio(Connection conn, String idSocio) {
+        String sql = "SELECT COUNT(*) FROM socios WHERE id_socio = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, idSocio);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el ID del socio: " + e.getMessage());
+        }
+        return false;
     }
 }

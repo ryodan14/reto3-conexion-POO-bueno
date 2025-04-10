@@ -76,7 +76,7 @@ public class Delete {
         } catch (SQLException e) {
             System.out.println("Error al borrar el usuario: " + e.getMessage());
         }
-        sc.close();
+        
     }
 
     // DELETE DE LIBROS
@@ -142,7 +142,7 @@ public class Delete {
         } catch (SQLException e) {
             System.out.println("Error al borrar el libro: " + e.getMessage());
         }
-        sc.close();
+        
     }
 
     // DELETE DE PRÉSTAMOS
@@ -181,7 +181,7 @@ public class Delete {
         } catch (SQLException e) {
             System.out.println("Error al borrar el préstamo: " + e.getMessage());
         }
-        sc.close();
+        
     }
 
     // DELETE DE AUTORES
@@ -244,7 +244,7 @@ public class Delete {
         } catch (SQLException e) {
             System.out.println("Error al borrar el autor: " + e.getMessage());
         }
-        sc.close();
+        
     }
 
     // DELETE DE PENALIZACIONES
@@ -279,6 +279,6 @@ public class Delete {
         } catch (SQLException e) {
             System.out.println("Error al borrar la penalización: " + e.getMessage());
         }
-        sc.close();
+        
     }
 }
