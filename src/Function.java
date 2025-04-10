@@ -130,11 +130,11 @@ public class Function {
         return false;
     }
 
-    public static boolean validarSS(Integer swSs){
+    public static boolean validarSs(Integer swSs){
         if (swSs == null) {
             return false;
         }
-        if (swSs<=1000000000000) {
+        if (swSs < 100000000000L) {
             return true;
         }
         return false;

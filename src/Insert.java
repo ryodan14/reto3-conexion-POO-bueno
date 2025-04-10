@@ -74,9 +74,24 @@ public class Insert {
 
         System.out.print("Contraseña: ");
         String contraseña = sc.nextLine();
+        
+        
+        Integer seguridad_social;
 
-        System.out.print("Seguridad Social: ");
-        String seguridad_social = sc.nextLine();
+        while (true) {
+            System.out.print("Seguridad Social: ");
+            seguridad_social = Integer.parseInt(sc.nextLine());
+            
+            if (Function.validarSs(seguridad_social)) {
+                break;
+            } else {
+                System.out.println("Seguridad social no válida, por favor introdúcelo de nuevo correctamente.");
+            }
+        }
+        
+            
+
+
 
         String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -88,11 +103,10 @@ public class Insert {
             pstmt.setString(3, nombre);
             pstmt.setString(4, apellido);
             pstmt.setString(5, direccion);
-            pstmt.setString(6, tlfn);
             pstmt.setString(7, correo);
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
-            pstmt.setString(10, seguridad_social);
+            pstmt.setInt(10, seguridad_social);
 
             int filas = pstmt.executeUpdate();
 
