@@ -92,12 +92,18 @@ public class Function {
         return false;
     }
 
-    public static boolean validarTelf(int telf){
-        if (telf==null){
-            mensa("Escriba un teléfono porfavor");
+    public static boolean validarTelf(String telefono){
+        if (telefono == null || telefono.length() != 9) {
             return false;
         }
-        return false;
+    
+        // Comprobar que todos los caracteres son dígitos
+        for (int i = 0; i < telefono.length(); i++) {
+            if (!Character.isDigit(telefono.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static Connection ConexionBaseDeDatos(String url, String user, String password){
