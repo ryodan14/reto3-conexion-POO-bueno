@@ -236,36 +236,28 @@ public class Insert {
         String descripcion = sc.nextLine();
 
         System.out.print("tipo de penalizacion: ");
-        String apellido1= sc.nextLine();
+        String tipo= sc.nextLine();
 
-        System.out.print("Segundo apellido: ");
-        String apellido2= sc.nextLine();
-
-
-
-        String sql = "INSERT INTO autores (id,nombre,apellido1,apellido2) " +
-                    "VALUES (?, ?, ?,?)";
+        String sql = "INSERT INTO penalizaciones (codigo,decripcion,tipo) " +
+                    "VALUES (?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
-            pstmt.setString(2, nombre);
-            pstmt.setString(3, apellido1);  
-            pstmt.setString(4, apellido2);
-
-
+            pstmt.setString(1, codigo);
+            pstmt.setString(2, descripcion);
+            pstmt.setString(3, tipo);
 
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("Autor insertado correctamente.");
+                System.out.println("penalización insertado correctamente.");
             } else {
-                System.out.println("No se pudo insertar el Autor.");
+                System.out.println("No se pudo insertar el penalización.");
             }
 
             pstmt.close();
         } catch (SQLException e) {
-            System.out.println("Error al insertar el autor: " + e.getMessage());
+            System.out.println("Error al insertar la penalización: " + e.getMessage());
         }
         sc.close(); 
     }
