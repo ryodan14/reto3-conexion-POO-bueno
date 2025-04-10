@@ -99,7 +99,7 @@ public class Insert {
         System.out.print("Isbn: ");
         String isbn= sc.nextLine();
 
-        String sql = "INSERT INTO socios (id_libro,titulo,isbn) " +
+        String sql = "INSERT INTO libros (id_libro,titulo,isbn) " +
                     "VALUES (?, ?, ?)";
 
         try {
@@ -146,7 +146,7 @@ public class Insert {
         System.out.print("Socio: ");
         String socio = sc.nextLine();
 
-        String sql = "INSERT INTO socios (codigo,fecha_inicio,fecha_devolucion,entregado,socio) " +
+        String sql = "INSERT INTO prestamos (codigo,fecha_inicio,fecha_devolucion,entregado,socio) " +
                     "VALUES (?, ?, ?,?,?)";
 
         try {
@@ -170,6 +170,102 @@ public class Insert {
             pstmt.close();
         } catch (SQLException e) {
             System.out.println("Error al insertar el prestamo: " + e.getMessage());
+        }
+        sc.close(); 
+    }
+    public static void InsertAutores(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("id del autor: ");
+        String id = sc.nextLine();
+
+        System.out.print("nombre: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("primer apellido: ");
+        String apellido1= sc.nextLine();
+
+        System.out.print("Segundo apellido: ");
+        String apellido2= sc.nextLine();
+
+
+
+        String sql = "INSERT INTO autores (id,nombre,apellido1,apellido2) " +
+                    "VALUES (?, ?, ?,?)";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.setString(2, nombre);
+            pstmt.setString(3, apellido1);  
+            pstmt.setString(4, apellido2);
+
+
+
+            int filas = pstmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Autor insertado correctamente.");
+            } else {
+                System.out.println("No se pudo insertar el Autor.");
+            }
+
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el autor: " + e.getMessage());
+        }
+        sc.close(); 
+    }
+    public static void InsertPenalizaciones(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("codigo de penalización: ");
+        String codigo = sc.nextLine();
+
+        System.out.print("Descripción de la penalización: ");
+        String descripcion = sc.nextLine();
+
+        System.out.print("tipo de penalizacion: ");
+        String apellido1= sc.nextLine();
+
+        System.out.print("Segundo apellido: ");
+        String apellido2= sc.nextLine();
+
+
+
+        String sql = "INSERT INTO autores (id,nombre,apellido1,apellido2) " +
+                    "VALUES (?, ?, ?,?)";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.setString(2, nombre);
+            pstmt.setString(3, apellido1);  
+            pstmt.setString(4, apellido2);
+
+
+
+            int filas = pstmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Autor insertado correctamente.");
+            } else {
+                System.out.println("No se pudo insertar el Autor.");
+            }
+
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el autor: " + e.getMessage());
         }
         sc.close(); 
     }
