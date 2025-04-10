@@ -92,8 +92,14 @@ public class Function {
         return false;
     }
 
+<<<<<<< HEAD
     public static boolean validarTelf(String telefono){
         if (telefono == null || telefono.length() != 9) {
+=======
+    public static boolean validarTelf(Integer tlfn){
+        if (tlfn == null){
+            mensa("Escriba un teléfono porfavor");
+>>>>>>> 4131b3bd53d1fb217701d8849bcdf2e1b80d780e
             return false;
         }
     

@@ -21,7 +21,7 @@ public class Conexion{
             System.out.println("*********************************************************************\n");
             System.out.println("       1-Obtener conexión                 4-Cerrar conexión");
             System.out.println("       2-Consultar la tabla               3-Cambiar tamaño cmd");
-            System.out.println("       5-Añadir  Usuario                  9-Salir de la aplicación");
+            System.out.println("       5-Añadir/Borrar datos              9-Salir de la aplicación");
             System.out.println("       6-Borrar Usuario                   10-Cambiar el color");
             System.out.println("       7-Mostrar socios paginando                                 ");
             System.out.println("Elige la opción:");
@@ -39,7 +39,6 @@ public class Conexion{
                         System.out.println("Presiona Enter para continuar...");
                         teclado.nextLine(); // Limpia el \n después de nextInt
                         teclado.nextLine(); // Espera que el usuario pulse Enter
-                        break;
                     }
                     System.out.println("Conexión exitosa a la base de datos.\n");
                     System.out.println("Presiona Enter para continuar...");
@@ -75,7 +74,7 @@ public class Conexion{
                         System.out.println("       3-Insertar Prestamos                 8-Borrar Prestamos");
                         System.out.println("       4-Insertar Autores                   9-Borrar Autores");
                         System.out.println("       5-Insertar Penalizaciones            10-Borrar Penalizaciones");
-                        System.out.println("       11-Salir de la aplicación             ");
+                        System.out.println("       11-Volver al inicio             ");
                         System.out.println("Elige la opción:");
                         eleccion = teclado.nextInt();
                         switch (eleccion) {
@@ -155,16 +154,9 @@ public class Conexion{
                         
                             default:
                                 break;
-                        }
-                break;
+                        };}
+                
                     
-                case 6://borrar usuario
-                    Delete.DeleteManual(conn);
-                    Function.mensa("Borrado correctamente");
-                    System.out.println("Presiona Enter para continuar...");
-                    teclado.nextLine(); // Limpia el \n después de nextInt
-                    teclado.nextLine(); // Espera que el usuario pulse Enter
-                    break;
                 case 9://cerrar conexion y programa
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
                     break;
@@ -195,4 +187,5 @@ public class Conexion{
         return nCambios;
     }
     
-}
+    }
+

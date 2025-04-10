@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Delete {
 
-            //DELETE DE SOCIOS//
+    // DELETE DE SOCIOS
     public static void DeleteSocios(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -14,7 +14,7 @@ public class Delete {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("¿Cómo quieres borrar el usuario?");
+        System.out.println("¿Cómo quieres borrar al usuario?");
         System.out.println("1. Por ID");
         System.out.println("2. Por DNI");
         System.out.println("3. Por nombre y apellido");
@@ -36,15 +36,11 @@ public class Delete {
 
                 case "2":
                     System.out.print("Introduce el DNI del socio: ");
-                    boolean dniCorrecto=false;
-                    String dni="";
-                    while (dniCorrecto==false) {
+                    boolean dniCorrecto = false;
+                    String dni = "";
+                    while (!dniCorrecto) {
                         dni = sc.nextLine();
-                        if (Function.validarDNI(dni)) {
-                            dniCorrecto=true;
-                        }else{
-                            dniCorrecto=false;
-                        }
+                        dniCorrecto = Function.validarDNI(dni);
                     }
                     sql = "DELETE FROM socios WHERE dni = ?";
                     pstmt = conn.prepareStatement(sql);
@@ -83,7 +79,7 @@ public class Delete {
         sc.close();
     }
 
-            //DELETE DE LIBROS//
+    // DELETE DE LIBROS
     public static void DeleteLibros(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -94,7 +90,7 @@ public class Delete {
 
         System.out.println("¿Cómo quieres borrar el libro?");
         System.out.println("1. Por ID");
-        System.out.println("2. Por Titulo");
+        System.out.println("2. Por título");
         System.out.println("3. Por ISBN");
         System.out.print("Elige opción: ");
         String opcion = sc.nextLine();
@@ -113,7 +109,7 @@ public class Delete {
                     break;
 
                 case "2":
-                    System.out.print("Introduce el titulo del libro: ");
+                    System.out.print("Introduce el título del libro: ");
                     String titulo = sc.nextLine();
                     sql = "DELETE FROM libros WHERE titulo = ?";
                     pstmt = conn.prepareStatement(sql);
@@ -123,7 +119,7 @@ public class Delete {
                 case "3":
                     System.out.print("Introduce el ISBN: ");
                     String isbn = sc.nextLine();
-                    sql = "DELETE FROM libros WHERE isbn = ? ";
+                    sql = "DELETE FROM libros WHERE isbn = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, isbn);
                     break;
@@ -136,7 +132,7 @@ public class Delete {
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("libro borrado correctamente.");
+                System.out.println("Libro borrado correctamente.");
             } else {
                 System.out.println("No se encontró ningún libro con ese dato.");
             }
@@ -149,44 +145,140 @@ public class Delete {
         sc.close();
     }
 
-                //DELETE DE PRESTAMOS//
-                public static void DeletePrestamos(Connection conn) {
-                    if (conn == null) {
-                        System.out.println("No hay conexión con la base de datos.");
-                        return;
-                    }
-            
-                    Scanner sc = new Scanner(System.in);
-            
-            
-                    String sql = "";
-                    try {
-                        PreparedStatement pstmt = null;
+    // DELETE DE PRÉSTAMOS
+    public static void DeletePrestamos(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
 
-                                System.out.print("Introduce el ID del libro: ");
-                                String id = sc.nextLine();
-                                System.out.println(" introduce la fecha de entrega: ");
-                                String fecha_devolucion = sc.nextLine();
-                                sql = "DELETE FROM libros WHERE id_libro = ? AND fecha_devolucion = ?";
-                                pstmt = conn.prepareStatement(sql);
-                                pstmt.setString(1, id);
-                                pstmt.setString(2, fecha_devolucion);
+        Scanner sc = new Scanner(System.in);
 
-            
-                        int filas = pstmt.executeUpdate();
-            
-                        if (filas > 0) {
-                            System.out.println("prestamo borrado correctamente.");
-                        } else {
-                            System.out.println("No se encontró ningún prestamo con ese dato.");
-                        }
-            
-                        pstmt.close();
-            
-                    } catch (SQLException e) {
-                        System.out.println("Error al borrar el prestamo: " + e.getMessage());
-                    }
-                    sc.close();
-                }
+        String sql = "";
+        try {
+            PreparedStatement pstmt = null;
 
+            System.out.print("Introduce el codigo del prestamos: ");
+            String id = sc.nextLine();
+            System.out.print("Introduce la fecha de inicio: ");
+            String fecha_inicio = sc.nextLine();
+
+            sql = "DELETE FROM prestamos WHERE codigo = ? AND fecha_inicio = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.setString(2, fecha_inicio);
+
+            int filas = pstmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Préstamo borrado correctamente.");
+            } else {
+                System.out.println("No se encontró ningún préstamo con ese dato.");
+            }
+
+            pstmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al borrar el préstamo: " + e.getMessage());
+        }
+        sc.close();
+    }
+
+    // DELETE DE AUTORES
+    public static void DeleteAutores(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("¿Cómo quieres borrar el autor?");
+        System.out.println("1. Por ID");
+        System.out.println("2. Por nombre");
+        System.out.print("Elige opción: ");
+        String opcion = sc.nextLine();
+
+        String sql = "";
+        try {
+            PreparedStatement pstmt = null;
+
+            switch (opcion) {
+                case "1":
+                    System.out.print("Introduce el ID del autor: ");
+                    String id = sc.nextLine();
+                    sql = "DELETE FROM autores WHERE id_autor = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, id);
+                    break;
+
+                case "2":
+                    System.out.print("Introduce el nombre del autor: ");
+                    String nombre = sc.nextLine();
+                    System.out.print("Introduce el primer apellido del autor: ");
+                    String apellido1 = sc.nextLine();
+                    System.out.print("Introduce el segundo apellido del autor: ");
+                    String apellido2 = sc.nextLine();
+                    sql = "DELETE FROM autores WHERE nombre = ? AND apellido1 = ? AND apellido2 = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, nombre);
+                    pstmt.setString(2, apellido1);
+                    pstmt.setString(3, apellido2);
+                    break;
+
+                default:
+                    System.out.println("Opción no válida.");
+                    return;
+            }
+
+            int filas = pstmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Autor borrado correctamente.");
+            } else {
+                System.out.println("No se encontró ningún autor con ese dato.");
+            }
+
+            pstmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al borrar el autor: " + e.getMessage());
+        }
+        sc.close();
+    }
+
+    // DELETE DE PENALIZACIONES
+    public static void DeletePenalizaciones(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("¿Cuál es el código de la penalización? ");
+        String id = sc.nextLine();
+
+        String sql = "";
+        try {
+            PreparedStatement pstmt = null;
+
+            sql = "DELETE FROM penalizacion WHERE codigo = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+
+            int filas = pstmt.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Penalización borrada correctamente.");
+            } else {
+                System.out.println("No se encontró ninguna penalización con ese dato.");
+            }
+
+            pstmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al borrar la penalización: " + e.getMessage());
+        }
+        sc.close();
+    }
 }

@@ -20,17 +20,16 @@ public class Insert {
         System.out.print("Apellido: ");
         String apellido = sc.nextLine();
 
-        boolean dniCorrecto=false;
+        boolean dniCorrecto = false;
         System.out.print("DNI: ");
-        String dni="";
-        while (dniCorrecto==false) {
+        String dni = "";
+        while (!dniCorrecto) {
             dni = sc.nextLine();
             if (Function.validarDNI(dni)) {
-                dniCorrecto=true;
-                System.out.println("DNI válido");
-            }else{
-                dniCorrecto=false;
-                System.out.println("DNI no válido");
+                dniCorrecto = true;
+                System.out.println("DNI válido.");
+            } else {
+                System.out.println("DNI no válido.");
             }
         }
 
@@ -53,7 +52,7 @@ public class Insert {
         String seguridad_social = sc.nextLine();
 
         String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -71,17 +70,18 @@ public class Insert {
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("Usuario insertado correctamente.");
+                System.out.println("Socio insertado correctamente.");
             } else {
-                System.out.println("No se pudo insertar el usuario.");
+                System.out.println("No se pudo insertar el socio.");
             }
 
             pstmt.close();
         } catch (SQLException e) {
-            System.out.println("Error al insertar el usuario: " + e.getMessage());
+            System.out.println("Error al insertar el socio: " + e.getMessage());
         }
         sc.close(); 
     }
+
     public static void InsertLibros(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -93,21 +93,19 @@ public class Insert {
         System.out.print("ID: ");
         String id_libro = sc.nextLine();
 
-        System.out.print("Titulo: ");
+        System.out.print("Título: ");
         String titulo = sc.nextLine();
 
-        System.out.print("Isbn: ");
-        String isbn= sc.nextLine();
+        System.out.print("ISBN: ");
+        String isbn = sc.nextLine();
 
-        String sql = "INSERT INTO libros (id_libro,titulo,isbn) " +
-                    "VALUES (?, ?, ?)";
+        String sql = "INSERT INTO libros (id_libro, titulo, isbn) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id_libro);
             pstmt.setString(2, titulo);
             pstmt.setString(3, isbn);
-
 
             int filas = pstmt.executeUpdate();
 
@@ -123,6 +121,7 @@ public class Insert {
         }
         sc.close(); 
     }
+
     public static void InsertPrestamos(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -131,23 +130,41 @@ public class Insert {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Codigo: ");
+        System.out.print("Código: ");
         String codigo = sc.nextLine();
 
         System.out.print("Fecha de inicio: ");
         String fecha_inicio = sc.nextLine();
 
-        System.out.print("Fecha de devolución: ");
-        String fecha_devolucion= sc.nextLine();
+        System.out.print("¿Entregado? (sí/no): ");
+        String entregado = sc.nextLine();
+        
+        while (!entregado.equalsIgnoreCase("S") && !entregado.equalsIgnoreCase("N")) {
+            System.out.println("Respuesta no válida. Por favor, introduzca 'si=S' o 'no=N'.");
+            System.out.print("¿Entregado? (S/N): ");
+            entregado = sc.nextLine();
+        }
+        
+        // Convertir a "1" o "0"
+        if (entregado.equalsIgnoreCase("S")) {
+            entregado = "1";
+            System.out.print("Fecha de devolución: ");
+            String fecha_devolucion = sc.nextLine();
+        } else {
+            entregado = "0";
+        }
+        
 
-        System.out.print("entregado: ");
-        String entregado= sc.nextLine();
 
-        System.out.print("Socio: ");
+        // OJO: 'entregado' es un booleano, pero se guarda como String en la base de datos
+        // y se convierte a booleano en la consulta SQL
+
+
+
+        System.out.print("ID del socio: ");
         String socio = sc.nextLine();
 
-        String sql = "INSERT INTO prestamos (codigo,fecha_inicio,fecha_devolucion,entregado,socio) " +
-                    "VALUES (?, ?, ?,?,?)";
+        String sql = "INSERT INTO prestamos (codigo, fecha_inicio, fecha_devolucion, entregado, socio) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -157,22 +174,21 @@ public class Insert {
             pstmt.setString(4, entregado);
             pstmt.setString(5, socio);
 
-
-
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("Prestamo insertado correctamente.");
+                System.out.println("Préstamo insertado correctamente.");
             } else {
-                System.out.println("No se pudo insertar el prestamo.");
+                System.out.println("No se pudo insertar el préstamo.");
             }
 
             pstmt.close();
         } catch (SQLException e) {
-            System.out.println("Error al insertar el prestamo: " + e.getMessage());
+            System.out.println("Error al insertar el préstamo: " + e.getMessage());
         }
         sc.close(); 
     }
+
     public static void InsertAutores(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -181,38 +197,33 @@ public class Insert {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("id del autor: ");
+        System.out.print("ID del autor: ");
         String id = sc.nextLine();
 
-        System.out.print("nombre: ");
+        System.out.print("Nombre: ");
         String nombre = sc.nextLine();
 
-        System.out.print("primer apellido: ");
-        String apellido1= sc.nextLine();
+        System.out.print("Primer apellido: ");
+        String apellido1 = sc.nextLine();
 
         System.out.print("Segundo apellido: ");
-        String apellido2= sc.nextLine();
+        String apellido2 = sc.nextLine();
 
-
-
-        String sql = "INSERT INTO autores (id,nombre,apellido1,apellido2) " +
-                    "VALUES (?, ?, ?,?)";
+        String sql = "INSERT INTO autores (id, nombre, apellido1, apellido2) VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
             pstmt.setString(2, nombre);
-            pstmt.setString(3, apellido1);  
+            pstmt.setString(3, apellido1);
             pstmt.setString(4, apellido2);
-
-
 
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
                 System.out.println("Autor insertado correctamente.");
             } else {
-                System.out.println("No se pudo insertar el Autor.");
+                System.out.println("No se pudo insertar el autor.");
             }
 
             pstmt.close();
@@ -221,6 +232,7 @@ public class Insert {
         }
         sc.close(); 
     }
+
     public static void InsertPenalizaciones(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -229,17 +241,17 @@ public class Insert {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("codigo de penalización: ");
+        System.out.print("Código de penalización: ");
         String codigo = sc.nextLine();
 
         System.out.print("Descripción de la penalización: ");
         String descripcion = sc.nextLine();
 
-        System.out.print("tipo de penalizacion: ");
-        String tipo= sc.nextLine();
+        System.out.print("Tipo de penalización: ");
+        String tipo = sc.nextLine();
 
-        String sql = "INSERT INTO penalizaciones (codigo,decripcion,tipo) " +
-                    "VALUES (?, ?, ?)";
+        // OJO: columna 'decripcion' estaba mal escrita
+        String sql = "INSERT INTO penalizaciones (codigo, descripcion, tipo) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -250,9 +262,9 @@ public class Insert {
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("penalización insertado correctamente.");
+                System.out.println("Penalización insertada correctamente.");
             } else {
-                System.out.println("No se pudo insertar el penalización.");
+                System.out.println("No se pudo insertar la penalización.");
             }
 
             pstmt.close();
