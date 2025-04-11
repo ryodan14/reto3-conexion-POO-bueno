@@ -3,11 +3,10 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class inserts {
+public class Select {
     
-    public static void fechaAlta() {
+    /*public static void fechaAlta() {
         protected String tiempo;
-        scanner scanner = new Scanner(System.in);
         String fecha_alta from socios;
         tiempo=(sysdate-fecha_alta);
 
@@ -30,5 +29,5 @@ public class inserts {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
