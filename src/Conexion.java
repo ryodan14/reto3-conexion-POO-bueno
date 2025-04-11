@@ -2,6 +2,7 @@ import java.sql.*;
 import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.*;
 
 public class Conexion{
     public static void main(String[] args) throws InterruptedException{
@@ -13,6 +14,9 @@ public class Conexion{
         int eleccion=0;
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        JFrame frame = new JFrame("D4RK 3NT3RPR1S3");
+        ImageIcon icon = new ImageIcon("imagen/dark_logo.jpg");
+        JLabel label = new JLabel(icon);
 
         while (eleccion!=10) {
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
@@ -24,6 +28,7 @@ public class Conexion{
             System.out.println("       3-Añadir/Borrar datos              8-Cambiar color");
             System.out.println("       4-Borrar Usuario                   9-Limpiar pantalla");
             System.out.println("       5-Mostrar socios paginando         10-Salir de la aplicación");
+            System.out.println("                                          11-Creditos");
             System.out.println("Elige la opción:");
             
     
@@ -191,6 +196,25 @@ public class Conexion{
                 //Cerrar conexion y programa
                 case 10:
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
+                    teclado.nextLine(); // Limpia el \n después de nextInt
+                    teclado.nextLine(); // Espera que el usuario pulse Enter
+                    break;
+
+                //Creditos
+                case 11:
+                    Function.cls();
+                    frame.add(label);
+                    frame.pack();
+                    frame.setVisible(true);
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    System.out.println("                 /*************************");
+                    System.out.println("                *    Programa creado por: *");
+                    System.out.println("                *           ASIER         *");
+                    System.out.println("                *           ENEKO         *");
+                    System.out.println("                *           DIEGO         *");
+                    System.out.println("                *           DANIEL        *");
+                    System.out.println("                *         JONHATTAN       *");
+                    System.out.println("                *************************/");
                     teclado.nextLine(); // Limpia el \n después de nextInt
                     teclado.nextLine(); // Espera que el usuario pulse Enter
                     break;
