@@ -14,7 +14,7 @@ public class Conexion{
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        while (eleccion!=9) {
+        while (eleccion!=10) {
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
@@ -184,7 +184,6 @@ public class Conexion{
                 //limpiar CMD
                 case 9:
                     Function.cls();
-                    System.out.println("Funciona");
                     break;
 
                 //Cerrar conexion y programa
