@@ -200,7 +200,7 @@ public class Delete {
                 case "1":
                     System.out.print("Introduce el ID del autor: ");
                     String id = sc.nextLine();
-                    sql = "DELETE FROM autores WHERE id_autor = ?";
+                    sql = "DELETE FROM autores WHERE id = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, id);
                     break;
