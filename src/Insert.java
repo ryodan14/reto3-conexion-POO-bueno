@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.sql.*;
 
 public class Insert {
+    public static final Scanner sc=new Scanner(System.in);
 
     //INSERTAR SOCIOS
     public static void InsertSocios(Connection conn) {
@@ -10,7 +11,6 @@ public class Insert {
             return;
         }
     
-        Scanner sc = new Scanner(System.in);
         String id_socio;
     
         while (true) {
@@ -120,7 +120,7 @@ public class Insert {
         } catch (SQLException e) {
             System.out.println("Error al insertar el socio: " + e.getMessage());
         }
-        
+
     }
 
     public static void InsertLibros(Connection conn) {
@@ -128,8 +128,6 @@ public class Insert {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner sc = new Scanner(System.in);
 
         System.out.print("ID: ");
         String id_libro = sc.nextLine();
@@ -168,8 +166,6 @@ public class Insert {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-    
-        Scanner sc = new Scanner(System.in);
     
         System.out.print("Código: ");
         String codigo = sc.nextLine();
@@ -236,8 +232,6 @@ public class Insert {
             return;
         }
 
-        Scanner sc = new Scanner(System.in);
-
         System.out.print("ID del autor: ");
         String id = sc.nextLine();
 
@@ -264,7 +258,7 @@ public class Insert {
             if (filas < 0) {
                 System.out.println("No se pudo insertar el autor.");
             }
-            
+
             pstmt.close();
         } catch (SQLException e) {
             System.out.println("Error al insertar el autor: " + e.getMessage());
@@ -277,8 +271,6 @@ public class Insert {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner sc = new Scanner(System.in);
 
         System.out.print("Código de penalización: ");
         String codigo = sc.nextLine();
