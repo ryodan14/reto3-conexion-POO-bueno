@@ -17,7 +17,7 @@ public class Function {
         int decision=0;
         cls();
         System.out.println("***********************");
-        System.out.println("**/     colores     /**");
+        System.out.println("**/     COLORES     /**");
         System.out.println("***********************");
         System.out.println("1-Verde");
         System.out.println("2-Azul");
@@ -143,13 +143,12 @@ public class Function {
         return false;
     }
 
-    //METODO PARA VALIDAR EL NÚMERO DE LA SEGURIDAD SOCIAL
-    public static boolean validarSs(Long swSs){
-        if (swSs != null && swSs < 100000000000L) {
-            return true;
-        }
-        return false;
+      //METODO PARA VALIDAR EL NÚMERO DE LA SEGURIDAD SOCIAL
+        public static boolean validarSs(Long swSs) {
+        if (swSs == null) return true; // Es opcional, así que null está OK
+        return swSs >= 100000000000L && swSs <= 999999999999L; // Exactamente 12 dígitos
     }
+    
 /* 
     public static boolean validarFechaDev(String fechaDev, String fechaInicio, char letra){
 
@@ -201,4 +200,23 @@ public class Function {
         }
         return false;
     }
+
+    //comprobacion dni socios
+    public static boolean dniYaExiste(Connection conn, String dni) {
+        String sql = "SELECT COUNT(*) FROM socios WHERE dni = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, dni);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                // Devuelve true si existe al menos un registro con el DNI proporcionado
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el DNI del socio: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    
 }

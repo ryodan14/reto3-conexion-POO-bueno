@@ -34,13 +34,23 @@ public class Insert {
         while (true) {
             System.out.print("DNI: ");
             dni = sc.nextLine();
-            if (Function.validarDNI(dni)) {
-                System.out.println("DNI válido.");
-                break;
-            } else {
+        
+            if (!Function.validarDNI(dni)) {
                 System.out.println("DNI no válido.");
+                continue;
             }
+            System.out.println("comprobando si el DNI no esta repetido...");
+            // Comprobar si el DNI ya existe en la base de datos
+            if (Function.dniYaExiste(conn, dni)) {
+                System.out.println("El DNI ya existe. Introduzca otro DNI.");
+                continue;
+            }
+        
+            System.out.println("DNI válido y único.");
+            break; // Sale del bucle
         }
+        
+        
 
         System.out.print("Dirección: ");
         String direccion = sc.nextLine();
@@ -76,16 +86,29 @@ public class Insert {
         String contraseña = sc.nextLine();
         
         
-        Long seguridad_social;
+        Long seguridad_social = null;
 
         while (true) {
-            System.out.print("Seguridad Social: ");
-            seguridad_social = Long.parseLong(sc.nextLine());
-            
-            if (Function.validarSs(seguridad_social)) {
+            System.out.print("Seguridad Social (opcional, 12 dígitos): ");
+            String input = sc.nextLine().trim();
+        
+            if (input.isEmpty()) {
+                // Vacío, lo tomamos como válido y opcional
+                seguridad_social = null;
                 break;
-            } else {
-                System.out.println("Seguridad social no válida, por favor introdúcelo de nuevo correctamente.");
+            }
+        
+            try {
+                seguridad_social = Long.parseLong(input);
+        
+                if (Function.validarSs(seguridad_social)) {
+                    break;
+                } else {
+                    System.out.println("Número no válido. Debe tener exactamente 12 dígitos.");
+                }
+        
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada no válida. Introduce solo números.");
             }
         }
         
