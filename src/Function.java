@@ -17,7 +17,7 @@ public class Function {
         int decision=0;
         cls();
         System.out.println("***********************");
-        System.out.println("**/     colores     /**");
+        System.out.println("**/     COLORES     /**");
         System.out.println("***********************");
         System.out.println("1-Verde");
         System.out.println("2-Azul");
