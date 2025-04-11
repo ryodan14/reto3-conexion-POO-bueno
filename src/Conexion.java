@@ -191,11 +191,15 @@ public class Conexion{
                 //Cerrar conexion y programa
                 case 10:
                     Function.mensa("Gracias por usar la aplicación!!!! - © D4RK");
+                    teclado.nextLine(); // Limpia el \n después de nextInt
+                    teclado.nextLine(); // Espera que el usuario pulse Enter
                     break;
                 
                 //Por si el usuario no mete la opción correcta
                 default:
                     Function.mensa("Elige una de las opciones que se dan.\n");
+                    teclado.nextLine(); // Limpia el \n después de nextInt
+                    teclado.nextLine(); // Espera que el usuario pulse Enter
                     break;
             }
         }
