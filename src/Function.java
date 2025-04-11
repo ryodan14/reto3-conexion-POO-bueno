@@ -132,11 +132,8 @@ public class Function {
     }
 
     //METODO PARA VALIDAR EL NÚMERO DE LA SEGURIDAD SOCIAL
-    public static boolean validarSs(Integer swSs){
-        if (swSs == null) {
-            return false;
-        }
-        if (swSs < 100000000000L) {
+    public static boolean validarSs(Long swSs){
+        if (swSs != null && swSs < 100000000000L) {
             return true;
         }
         return false;
