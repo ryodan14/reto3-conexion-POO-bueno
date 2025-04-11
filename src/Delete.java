@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Delete {
+    public static final Scanner sc=new Scanner(System.in);
 
     // DELETE DE SOCIOS
     public static void DeleteSocios(Connection conn) {
@@ -11,8 +12,6 @@ public class Delete {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("¿Cómo quieres borrar al usuario?");
         System.out.println("1. Por ID");
@@ -86,8 +85,6 @@ public class Delete {
             return;
         }
 
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("¿Cómo quieres borrar el libro?");
         System.out.println("1. Por ID");
         System.out.println("2. Por título");
@@ -152,8 +149,6 @@ public class Delete {
             return;
         }
 
-        Scanner sc = new Scanner(System.in);
-
         String sql = "";
         try {
             PreparedStatement pstmt = null;
@@ -190,8 +185,6 @@ public class Delete {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("¿Cómo quieres borrar el autor?");
         System.out.println("1. Por ID");
@@ -253,8 +246,7 @@ public class Delete {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner sc = new Scanner(System.in);
+        
         System.out.print("¿Cuál es el código de la penalización? ");
         String id = sc.nextLine();
 
