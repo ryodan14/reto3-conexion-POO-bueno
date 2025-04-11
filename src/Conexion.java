@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 
 public class Conexion{
     public static void main(String[] args) {
-        String url = "jdbc:mysql://25.7.162.154:3306/bdbiblioteca";
-        String user = "admin";
-        String password = "1234";
+        String url = "jdbc:mysql://bobf1njbp8saudtt1nak-mysql.services.clever-cloud.com:3306/bobf1njbp8saudtt1nak";
+        String user = "uy1iolwqnlj3jewx";
+        String password = "AOLhQz3cGO47udL3YLak";
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
         int eleccion=0;
