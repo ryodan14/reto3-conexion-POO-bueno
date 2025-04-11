@@ -179,6 +179,8 @@ public class Conexion{
                 //Cambiar color
                 case 8:
                     Function.Color();
+                    teclado.nextLine(); // Limpia el \n después de nextInt
+                    teclado.nextLine(); // Espera que el usuario pulse Enter
                     break;
     
                 //limpiar CMD

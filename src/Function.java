@@ -11,8 +11,9 @@ public class Function {
     public static final String AZUL = "\u001B[34m";
     public static final String FONDO_AZUL = "\u001B[44m";
 
+    public static final Scanner sc= new Scanner(System.in);
+
     public static void Color(){
-        Scanner escanea = new Scanner(System.in);
         int decision=0;
         cls();
         System.out.println("***********************");
@@ -24,7 +25,7 @@ public class Function {
         System.out.println("4-Amarillo");
         System.out.println("5-Fondo azul");
         System.out.println("6-Resetear");
-        decision = escanea.nextInt();
+        decision = sc.nextInt();
         switch (decision) {
             case 1:
                 System.out.println(VERDE);
@@ -54,7 +55,7 @@ public class Function {
                 System.out.println("Opción no válida");
                 break;
         }
-        escanea.close();
+        System.out.println("Color cambiado con exito!!!!");
     }
         //arreglar
     public static void tamañoCMD(){
