@@ -78,6 +78,16 @@ public class Function {
     public static void mensa(String mensaje){
         System.out.println(mensaje);
     }
+
+    public static void mostrarTextoLento(String texto) throws InterruptedException {
+        for (char c : texto.toCharArray()) {
+            System.out.print(c);
+            Thread.sleep(30); // Tiempo entre letras (ms)
+        }
+        System.out.println(); // Nueva línea después del texto
+        Thread.sleep(300); // Pausa entre líneas
+    }
+
         //mmetodo para validar DNI
     public static boolean validarDNI(String swDNI) {
         if (swDNI == null || swDNI.length() != 9) {
