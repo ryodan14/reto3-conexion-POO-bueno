@@ -133,13 +133,12 @@ public class Function {
         return false;
     }
 
-    //METODO PARA VALIDAR EL NÚMERO DE LA SEGURIDAD SOCIAL
-    public static boolean validarSs(Long swSs){
-        if (swSs != null && swSs < 100000000000L) {
-            return true;
-        }
-        return false;
+      //METODO PARA VALIDAR EL NÚMERO DE LA SEGURIDAD SOCIAL
+        public static boolean validarSs(Long swSs) {
+        if (swSs == null) return true; // Es opcional, así que null está OK
+        return swSs >= 100000000000L && swSs <= 999999999999L; // Exactamente 12 dígitos
     }
+    
 /* 
     public static boolean validarFechaDev(String fechaDev, String fechaInicio, char letra){
 

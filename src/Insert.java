@@ -86,16 +86,29 @@ public class Insert {
         String contraseña = sc.nextLine();
         
         
-        Long seguridad_social;
+        Long seguridad_social = null;
 
         while (true) {
-            System.out.print("Seguridad Social: ");
-            seguridad_social = Long.parseLong(sc.nextLine());
-            
-            if (Function.validarSs(seguridad_social)) {
+            System.out.print("Seguridad Social (opcional, 12 dígitos): ");
+            String input = sc.nextLine().trim();
+        
+            if (input.isEmpty()) {
+                // Vacío, lo tomamos como válido y opcional
+                seguridad_social = null;
                 break;
-            } else {
-                System.out.println("Seguridad social no válida, por favor introdúcelo de nuevo correctamente.");
+            }
+        
+            try {
+                seguridad_social = Long.parseLong(input);
+        
+                if (Function.validarSs(seguridad_social)) {
+                    break;
+                } else {
+                    System.out.println("Número no válido. Debe tener exactamente 12 dígitos.");
+                }
+        
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada no válida. Introduce solo números.");
             }
         }
         
