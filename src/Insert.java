@@ -34,13 +34,23 @@ public class Insert {
         while (true) {
             System.out.print("DNI: ");
             dni = sc.nextLine();
-            if (Function.validarDNI(dni)) {
-                System.out.println("DNI válido.");
-                break;
-            } else {
+        
+            if (!Function.validarDNI(dni)) {
                 System.out.println("DNI no válido.");
+                continue;
             }
+            System.out.println("comprobando si el DNI no esta repetido...");
+            // Comprobar si el DNI ya existe en la base de datos
+            if (Function.dniYaExiste(conn, dni)) {
+                System.out.println("El DNI ya existe. Introduzca otro DNI.");
+                continue;
+            }
+        
+            System.out.println("DNI válido y único.");
+            break; // Sale del bucle
         }
+        
+        
 
         System.out.print("Dirección: ");
         String direccion = sc.nextLine();

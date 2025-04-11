@@ -191,4 +191,23 @@ public class Function {
         }
         return false;
     }
+
+    //comprobacion dni socios
+    public static boolean dniYaExiste(Connection conn, String dni) {
+        String sql = "SELECT COUNT(*) FROM socios WHERE dni = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, dni);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                // Devuelve true si existe al menos un registro con el DNI proporcionado
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el DNI del socio: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    
 }
