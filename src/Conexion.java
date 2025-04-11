@@ -207,14 +207,14 @@ public class Conexion{
                     frame.pack();
                     frame.setVisible(true);
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    System.out.println("                 /*************************");
-                    System.out.println("                *    Programa creado por: *");
-                    System.out.println("                *           ASIER         *");
-                    System.out.println("                *           ENEKO         *");
-                    System.out.println("                *           DIEGO         *");
-                    System.out.println("                *           DANIEL        *");
-                    System.out.println("                *         JONHATTAN       *");
-                    System.out.println("                *************************/");
+                    System.out.println("                                               /*************************");
+                    System.out.println("                                              *   Programa creado por:  *");
+                    System.out.println("                                              *          ASIER          *");
+                    System.out.println("                                              *          ENEKO          *");
+                    System.out.println("                                              *          DIEGO          *");
+                    System.out.println("                                              *          DANIEL         *");
+                    System.out.println("                                              *        JONHATTAN       /");
+                    System.out.println("                                              *************************");
                     teclado.nextLine(); // Limpia el \n después de nextInt
                     teclado.nextLine(); // Espera que el usuario pulse Enter
                     break;
