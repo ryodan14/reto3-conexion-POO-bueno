@@ -76,11 +76,11 @@ public class Insert {
         String contraseña = sc.nextLine();
         
         
-        Integer seguridad_social;
+        Long seguridad_social;
 
         while (true) {
             System.out.print("Seguridad Social: ");
-            seguridad_social = Integer.parseInt(sc.nextLine());
+            seguridad_social = Long.parseLong(sc.nextLine());
             
             if (Function.validarSs(seguridad_social)) {
                 break;
@@ -106,7 +106,7 @@ public class Insert {
             pstmt.setString(7, correo);
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
-            pstmt.setInt(10, seguridad_social);
+            pstmt.setLong(10, seguridad_social);
 
             int filas = pstmt.executeUpdate();
 
@@ -261,12 +261,10 @@ public class Insert {
 
             int filas = pstmt.executeUpdate();
 
-            if (filas > 0) {
-                System.out.println("Autor insertado correctamente.");
-            } else {
+            if (filas < 0) {
                 System.out.println("No se pudo insertar el autor.");
             }
-
+            
             pstmt.close();
         } catch (SQLException e) {
             System.out.println("Error al insertar el autor: " + e.getMessage());
