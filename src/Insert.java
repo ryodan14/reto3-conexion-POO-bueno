@@ -55,9 +55,10 @@ public class Insert {
         System.out.print("Dirección: ");
         String direccion = sc.nextLine();
 
-        while(true) {
+        String tlfn = "";
+        while (true) {
             System.out.print("Teléfono: ");
-            String tlfn = sc.nextLine();
+            tlfn = sc.nextLine(); // ← lo guardas aquí
             if (Function.validarTelf(tlfn)) {
                 break;
             } else {
@@ -89,7 +90,7 @@ public class Insert {
         Long seguridad_social = null;
 
         while (true) {
-            System.out.print("Seguridad Social (opcional, 12 dígitos): ");
+            System.out.print("Seguridad Social: ");
             String input = sc.nextLine().trim();
         
             if (input.isEmpty()) {
@@ -104,7 +105,7 @@ public class Insert {
                 if (Function.validarSs(seguridad_social)) {
                     break;
                 } else {
-                    System.out.println("Número no válido. Debe tener exactamente 12 dígitos.");
+                    System.out.println("Número no válido. Debe tener 12 dígitos.");
                 }
         
             } catch (NumberFormatException e) {
@@ -126,6 +127,7 @@ public class Insert {
             pstmt.setString(3, nombre);
             pstmt.setString(4, apellido);
             pstmt.setString(5, direccion);
+            pstmt.setString(6, tlfn);
             pstmt.setString(7, correo);
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);

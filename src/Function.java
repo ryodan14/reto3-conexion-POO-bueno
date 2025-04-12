@@ -145,7 +145,7 @@ public class Function {
 
       //METODO PARA VALIDAR EL NÚMERO DE LA SEGURIDAD SOCIAL
         public static boolean validarSs(Long swSs) {
-        if (swSs == null) return true; // Es opcional, así que null está OK
+        if (swSs == null) return true; // Es opcional
         return swSs >= 100000000000L && swSs <= 999999999999L; // Exactamente 12 dígitos
     }
     
