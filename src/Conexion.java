@@ -42,11 +42,12 @@ public class Conexion{
                         System.out.println("Presiona Enter para continuar...");
                         teclado.nextLine(); // Limpia el \n después de nextInt
                         teclado.nextLine(); // Espera que el usuario pulse Enter
-                    }
+                    }else{
                     System.out.println("Conexión exitosa a la base de datos.\n");
                     System.out.println("Presiona Enter para continuar...");
                     teclado.nextLine(); // Limpia el \n
                     teclado.nextLine(); // Espera Enter
+                    }
                     break;
 
                 //Consultar tabla
