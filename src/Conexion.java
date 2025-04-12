@@ -200,7 +200,7 @@ public class Conexion{
 
                 //Creditos
                 case 11:
-                    Creditos.main(args);
+                    PantallaCreditos.main(args);
                     break;
                 
                 //Por si el usuario no mete la opción correcta
