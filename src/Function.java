@@ -218,5 +218,48 @@ public class Function {
         return false;
     }
     
+        //comprobacion id libros
+        public static boolean comprobarIdLibro(Connection conn, String idLibro) {
+            String sql = "SELECT COUNT(*) FROM libros WHERE id_libro = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, idLibro);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+                } 
+            } catch (SQLException e) {
+                System.out.println("Error al comprobar el ID del libro: " + e.getMessage());
+            }
+            return false;
+        }
     
+                //comprobacion titulo libro
+                public static boolean comprobarTituloLibro(Connection conn, String TituloLibro) {
+                    String sql = "SELECT COUNT(*) FROM libros WHERE titulo = ?";
+                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                        pstmt.setString(1, TituloLibro);
+                        ResultSet rs = pstmt.executeQuery();
+                        if (rs.next()) {
+                            return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+                        } 
+                    } catch (SQLException e) {
+                        System.out.println("Error al comprobar el titulo del libro: " + e.getMessage());
+                    }
+                    return false;
+                }
+
+                //comprobacion isbn libro
+                public static boolean comprobarISBNLibro(Connection conn, String ISBNLibro) {
+                    String sql = "SELECT COUNT(*) FROM libros WHERE titulo = ?";
+                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                        pstmt.setString(1, ISBNLibro);
+                        ResultSet rs = pstmt.executeQuery();
+                        if (rs.next()) {
+                            return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+                        } 
+                    } catch (SQLException e) {
+                        System.out.println("Error al comprobar el ISBN del libro: " + e.getMessage());
+                    }
+                    return false;
+                }
 }

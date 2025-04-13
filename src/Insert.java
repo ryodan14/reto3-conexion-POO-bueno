@@ -58,7 +58,7 @@ public class Insert {
         String tlfn = "";
         while (true) {
             System.out.print("Teléfono: ");
-            tlfn = sc.nextLine(); // ← lo guardas aquí
+            tlfn = sc.nextLine(); 
             if (Function.validarTelf(tlfn)) {
                 break;
             } else {
@@ -87,7 +87,7 @@ public class Insert {
         String contraseña = sc.nextLine();
         
         
-        Long seguridad_social = null;
+        Long seguridad_social ;
 
         while (true) {
             System.out.print("Seguridad Social: ");
@@ -131,7 +131,7 @@ public class Insert {
             pstmt.setString(7, correo);
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
-            pstmt.setLong(10, seguridad_social);
+            pstmt.setObject(10, seguridad_social, java.sql.Types.BIGINT);
 
             int filas = pstmt.executeUpdate();
 
@@ -147,45 +147,70 @@ public class Insert {
         }
 
     }
-
-    public static void InsertLibros(Connection conn) {
-        if (conn == null) {
-            System.out.println("No hay conexión con la base de datos.");
-            return;
-        }
-
-        System.out.print("ID: ");
-        String id_libro = sc.nextLine();
-
-        System.out.print("Título: ");
-        String titulo = sc.nextLine();
-
-        System.out.print("ISBN: ");
-        String isbn = sc.nextLine();
-
-        String sql = "INSERT INTO libros (id_libro, titulo, isbn) VALUES (?, ?, ?)";
-
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_libro);
-            pstmt.setString(2, titulo);
-            pstmt.setString(3, isbn);
-
-            int filas = pstmt.executeUpdate();
-
-            if (filas > 0) {
-                System.out.println("Libro insertado correctamente.");
-            } else {
-                System.out.println("No se pudo insertar el libro.");
-            }
-
-            pstmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error al insertar el libro: " + e.getMessage());
-        }
-        
+//INSERT DE LIBROS
+public static void InsertLibros(Connection conn) {
+    if (conn == null) {
+        System.out.println("No hay conexión con la base de datos.");
+        return;
     }
 
+    String id_libro;
+    while (true) {
+        System.out.print("ID: ");
+        id_libro = sc.nextLine();
+        if (Function.comprobarIdLibro(conn, id_libro)) {
+            System.out.println("ID ya existe. Introduzca otro ID.");
+        } else {
+            break;
+        }
+    }
+
+    String titulo;
+    while (true) {
+        System.out.print("Titulo: ");
+        titulo = sc.nextLine();
+        if (Function.comprobarTituloLibro(conn, titulo)) {
+            System.out.println("El libro ya está insertado. Por favor introduzca otro.");
+        } else {
+            break;
+        }
+    }
+
+    String isbn;
+    while (true) {
+        System.out.print("ISBN: ");
+        isbn = sc.nextLine();
+        if (Function.comprobarISBNLibro(conn, isbn)) {
+            System.out.println("El ISBN ya está insertado. Por favor introduzca otro.");
+        } else {
+            break;
+        }
+    }
+
+    String sql = "INSERT INTO libros (id_libro, titulo, isbn) VALUES (?, ?, ?)";
+
+    try {
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, id_libro);
+        pstmt.setString(2, titulo);
+        pstmt.setString(3, isbn);
+
+        int filas = pstmt.executeUpdate();
+
+        if (filas > 0) {
+            System.out.println("Libro insertado correctamente.");
+        } else {
+            System.out.println("No se pudo insertar el libro.");
+        }
+
+        pstmt.close();
+    } catch (SQLException e) {
+        System.out.println("Error al insertar el libro: " + e.getMessage());
+    }
+}
+
+
+        //INSERT DE PRESTAMOS
     public static void InsertPrestamos(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
