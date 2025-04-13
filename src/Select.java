@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Select {
     
-    /*public static void fechaAlta() {
+    public static void fechaAlta(Connection conn) {
+        
         protected String tiempo;
         String fecha_alta from socios;
         tiempo=(sysdate-fecha_alta);
@@ -29,5 +30,5 @@ public class Select {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

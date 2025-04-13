@@ -2,6 +2,10 @@ import java.sql.*;
 
 public class TestConsultarTabla {
     public static int mostrarTabla(Connection conn){
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return 0;
+        }
         int kont = 0;
         String sql = "SELECT * FROM socios order by id_socio";
         System.out.println(sql);
