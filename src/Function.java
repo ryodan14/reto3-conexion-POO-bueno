@@ -233,24 +233,25 @@ public class Function {
             return false;
         }
     
-                //comprobacion titulo libro
-                public static boolean comprobarTituloLibro(Connection conn, String TituloLibro) {
-                    String sql = "SELECT COUNT(*) FROM libros WHERE titulo = ?";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setString(1, TituloLibro);
-                        ResultSet rs = pstmt.executeQuery();
-                        if (rs.next()) {
-                            return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
-                        } 
-                    } catch (SQLException e) {
-                        System.out.println("Error al comprobar el titulo del libro: " + e.getMessage());
-                    }
-                    return false;
-                }
+        // comprobación título libro
+        public static boolean comprobarTituloLibro(Connection conn, String tituloLibro) {
+            String sql = "SELECT COUNT(*) FROM libros WHERE LOWER(titulo) = LOWER(?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, tituloLibro);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; // Devuelve true si existe sin importar mayúsculas
+                } 
+            } catch (SQLException e) {
+                System.out.println("Error al comprobar el título del libro: " + e.getMessage());
+            }
+            return false;
+        }
+        
 
                 //comprobacion isbn libro
                 public static boolean comprobarISBNLibro(Connection conn, String ISBNLibro) {
-                    String sql = "SELECT COUNT(*) FROM libros WHERE titulo = ?";
+                    String sql = "SELECT COUNT(*) FROM libros WHERE isbn = ?";
                     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                         pstmt.setString(1, ISBNLibro);
                         ResultSet rs = pstmt.executeQuery();
