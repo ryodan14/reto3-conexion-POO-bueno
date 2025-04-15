@@ -54,6 +54,9 @@ public class PantallaCreditos extends JFrame {
         SwingUtilities.invokeLater(() -> {
             PantallaCreditos ventana = new PantallaCreditos();
             ventana.setVisible(true);
+            ventana.setExtendedState(JFrame.NORMAL);
+            ventana.toFront();
+            ventana.requestFocus();
         });
     }
 

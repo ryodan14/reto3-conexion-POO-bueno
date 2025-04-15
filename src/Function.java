@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 public class Function {
@@ -218,80 +220,180 @@ public class Function {
         return false;
     }
     
-        //comprobacion id libros
-        public static boolean comprobarIdLibro(Connection conn, String idLibro) {
-            String sql = "SELECT COUNT(*) FROM libros WHERE id_libro = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, idLibro);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
-                } 
-            } catch (SQLException e) {
-                System.out.println("Error al comprobar el ID del libro: " + e.getMessage());
-            }
-            return false;
+    //comprobacion id libros
+    public static boolean comprobarIdLibro(Connection conn, String idLibro) {
+        String sql = "SELECT COUNT(*) FROM libros WHERE id_libro = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, idLibro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el ID del libro: " + e.getMessage());
         }
+        return false;
+    }
+
+    // comprobación título libro
+    public static boolean comprobarTituloLibro(Connection conn, String tituloLibro) {
+        String sql = "SELECT COUNT(*) FROM libros WHERE LOWER(titulo) = LOWER(?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, tituloLibro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Devuelve true si existe sin importar mayúsculas
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el título del libro: " + e.getMessage());
+        }
+        return false;
+    }
     
-        // comprobación título libro
-        public static boolean comprobarTituloLibro(Connection conn, String tituloLibro) {
-            String sql = "SELECT COUNT(*) FROM libros WHERE LOWER(titulo) = LOWER(?)";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, tituloLibro);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt(1) > 0; // Devuelve true si existe sin importar mayúsculas
-                } 
-            } catch (SQLException e) {
-                System.out.println("Error al comprobar el título del libro: " + e.getMessage());
-            }
-            return false;
+
+    //comprobacion isbn libro
+    public static boolean comprobarISBNLibro(Connection conn, String ISBNLibro) {
+        String sql = "SELECT COUNT(*) FROM libros WHERE isbn = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, ISBNLibro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el ISBN del libro: " + e.getMessage());
         }
-        
+        return false;
+    }
 
-                //comprobacion isbn libro
-                public static boolean comprobarISBNLibro(Connection conn, String ISBNLibro) {
-                    String sql = "SELECT COUNT(*) FROM libros WHERE isbn = ?";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setString(1, ISBNLibro);
-                        ResultSet rs = pstmt.executeQuery();
-                        if (rs.next()) {
-                            return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
-                        } 
-                    } catch (SQLException e) {
-                        System.out.println("Error al comprobar el ISBN del libro: " + e.getMessage());
-                    }
-                    return false;
-                }
+    //comprobacion codigo prestamo
+    public static boolean comprobarIdPrestamo(Connection conn, String idPrestamo) {
+        String sql = "SELECT COUNT(*) FROM prestamos WHERE codigo = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, idPrestamo);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el codigo del prestamo: " + e.getMessage());
+        }
+        return false;
+    }
 
-        //comprobacion codigo prestamo
-        public static boolean comprobarIdPrestamo(Connection conn, String idPrestamo) {
-            String sql = "SELECT COUNT(*) FROM prestamos WHERE codigo = ?";
+    //comprobacion de que el socio no lleva 3 prestamos
+    public static boolean comprobarIdSocioPrestamo(Connection conn, String idSocioPrestamo) {
+        String sql = "SELECT COUNT(*) FROM prestamos WHERE socio = ? and entregado = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, idSocioPrestamo);
+            pstmt.setString(2, "N");
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) >= 3; // Devuelve true si existe al menos tres registro
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el codigo del socio: " + e.getMessage());
+        }
+        return false;
+    }
+
+            //update de que ha entregado el libro
+        public static void marcarPrestamoComoEntregado(Connection conn, String codigoPrestamo) {
+    String sql = "UPDATE prestamos SET entregado = 'S', fecha_devolucion = ? WHERE codigo = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            String fechaHoy = LocalDate.now().toString(); // o la fecha que quieras registrar
+            pstmt.setString(1, fechaHoy);
+            pstmt.setString(2, codigoPrestamo);
+
+            int filas = pstmt.executeUpdate();
+            if (filas > 0) {
+                System.out.println("Préstamo marcado como entregado.");
+            } else {
+                System.out.println("No se encontró el préstamo con ese código.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar el préstamo: " + e.getMessage());
+        }
+    }
+
+
+    //comprobacion id autores
+    public static boolean comprobarIdAutor(Connection conn, String idAutor) {
+        String sql = "SELECT COUNT(*) FROM autores WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, idAutor);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el ID del Autor: " + e.getMessage());
+        }
+        return false;
+    }
+
+        // comprobar nombre y apellidos del autor
+        public static boolean comprobarNombreAutor(Connection conn, String nombre, String apellido1, String apellido2) {
+            String sql = "SELECT COUNT(*) FROM autores WHERE nombre = ? AND apellido1 = ? AND apellido2 = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, idPrestamo);
+                pstmt.setString(1, nombre);
+                pstmt.setString(2, apellido1);
+                pstmt.setString(3, apellido2);
                 ResultSet rs = pstmt.executeQuery();
                 if (rs.next()) {
                     return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
-                } 
+                }
             } catch (SQLException e) {
-                System.out.println("Error al comprobar el codigo del prestamo: " + e.getMessage());
+                System.out.println("Error al comprobar el nombre del autor: " + e.getMessage());
             }
             return false;
         }
 
-        //comprobacion de que el socio no lleva 3 prestamos
-        public static boolean comprobarIdSocioPrestamo(Connection conn, String idSocioPrestamo) {
-            String sql = "SELECT COUNT(*) FROM prestamos WHERE socio = ? and entregado = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, idSocioPrestamo);
-                pstmt.setString(2, "N");
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt(1) >= 3; // Devuelve true si existe al menos tres registro
-                } 
-            } catch (SQLException e) {
-                System.out.println("Error al comprobar el codigo del socio: " + e.getMessage());
+
+
+
+
+    //penalizacion de socios comprueba
+    public static void comprobarPenalizacion(Connection conn) {
+    String sql = "SELECT codigo, socio, fecha_inicio FROM prestamos WHERE entregado = 'N'";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String codigo = rs.getString("codigo: ");
+                String socio = rs.getString("socio: ");
+                LocalDate fechaInicio = LocalDate.parse(rs.getString("fecha_inicio"));
+                LocalDate hoy = LocalDate.now();
+
+                if (ChronoUnit.DAYS.between(fechaInicio, hoy) > 14) {
+                    // Aquí puedes actualizar al socio como "penalizado"
+                    penalizarSocio(conn, socio);
+                    System.out.println("Socio " + socio + " penalizado por el préstamo " + codigo);
+                }
             }
-            return false;
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar penalizaciones: " + e.getMessage());
         }
+    }
+    
+    
+    public static void penalizarSocio(Connection conn, String idSocio) {
+        String sql = "UPDATE penalizaciones SET penalizado = 'S' WHERE id_socio = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, idSocio);
+            int filas = pstmt.executeUpdate();
+            if (filas > 0) {
+                System.out.println("Socio penalizado con éxito.");
+            } else {
+                System.out.println("No se encontró el socio con ese ID.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al penalizar al socio: " + e.getMessage());
+        }
+    }
 }

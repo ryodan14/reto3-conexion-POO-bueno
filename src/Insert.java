@@ -286,15 +286,24 @@ public static void InsertPrestamos(Connection conn) {
     }
 }
 
-
+//INSERT DE AUTOR
     public static void InsertAutores(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
 
-        System.out.print("ID del autor: ");
-        String id = sc.nextLine();
+        String idAutor;
+        while (true) {
+            System.out.print("ID del autor: ");
+            idAutor = sc.nextLine();
+            if (Function.comprobarIdAutor(conn,idAutor)) {
+                System.out.println("El Id de autor " + idAutor + " ya existe. Por favor, introduzca otro.");
+            } else {
+                break;
+            }
+        }
+
 
         System.out.print("Nombre: ");
         String nombre = sc.nextLine();
@@ -305,11 +314,16 @@ public static void InsertPrestamos(Connection conn) {
         System.out.print("Segundo apellido: ");
         String apellido2 = sc.nextLine();
 
+        if(Function.comprobarNombreAutor(conn,nombre,apellido1,apellido2)) { 
+            System.out.println("El autor con nombre " + nombre + apellido1 + apellido2 + " ya existe. Por favor, introduzca otro.");
+            return; // Salir de la función sin continuar con la inserción
+        }
+
         String sql = "INSERT INTO autores (id, nombre, apellido1, apellido2) VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
+            pstmt.setString(1, idAutor);
             pstmt.setString(2, nombre);
             pstmt.setString(3, apellido1);
             pstmt.setString(4, apellido2);
@@ -322,10 +336,11 @@ public static void InsertPrestamos(Connection conn) {
 
             pstmt.close();
         } catch (SQLException e) {
-            System.out.println("Error al insertar el autor: " + e.getMessage());
-        }
-        
+            System.out.println("Error al insertar el autor: " + e.getMessage());    
     }
+        }
+    
+
 
     public static void InsertPenalizaciones(Connection conn) {
         if (conn == null) {
