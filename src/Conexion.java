@@ -97,7 +97,6 @@ public class Conexion{
                                 break;
                             case 4:
                                 Insert.InsertAutores(conn);
-                                Function.mensa("Autor Insertado correctamente");
                                 System.out.println("Presiona Enter para continuar...");
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
@@ -154,11 +153,11 @@ public class Conexion{
                     }
                     break;
 
-                //Paginar datos
+                //Borrar
                 case 4:
-                    TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                    testConsultarTabla.PagDatos(conn, 10);
+
                     break;
+                
                 //Mostrar socios paginando
                 case 5:
 
