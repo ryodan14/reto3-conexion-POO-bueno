@@ -210,71 +210,82 @@ public static void InsertLibros(Connection conn) {
 }
 
 
-        //INSERT DE PRESTAMOS
-    public static void InsertPrestamos(Connection conn) {
-        if (conn == null) {
-            System.out.println("No hay conexión con la base de datos.");
-            return;
-        }
-    
-        System.out.print("Código: ");
-        String codigo = sc.nextLine();
-    
-        System.out.print("Fecha de inicio: ");
-        String fecha_inicio = sc.nextLine();
-    
-        String entregado = "";
-        while (true) {
-            System.out.print("¿Entregado? (S/N): ");
-            entregado = sc.nextLine();
-    
-            if (entregado.equalsIgnoreCase("S") || entregado.equalsIgnoreCase("N")) {
-                break;
-            } else {
-                System.out.println("Respuesta no válida. Por favor, introduzca 'S' para sí o 'N' para no.");
-            }
-        }
-    
-        String fecha_devolucion = null;
-    
-        if (entregado.equalsIgnoreCase("S")) {
-            entregado = "S";
-            System.out.print("Fecha de devolución: ");
-            fecha_devolucion = sc.nextLine();
-        } else {
-            entregado = "N";
-            fecha_devolucion = null; 
-        }
-    
-        System.out.print("ID del socio: ");
-        String socio = sc.nextLine();
-    
-        String sql = "INSERT INTO prestamos (codigo, fecha_inicio, fecha_devolucion, entregado, socio) VALUES (?, ?, ?, ?, ?)";
-    
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, codigo);
-            pstmt.setString(2, fecha_inicio);
-            pstmt.setString(3, fecha_devolucion); // aunque sea null, se puede pasar
-            pstmt.setString(4, entregado);
-            pstmt.setString(5, socio);
-    
-            int filas = pstmt.executeUpdate();
-    
-            if (filas > 0) {
-                ;
-            } else {
-                System.out.println("No se pudo insertar el préstamo.");
-            }
-    
-            pstmt.close();
-        } catch (SQLException e) {
-            System.out.println("Error al insertar el préstamo: " + e.getMessage());
-        }
-    
-        
+// INSERT DE PRÉSTAMOS
+public static void InsertPrestamos(Connection conn) {
+    if (conn == null) {
+        System.out.println("No hay conexión con la base de datos.");
+        return;
     }
-    
+
+    String codigo;
+    while (true) {
+        System.out.print("Código: ");
+        codigo = sc.nextLine();
+        if (Function.comprobarIdPrestamo(conn, codigo)) {
+            System.out.println("El préstamo con código " + codigo + " ya existe. Por favor, introduzca otro.");
+        } else {
+            break;
+        }
+    }
+
+    System.out.print("Fecha de inicio: ");
+    String fecha_inicio = sc.nextLine();
+
+    String entregado = "";
+    while (true) {
+        System.out.print("¿Entregado? (S/N): ");
+        entregado = sc.nextLine();
+
+        if (entregado.equalsIgnoreCase("S") || entregado.equalsIgnoreCase("N")) {
+            break;
+        } else {
+            System.out.println("Respuesta no válida. Por favor, introduzca 'S' para sí o 'N' para no.");
+        }
+    }
+
+    String fecha_devolucion = null;
+
+    if (entregado.equalsIgnoreCase("S")) {
+        entregado = "S";
+        System.out.print("Fecha de devolución: ");
+        fecha_devolucion = sc.nextLine();
+    } else {
+        entregado = "N";
+        fecha_devolucion = null;
+    }
+
+    // Verificación del ID del socio
+    System.out.print("ID del socio: ");
+    String socio = sc.nextLine();
+
+    if (Function.comprobarIdSocioPrestamo(conn, socio)) {
+        // Si el socio tiene 3 préstamos sin devolver, mostrar el mensaje y salir sin insertar
+        System.out.println("El socio con código " + socio + " ya tiene 3 préstamos sin devolver. No se le admiten más.");
+        return; // Salir de la función sin continuar con la inserción
+    }
+    // Si pasa la comprobación, procedemos con la inserción
+    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, fecha_devolucion, entregado, socio) VALUES (?, ?, ?, ?, ?)";
+
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, codigo);
+        pstmt.setString(2, fecha_inicio);
+        pstmt.setString(3, fecha_devolucion); // Puede ser null
+        pstmt.setString(4, entregado);
+        pstmt.setString(5, socio);
+
+        int filas = pstmt.executeUpdate();
+
+        if (filas > 0) {
+            System.out.println("Préstamo insertado correctamente.");
+        } else {
+            System.out.println("No se pudo insertar el préstamo.");
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al insertar el préstamo: " + e.getMessage());
+    }
+}
+
 
     public static void InsertAutores(Connection conn) {
         if (conn == null) {

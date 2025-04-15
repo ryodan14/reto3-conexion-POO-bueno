@@ -91,7 +91,6 @@ public class Conexion{
                                 break;
                             case 3:
                                 Insert.InsertPrestamos(conn);
-                                Function.mensa("Prestamo Insertado correctamente");
                                 System.out.println("Presiona Enter para continuar...");
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter

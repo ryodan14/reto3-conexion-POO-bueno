@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+/*
 public class Select {
     
     public static void fechaAlta(Connection conn) {
@@ -32,3 +32,4 @@ public class Select {
         }
     }
 }
+*/

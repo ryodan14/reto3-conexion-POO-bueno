@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Function {
-    // Códigos ANSI para colores HAY QUE ARREGLARLO
+    // Códigos ANSI para colores
     public static final String RESET = "\u001B[0m";
     public static final String ROJO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";
@@ -263,4 +263,35 @@ public class Function {
                     }
                     return false;
                 }
+
+        //comprobacion codigo prestamo
+        public static boolean comprobarIdPrestamo(Connection conn, String idPrestamo) {
+            String sql = "SELECT COUNT(*) FROM prestamos WHERE codigo = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, idPrestamo);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+                } 
+            } catch (SQLException e) {
+                System.out.println("Error al comprobar el codigo del prestamo: " + e.getMessage());
+            }
+            return false;
+        }
+
+        //comprobacion de que el socio no lleva 3 prestamos
+        public static boolean comprobarIdSocioPrestamo(Connection conn, String idSocioPrestamo) {
+            String sql = "SELECT COUNT(*) FROM prestamos WHERE socio = ? and entregado = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, idSocioPrestamo);
+                pstmt.setString(2, "N");
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) >= 3; // Devuelve true si existe al menos tres registro
+                } 
+            } catch (SQLException e) {
+                System.out.println("Error al comprobar el codigo del socio: " + e.getMessage());
+            }
+            return false;
+        }
 }
