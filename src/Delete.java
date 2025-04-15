@@ -39,6 +39,7 @@ public class Delete {
                     String dni = "";
                     while (!dniCorrecto) {
                         dni = sc.nextLine();
+                        dni=Function.mayusculas(dni);
                         dniCorrecto = Function.validarDNI(dni);
                     }
                     sql = "DELETE FROM socios WHERE dni = ?";
@@ -49,8 +50,10 @@ public class Delete {
                 case "3":
                     System.out.print("Introduce el nombre: ");
                     String nombre = sc.nextLine();
+                    nombre=Function.mayusculas(nombre);
                     System.out.print("Introduce el apellido: ");
                     String apellido = sc.nextLine();
+                    apellido=Function.mayusculas(apellido);
                     sql = "DELETE FROM socios WHERE nombre = ? AND apellido = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, nombre);
@@ -108,6 +111,7 @@ public class Delete {
                 case "2":
                     System.out.print("Introduce el título del libro: ");
                     String titulo = sc.nextLine();
+                    titulo=Function.mayusculas(titulo);
                     sql = "DELETE FROM libros WHERE titulo = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, titulo);
@@ -208,10 +212,13 @@ public class Delete {
                 case "2":
                     System.out.print("Introduce el nombre del autor: ");
                     String nombre = sc.nextLine();
+                    nombre=Function.mayusculas(nombre);
                     System.out.print("Introduce el primer apellido del autor: ");
                     String apellido1 = sc.nextLine();
+                    apellido1=Function.mayusculas(apellido1);
                     System.out.print("Introduce el segundo apellido del autor: ");
                     String apellido2 = sc.nextLine();
+                    apellido2=Function.mayusculas(apellido2);
                     sql = "DELETE FROM autores WHERE nombre = ? AND apellido1 = ? AND apellido2 = ?";
                     pstmt = conn.prepareStatement(sql);
                     pstmt.setString(1, nombre);
