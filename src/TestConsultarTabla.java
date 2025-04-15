@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Scanner;
 
 public class TestConsultarTabla {
     public static int mostrarTabla(Connection conn){
@@ -43,5 +44,59 @@ public class TestConsultarTabla {
             System.out.println("Problema al consultar: \n" + sql + "\n" + e.getErrorCode() + " " + e.getMessage());
         }
         return kont;
+    }
+    public void PagDatos(Connection conn, int regPorPag){
+        
+        if (conn == null) {
+            System.out.println("No hay conexion con la base de datos.");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        int cont=1;
+        String opcion;
+
+        do {
+            int offset =(cont -1) * regPorPag;
+            String sql = "SELECT id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social " + "FROM socios " + "LIMIT ? OFFSET ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, regPorPag);
+                pstmt.setInt(2, offset);
+
+                ResultSet rs =pstmt.executeQuery();
+
+                System.out.println("Pagina " +cont);
+                System.out.println("-----------------------------------------------------------");
+
+                while (rs.next()) {
+                    System.out.println(
+                        rs.getString("id_socio") + " | "+
+                        rs.getString("dni") + " | " +
+                        rs.getString("nombre") + " | " +
+                        rs.getString("apellido") + " | " +
+                        rs.getString("direccion") + " | " +
+                        rs.getString("tlfn") + " | " +
+                        rs.getString("correo") + " | " +
+                        rs.getString("usuario") + " | " +
+                        rs.getString("contraseña") + " | " +
+                        rs.getObject("seguridad_social"));
+                }
+                rs.close();
+            }catch (SQLException e){
+                System.out.println("Error al obtener los socios: " +e.getMessage());
+            }
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("n = siguiente | p = anterior | s = salir");
+            opcion = sc.nextLine();
+
+            if (opcion.equalsIgnoreCase("n")) {
+                cont++;
+            }else if (opcion.equalsIgnoreCase("p") && cont > 1) {
+                cont--;
+            }
+        } while (!opcion.equalsIgnoreCase("s"));
+        sc.close();
     }
 }

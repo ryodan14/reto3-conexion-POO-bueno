@@ -154,11 +154,11 @@ public class Conexion{
                     }
                     break;
 
-                //Borrar
+                //Paginar datos
                 case 4:
-
+                    TestConsultarTabla testConsultarTabla = new testConsultarTabla();
+                    testConsultarTabla.PagDatos(conn, 10);
                     break;
-                
                 //Mostrar socios paginando
                 case 5:
 
