@@ -380,7 +380,7 @@ public class Function {
         }
     }
     
-    
+    //penealizacion socios
     public static void penalizarSocio(Connection conn, String idSocio) {
         String sql = "UPDATE penalizaciones SET penalizado = 'S' WHERE id_socio = ?";
 
@@ -395,5 +395,10 @@ public class Function {
         } catch (SQLException e) {
             System.out.println("Error al penalizar al socio: " + e.getMessage());
         }
+    }
+
+    public static String mayusculas(String palabra) {
+        palabra=palabra.toUpperCase();
+        return palabra;
     }
 }

@@ -26,14 +26,17 @@ public class Insert {
 
         System.out.print("Nombre: ");
         String nombre = sc.nextLine();
+        nombre=Function.mayusculas(nombre);
 
         System.out.print("Apellido: ");
         String apellido = sc.nextLine();
+        apellido=Function.mayusculas(apellido);
 
         String dni = "";
         while (true) {
             System.out.print("DNI: ");
             dni = sc.nextLine();
+            dni=Function.mayusculas(dni);
         
             if (!Function.validarDNI(dni)) {
                 System.out.println("DNI no válido.");
@@ -54,11 +57,13 @@ public class Insert {
 
         System.out.print("Dirección: ");
         String direccion = sc.nextLine();
+        direccion=Function.mayusculas(direccion);
 
         String tlfn = "";
         while (true) {
             System.out.print("Teléfono: ");
             tlfn = sc.nextLine(); 
+            tlfn=Function.mayusculas(tlfn);
             if (Function.validarTelf(tlfn)) {
                 break;
             } else {
@@ -71,6 +76,7 @@ public class Insert {
         while (true) {
             System.out.print("Correo: ");
             correo = sc.nextLine();
+            correo=Function.mayusculas(correo);
             if (Function.validarCorreo(correo)) {
                 break;
             } else {
@@ -82,9 +88,11 @@ public class Insert {
 
         System.out.print("Usuario: ");
         String usuario = sc.nextLine();
+        usuario=Function.mayusculas(usuario);
 
         System.out.print("Contraseña: ");
         String contraseña = sc.nextLine();
+        contraseña=Function.mayusculas(contraseña);
         
         
         Long seguridad_social ;
@@ -169,6 +177,7 @@ public static void InsertLibros(Connection conn) {
     while (true) {
         System.out.print("Titulo: ");
         titulo = sc.nextLine();
+        titulo=Function.mayusculas(titulo);
         if (Function.comprobarTituloLibro(conn, titulo)) {
             System.out.println("El libro ya está insertado. Por favor introduzca otro.");
         } else {
@@ -180,6 +189,7 @@ public static void InsertLibros(Connection conn) {
     while (true) {
         System.out.print("ISBN: ");
         isbn = sc.nextLine();
+        isbn=Function.mayusculas(isbn);
         if (Function.comprobarISBNLibro(conn, isbn)) {
             System.out.println("El ISBN ya está insertado. Por favor introduzca otro.");
         } else {
@@ -307,15 +317,18 @@ public static void InsertPrestamos(Connection conn) {
 
         System.out.print("Nombre: ");
         String nombre = sc.nextLine();
-
+        nombre=Function.mayusculas(nombre);
+        
         System.out.print("Primer apellido: ");
         String apellido1 = sc.nextLine();
+        apellido1=Function.mayusculas(apellido1);
 
         System.out.print("Segundo apellido: ");
         String apellido2 = sc.nextLine();
+        apellido2=Function.mayusculas(apellido2);
 
         if(Function.comprobarNombreAutor(conn,nombre,apellido1,apellido2)) { 
-            System.out.println("El autor con nombre " + nombre + apellido1 + apellido2 + " ya existe. Por favor, introduzca otro.");
+            System.out.println("El autor con nombre " + nombre + " " +apellido1 +" "+ apellido2 + " ya existe. Por favor, introduzca otro.");
             return; // Salir de la función sin continuar con la inserción
         }
 
@@ -353,18 +366,24 @@ public static void InsertPrestamos(Connection conn) {
 
         System.out.print("Descripción de la penalización: ");
         String descripcion = sc.nextLine();
+        descripcion=Function.mayusculas(descripcion);
 
         System.out.print("Tipo de penalización: ");
         String tipo = sc.nextLine();
+        tipo=Function.mayusculas(tipo);
+
+        System.out.println("Id del socio: ");
+        String ID_Socio = sc.nextLine();
 
         // OJO: columna 'decripcion' estaba mal escrita
-        String sql = "INSERT INTO penalizaciones (codigo, descripcion, tipo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO penalizaciones (codigo, descripcion, tipo, ID_Socio) VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, codigo);
             pstmt.setString(2, descripcion);
             pstmt.setString(3, tipo);
+            pstmt.setString(4, ID_Socio);
 
             int filas = pstmt.executeUpdate();
 
