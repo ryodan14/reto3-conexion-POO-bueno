@@ -156,9 +156,35 @@ public class Conexion{
 
                 //Paginar datos
                 case 4:
-                    TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                    testConsultarTabla.PagDatos(conn, 10);
-                    break;
+                    switch(eleccion) {
+                        case 1:
+                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
+                        testConsultarTabla.PaginarAutores(conn, 10);
+                            break;
+                        case 2:
+                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
+                        testConsultarTabla.PaginarLibros(conn, 10);
+                            break;
+                        case 3:
+                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
+                        testConsultarTabla.PaginarPenalizaciones(conn, 10);
+                            break;
+                        case 4:
+                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
+                        testConsultarTabla.PaginarPrestamos(conn,10);
+                            break;
+                        case 5:
+                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
+                        testConsultarTabla.PaginarSocios(conn,10);
+                            break;
+                        case 6:
+                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
+                        testConsultarTabla.PaginarTusuarios(conn,10);
+                            break;
+                    default:
+                        break;
+                    }
+
                 //Mostrar socios paginando
                 case 5:
 

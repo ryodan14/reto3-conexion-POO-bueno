@@ -45,7 +45,7 @@ public class TestConsultarTabla {
         }
         return kont;
     }
-    public void PagDatos(Connection conn, int regPorPag){
+    public void PaginarTusuarios(Connection conn, int regPorPag){
         
         if (conn == null) {
             System.out.println("No hay conexion con la base de datos.");
@@ -58,7 +58,248 @@ public class TestConsultarTabla {
 
         do {
             int offset =(cont -1) * regPorPag;
-            String sql = "SELECT id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social " + "FROM socios " + "LIMIT ? OFFSET ?";
+            String sql = "SELECT usucod, usunom, usudni, usuapel " + "FROM Tusuarios " + "LIMIT 10 OFFSET 0";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, regPorPag);
+                pstmt.setInt(2, offset);
+
+                ResultSet rs =pstmt.executeQuery();
+
+                System.out.println("Pagina " +cont);
+                System.out.println("-----------------------------------------------------------");
+
+                while (rs.next()) {
+                    System.out.println(
+                        rs.getString("usucod") + " | "+
+                        rs.getString("usunom") + " | "+
+                        rs.getString("usudni") + " | "+
+                        rs.getString("usuapel") + " | ");
+                }
+                rs.close();
+            }catch (SQLException e){
+                System.out.println("Error al obtener las penalizaciones: " +e.getMessage());
+            }
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("n = siguiente | p = anterior | s = salir");
+            opcion = sc.nextLine();
+
+            if (opcion.equalsIgnoreCase("n")) {
+                cont++;
+            }else if (opcion.equalsIgnoreCase("p") && cont > 1) {
+                cont--;
+            }
+        } while (!opcion.equalsIgnoreCase("s"));
+        sc.close();
+    }
+    public void PaginarPrestamos(Connection conn, int regPorPag){
+        
+        if (conn == null) {
+            System.out.println("No hay conexion con la base de datos.");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        int cont=1;
+        String opcion;
+
+        do {
+            int offset =(cont -1) * regPorPag;
+            String sql = "SELECT codigo, fecha_inicio, fecha_devolucion, entregado, socio " + "FROM prestamos " + "LIMIT 10 OFFSET 0";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, regPorPag);
+                pstmt.setInt(2, offset);
+
+                ResultSet rs =pstmt.executeQuery();
+
+                System.out.println("Pagina " +cont);
+                System.out.println("-----------------------------------------------------------");
+
+                while (rs.next()) {
+                    System.out.println(
+                        rs.getString("codigo") + " | "+
+                        rs.getString("fecha_inicio") + " | "+
+                        rs.getString("fecha_devolucion") + " | "+
+                        rs.getString("entregado") + " | " +
+                        rs.getString("socio") + " | ");
+                }
+                rs.close();
+            }catch (SQLException e){
+                System.out.println("Error al obtener los prestamos: " +e.getMessage());
+            }
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("n = siguiente | p = anterior | s = salir");
+            opcion = sc.nextLine();
+
+            if (opcion.equalsIgnoreCase("n")) {
+                cont++;
+            }else if (opcion.equalsIgnoreCase("p") && cont > 1) {
+                cont--;
+            }
+        } while (!opcion.equalsIgnoreCase("s"));
+        sc.close();
+    }
+    public void PaginarPenalizaciones(Connection conn, int regPorPag){
+        
+        if (conn == null) {
+            System.out.println("No hay conexion con la base de datos.");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        int cont=1;
+        String opcion;
+
+        do {
+            int offset =(cont -1) * regPorPag;
+            String sql = "SELECT codigo, descripcion, tipo, titulo, isbn " + "FROM penalizaciones " + "LIMIT 10 OFFSET 0";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, regPorPag);
+                pstmt.setInt(2, offset);
+
+                ResultSet rs =pstmt.executeQuery();
+
+                System.out.println("Pagina " +cont);
+                System.out.println("-----------------------------------------------------------");
+
+                while (rs.next()) {
+                    System.out.println(
+                        rs.getString("codigo") + " | "+
+                        rs.getString("descripcion") + " | "+
+                        rs.getString("tipo") + " | "+
+                        rs.getString("titulo") + " | " +
+                        rs.getString("isbn") + " | ");
+                }
+                rs.close();
+            }catch (SQLException e){
+                System.out.println("Error al obtener las penalizaciones: " +e.getMessage());
+            }
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("n = siguiente | p = anterior | s = salir");
+            opcion = sc.nextLine();
+
+            if (opcion.equalsIgnoreCase("n")) {
+                cont++;
+            }else if (opcion.equalsIgnoreCase("p") && cont > 1) {
+                cont--;
+            }
+        } while (!opcion.equalsIgnoreCase("s"));
+        sc.close();
+    }
+    public void PaginarLibros(Connection conn, int regPorPag){
+        
+        if (conn == null) {
+            System.out.println("No hay conexion con la base de datos.");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        int cont=1;
+        String opcion;
+
+        do {
+            int offset =(cont -1) * regPorPag;
+            String sql = "SELECT id_libro, titulo, isbn" + "FROM libros " + "LIMIT 10 OFFSET 0";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, regPorPag);
+                pstmt.setInt(2, offset);
+
+                ResultSet rs =pstmt.executeQuery();
+
+                System.out.println("Pagina " +cont);
+                System.out.println("-----------------------------------------------------------");
+
+                while (rs.next()) {
+                    System.out.println(
+                        rs.getString("id_libro") + " | "+
+                        rs.getString("titulo") + " | " +
+                        rs.getString("isbn") + " | ");
+                }
+                rs.close();
+            }catch (SQLException e){
+                System.out.println("Error al obtener los libros: " +e.getMessage());
+            }
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("n = siguiente | p = anterior | s = salir");
+            opcion = sc.nextLine();
+
+            if (opcion.equalsIgnoreCase("n")) {
+                cont++;
+            }else if (opcion.equalsIgnoreCase("p") && cont > 1) {
+                cont--;
+            }
+        } while (!opcion.equalsIgnoreCase("s"));
+        sc.close();
+    }
+    public void PaginarAutores(Connection conn, int regPorPag){
+        
+        if (conn == null) {
+            System.out.println("No hay conexion con la base de datos.");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        int cont=1;
+        String opcion;
+
+        do {
+            int offset =(cont -1) * regPorPag;
+            String sql = "SELECT id, nombre, apellido1, apellido2 " + "FROM autores " + "LIMIT 10 OFFSET 0";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1, regPorPag);
+                pstmt.setInt(2, offset);
+
+                ResultSet rs =pstmt.executeQuery();
+
+                System.out.println("Pagina " +cont);
+                System.out.println("-----------------------------------------------------------");
+
+                while (rs.next()) {
+                    System.out.println(
+                        rs.getString("id") + " | " +
+                        rs.getString("nombre") + " | " +
+                        rs.getString("apellido1") + " | " +
+                        rs.getString("apellido2") + " | " );
+                }
+                rs.close();
+            }catch (SQLException e){
+                System.out.println("Error al obtener los autores: " +e.getMessage());
+            }
+
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("n = siguiente | p = anterior | s = salir");
+            opcion = sc.nextLine();
+
+            if (opcion.equalsIgnoreCase("n")) {
+                cont++;
+            }else if (opcion.equalsIgnoreCase("p") && cont > 1) {
+                cont--;
+            }
+        } while (!opcion.equalsIgnoreCase("s"));
+        sc.close();
+    }
+    public void PaginarSocios(Connection conn, int regPorPag){
+        
+        if (conn == null) {
+            System.out.println("No hay conexion con la base de datos.");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        int cont=1;
+        String opcion;
+
+        do {
+            int offset =(cont -1) * regPorPag;
+            String sql = "SELECT id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social " + "FROM socios " + "LIMIT 10 OFFSET 0";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)){
                 pstmt.setInt(1, regPorPag);
