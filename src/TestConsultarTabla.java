@@ -53,7 +53,7 @@ public class TestConsultarTabla {
         Scanner teclado = new Scanner(System.in);
         int offset = 0;
         int limit = 5;
-        String sql = "";
+        String sql = " ";
 
         switch (tabla.toLowerCase()) {
             case "socios":
@@ -120,6 +120,7 @@ public class TestConsultarTabla {
             } catch (SQLException e) {
                 System.out.println("Error al consultar: " + e.getMessage());
             }
+            break;
         }
         teclado.close();
     }
