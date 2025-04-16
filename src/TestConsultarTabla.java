@@ -90,6 +90,7 @@ public class TestConsultarTabla {
                 ResultSetMetaData meta = rs.getMetaData();
                 int columnas = meta.getColumnCount();
 
+                //Sirve para ver las columnas y su valor? Ns
                 while (rs.next()) {
                     for (int i = 1; i <= columnas; i++) {
                         System.out.print(meta.getColumnName(i) + ": " + rs.getString(i) + " | ");
@@ -124,4 +125,3 @@ public class TestConsultarTabla {
         teclado.close();
     }
 }
- 
