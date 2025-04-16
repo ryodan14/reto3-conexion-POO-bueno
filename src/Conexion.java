@@ -23,7 +23,7 @@ public class Conexion{
             System.out.println("       1-Obtener conexión                 6-Cerrar conexión");
             System.out.println("       2-Consultar la tabla               7-Cambiar tamaño cmd");
             System.out.println("       3-Añadir/Borrar datos              8-Cambiar color");
-            System.out.println("       4-Borrar Usuario                   9-Limpiar pantalla");
+            System.out.println("       4-Ver tablas                       9-Limpiar pantalla");
             System.out.println("       5-Mostrar socios paginando         10-Salir de la aplicación");
             System.out.println("                                          11-Creditos");
             System.out.println("Elige la opción:");

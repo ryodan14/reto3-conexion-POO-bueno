@@ -357,7 +357,11 @@ public class Function {
 
     //penalizacion de socios comprueba
     public static void comprobarPenalizacion(Connection conn) {
-    String sql = "SELECT codigo, socio, fecha_inicio FROM prestamos WHERE entregado = 'N'";
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+        String sql = "SELECT codigo, socio, fecha_inicio FROM prestamos WHERE entregado = 'N'";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery()) {
@@ -382,6 +386,11 @@ public class Function {
     
     //penealizacion socios
     public static void penalizarSocio(Connection conn, String idSocio) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+        
         String sql = "UPDATE penalizaciones SET penalizado = 'S' WHERE id_socio = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
