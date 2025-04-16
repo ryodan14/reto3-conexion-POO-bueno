@@ -153,37 +153,12 @@ public class Conexion{
                     }
                     break;
 
-                //Borrar
+                //Paginar Tablas
                 case 4:
-                    switch(eleccion) {
-                        case 1:
-                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                        testConsultarTabla.PaginarAutores(conn, 10);
-                            break;
-                        case 2:
-                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                        testConsultarTabla.PaginarLibros(conn, 10);
-                            break;
-                        case 3:
-                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                        testConsultarTabla.PaginarPenalizaciones(conn, 10);
-                            break;
-                        case 4:
-                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                        testConsultarTabla.PaginarPrestamos(conn,10);
-                            break;
-                        case 5:
-                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                        testConsultarTabla.PaginarSocios(conn,10);
-                            break;
-                        case 6:
-                        TestConsultarTabla testConsultarTabla = new testConsultarTabla();
-                        testConsultarTabla.PaginarTusuarios(conn,10);
-                            break;
-                    default:
-                        break;
-                    }
-
+                    System.out.println("Introduce el nombre de la tabla: ");
+                    String tabla = teclado.nextLine();
+                    TestConsultarTabla.paginarTabla(conn, tabla);
+                    break;
                 //Mostrar socios paginando
                 case 5:
 
