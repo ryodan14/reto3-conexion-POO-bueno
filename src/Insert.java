@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.sql.*;
+import java.time.LocalDate;
 
 public class Insert {
     public static final Scanner sc=new Scanner(System.in);
@@ -227,6 +228,8 @@ public static void InsertPrestamos(Connection conn) {
         return;
     }
 
+
+
     String codigo;
     while (true) {
         System.out.print("Código: ");
@@ -238,31 +241,12 @@ public static void InsertPrestamos(Connection conn) {
         }
     }
 
-    System.out.print("Fecha de inicio: ");
-    String fecha_inicio = sc.nextLine();
+    String fecha_inicio = null;
+    if (fecha_inicio == null || fecha_inicio.trim().isEmpty()) {
+    fecha_inicio = LocalDate.now().toString(); // yyyy-MM-dd
+}
 
-    String entregado = "";
-    while (true) {
-        System.out.print("¿Entregado? (S/N): ");
-        entregado = sc.nextLine();
 
-        if (entregado.equalsIgnoreCase("S") || entregado.equalsIgnoreCase("N")) {
-            break;
-        } else {
-            System.out.println("Respuesta no válida. Por favor, introduzca 'S' para sí o 'N' para no.");
-        }
-    }
-
-    String fecha_devolucion = null;
-
-    if (entregado.equalsIgnoreCase("S")) {
-        entregado = "S";
-        System.out.print("Fecha de devolución: ");
-        fecha_devolucion = sc.nextLine();
-    } else {
-        entregado = "N";
-        fecha_devolucion = null;
-    }
 
     // Verificación del ID del socio
     System.out.print("ID del socio: ");
@@ -295,14 +279,13 @@ public static void InsertPrestamos(Connection conn) {
     }
 
     // Si pasa todas las comprobaciones, procedemos con la inserción
-    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, fecha_devolucion, entregado, socio) VALUES (?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, socio) VALUES (?, ?, ?)";
 
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
         pstmt.setString(1, codigo);
         pstmt.setString(2, fecha_inicio);
-        pstmt.setString(3, fecha_devolucion); // Puede ser null
-        pstmt.setString(4, entregado);
-        pstmt.setString(5, socio);
+        pstmt.setString(3, socio);
+    
 
         int filas = pstmt.executeUpdate();
 
@@ -436,4 +419,37 @@ public static void InsertPrestamos(Connection conn) {
         }
 
     }
+
+    public static void PrestamoEntregado (Connection conn){
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
+    
+        System.out.print("Código del préstamo: ");
+        String codigo = sc.nextLine();
+    
+        String fecha_devolucion = LocalDate.now().toString(); // yyyy-MM-dd
+    
+        String sql = "UPDATE prestamos SET entregado = 'S', fecha_devolucion = ? WHERE codigo = ?";
+    
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, fecha_devolucion);  
+            pstmt.setString(2, codigo);           
+    
+            int filas = pstmt.executeUpdate();
+    
+            if (filas > 0) {
+                System.out.println("Préstamo marcado como entregado.");
+            } else {
+                System.out.println("No se pudo marcar el préstamo como entregado.");
+            }
+    
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error al marcar el préstamo como entregado: " + e.getMessage());
+        }
+    }
+    
 }
