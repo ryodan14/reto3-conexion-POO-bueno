@@ -268,12 +268,33 @@ public static void InsertPrestamos(Connection conn) {
     System.out.print("ID del socio: ");
     String socio = sc.nextLine();
 
-    if (Function.comprobarIdSocioPrestamo(conn, socio)) {
-        // Si el socio tiene 3 préstamos sin devolver, mostrar el mensaje y salir sin insertar
-        System.out.println("El socio con código " + socio + " ya tiene 3 préstamos sin devolver. No se le admiten más.");
-        return; // Salir de la función sin continuar con la inserción
+    // Comprobar si el socio está penalizado
+    String penalizadoSql = "SELECT penalizado FROM socios WHERE id_socio = ?";
+    try (PreparedStatement penalizadoStmt = conn.prepareStatement(penalizadoSql)) {
+        penalizadoStmt.setString(1, socio);
+        ResultSet rs = penalizadoStmt.executeQuery();
+        if (rs.next()) {
+            String estadoPenalizado = rs.getString("penalizado");
+            if (estadoPenalizado != null && estadoPenalizado.equalsIgnoreCase("S")) {
+                System.out.println("El socio con ID " + socio + " está penalizado y no puede realizar préstamos.");
+                return;
+            }
+        } else {
+            System.out.println("No se encontró el socio con ID " + socio + ".");
+            return;
+        }
+    } catch (SQLException e) {
+        System.out.println("Error al comprobar si el socio está penalizado: " + e.getMessage());
+        return;
     }
-    // Si pasa la comprobación, procedemos con la inserción
+
+    // Comprobar si tiene 3 préstamos sin devolver
+    if (Function.comprobarIdSocioPrestamo(conn, socio)) {
+        System.out.println("El socio con código " + socio + " ya tiene 3 préstamos sin devolver. No se le admiten más.");
+        return;
+    }
+
+    // Si pasa todas las comprobaciones, procedemos con la inserción
     String sql = "INSERT INTO prestamos (codigo, fecha_inicio, fecha_devolucion, entregado, socio) VALUES (?, ?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -295,6 +316,7 @@ public static void InsertPrestamos(Connection conn) {
         System.out.println("Error al insertar el préstamo: " + e.getMessage());
     }
 }
+
 
 //INSERT DE AUTOR
     public static void InsertAutores(Connection conn) {
@@ -392,11 +414,26 @@ public static void InsertPrestamos(Connection conn) {
             } else {
                 System.out.println("No se pudo insertar la penalización.");
             }
-
+            
             pstmt.close();
         } catch (SQLException e) {
             System.out.println("Error al insertar la penalización: " + e.getMessage());
         }
-        
+        // Después de insertar la penalización, actualizamos la columna 'penalizado' en la tabla 'socios'
+        String updateSql = "UPDATE socios SET penalizado = 'S' WHERE id_socio = ?";
+
+        try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+            updateStmt.setString(1, ID_Socio);
+            int updateFilas = updateStmt.executeUpdate();
+
+            if (updateFilas > 0) {
+                System.out.println("Socio marcado como penalizado ('S').");
+            } else {
+                System.out.println("No se pudo marcar el socio como penalizado.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar estado de penalización del socio: " + e.getMessage());
+        }
+
     }
 }
