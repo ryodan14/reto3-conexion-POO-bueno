@@ -155,8 +155,8 @@ public class Conexion{
 
                 //Paginar Tablas
                 case 4:
-                    System.out.println("Introduce el nombre de la tabla: ");
-                    String tabla = teclado.nextLine();
+                    Function.mensa("Introduce el nombre de la tabla: ");
+                    String tabla = teclado.next();
                     TestConsultarTabla.paginarTabla(conn, tabla);
                     break;
                 //Mostrar socios paginando
@@ -210,7 +210,6 @@ public class Conexion{
                     break;
             }
         }
-
         teclado.close();
     }
 }

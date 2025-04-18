@@ -55,6 +55,7 @@ public class TestConsultarTabla {
         int limit = 5;
         String sql = " ";
 
+        //Escoje la tabla de la que quiere ver la informacion
         switch (tabla.toLowerCase()) {
             case "socios":
                 sql = "SELECT * FROM socios LIMIT ? OFFSET ?";
@@ -121,7 +122,7 @@ public class TestConsultarTabla {
             } catch (SQLException e) {
                 System.out.println("Error al consultar: " + e.getMessage());
             }
-            break;
+            
         }
         teclado.close();
     }
