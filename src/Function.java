@@ -350,39 +350,36 @@ public class Function {
             }
             return false;
         }
-
-
-
-
-
-    //penalizacion de socios comprueba
-    public static void comprobarPenalizacion(Connection conn) {
-        if (conn == null) {
-            System.out.println("No hay conexión con la base de datos.");
-            return;
-        }
-        String sql = "SELECT codigo, socio, fecha_inicio FROM prestamos WHERE entregado = 'N'";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()) {
-
-            while (rs.next()) {
-                String codigo = rs.getString("codigo: ");
-                String socio = rs.getString("socio: ");
-                LocalDate fechaInicio = LocalDate.parse(rs.getString("fecha_inicio"));
-                LocalDate hoy = LocalDate.now();
-
-                if (ChronoUnit.DAYS.between(fechaInicio, hoy) > 14) {
-                    // Aquí puedes actualizar al socio como "penalizado"
-                    penalizarSocio(conn, socio);
-                    System.out.println("Socio " + socio + " penalizado por el préstamo " + codigo);
-                }
+        // Comprobación de penalización para socios
+        public static void comprobarPenalizacion(Connection conn) {
+            if (conn == null) {
+                System.out.println("No hay conexión con la base de datos.");
+                return;
             }
 
-        } catch (SQLException e) {
-            System.out.println("Error al comprobar penalizaciones: " + e.getMessage());
+            String sql = "SELECT codigo, socio, fecha_inicio FROM prestamos WHERE entregado = 'N'";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql);
+                ResultSet rs = pstmt.executeQuery()) {
+
+                while (rs.next()) {
+                    String codigo = rs.getString("codigo");
+                    String socio = rs.getString("socio");
+                    LocalDate fechaInicio = LocalDate.parse(rs.getString("fecha_inicio"));
+                    LocalDate hoy = LocalDate.now();
+
+                    if (ChronoUnit.DAYS.between(fechaInicio, hoy) > 14) {
+                        // Penaliza al socio si tiene el préstamo sin devolver por más de 14 días
+                        penalizarSocio(conn, socio);
+                        System.out.println("Socio " + socio + " penalizado por el préstamo " + codigo);
+                    }
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Error al comprobar penalizaciones: " + e.getMessage());
+            }
         }
-    }
+
     
     //penealizacion socios
     public static void penalizarSocio(Connection conn, String idSocio) {
@@ -409,5 +406,9 @@ public class Function {
     public static String mayusculas(String palabra) {
         palabra=palabra.toUpperCase();
         return palabra;
+    }
+
+    public static void actualizarPenalizacion(Connection conn, String penalizado) {
+        String sql = "Update socios Set penalizado = 'S' where id_socio in (select ID_Docio from penalizaciones)";
     }
 }

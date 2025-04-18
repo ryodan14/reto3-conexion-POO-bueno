@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -247,37 +248,70 @@ public class Delete {
         
     }
 
-    // DELETE DE PENALIZACIONES
-    public static void DeletePenalizaciones(Connection conn) {
-        if (conn == null) {
-            System.out.println("No hay conexión con la base de datos.");
-            return;
-        }
-        
-        System.out.print("¿Cuál es el código de la penalización? ");
-        String id = sc.nextLine();
-
-        String sql = "";
-        try {
-            PreparedStatement pstmt = null;
-
-            sql = "DELETE FROM penalizacion WHERE codigo = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id);
-
-            int filas = pstmt.executeUpdate();
-
-            if (filas > 0) {
-                System.out.println("Penalización borrada correctamente.");
-            } else {
-                System.out.println("No se encontró ninguna penalización con ese dato.");
+        // DELETE DE PENALIZACIONES
+        public static void DeletePenalizaciones(Connection conn) {
+            if (conn == null) {
+                System.out.println("No hay conexión con la base de datos.");
+                return;
             }
 
-            pstmt.close();
+            System.out.print("¿Cuál es el código de la penalización? ");
+            String codigoPenalizacion = sc.nextLine();
 
-        } catch (SQLException e) {
-            System.out.println("Error al borrar la penalización: " + e.getMessage());
+            String obtenerSocioSql = "SELECT ID_Socio FROM penalizaciones WHERE codigo = ?";
+            String idSocio = null;
+
+            try (PreparedStatement stmt = conn.prepareStatement(obtenerSocioSql)) {
+                stmt.setString(1, codigoPenalizacion);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    idSocio = rs.getString("ID_Socio");
+                } else {
+                    System.out.println("No se encontró ninguna penalización con ese código.");
+                    return;
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al buscar el socio de la penalización: " + e.getMessage());
+                return;
+            }
+
+            // Borrar la penalización
+            String deleteSql = "DELETE FROM penalizaciones WHERE codigo = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteSql)) {
+                pstmt.setString(1, codigoPenalizacion);
+                int filas = pstmt.executeUpdate();
+
+                if (filas > 0) {
+                    System.out.println("Penalización borrada correctamente.");
+                } else {
+                    System.out.println("No se pudo borrar la penalización.");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al borrar la penalización: " + e.getMessage());
+                return;
+            }
+
+            // Verificar si el socio aún tiene más penalizaciones
+            String comprobarSql = "SELECT COUNT(*) FROM penalizaciones WHERE ID_Socio = ?";
+            try (PreparedStatement comprobarStmt = conn.prepareStatement(comprobarSql)) {
+                comprobarStmt.setString(1, idSocio);
+                ResultSet rs = comprobarStmt.executeQuery();
+
+                if (rs.next() && rs.getInt(1) == 0) {
+                    // No tiene más penalizaciones → actualizar a 'N'
+                    String updateSql = "UPDATE socios SET penalizado = 'N' WHERE id_socio = ?";
+                    try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                        updateStmt.setString(1, idSocio);
+                        updateStmt.executeUpdate();
+                        System.out.println("Socio desmarcado como penalizado ('N').");
+                    }
+                } else {
+                    System.out.println("El socio todavía tiene otras penalizaciones activas.");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al actualizar estado de penalización del socio: " + e.getMessage());
+            }
         }
-        
-    }
+
 }
