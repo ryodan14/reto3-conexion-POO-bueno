@@ -58,6 +58,17 @@ public class PantallaCreditos extends JFrame {
 
         add(panel);
 
+        // Detener la música cuando se cierre la ventana
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                if (clip != null && clip.isRunning()) {
+                    clip.stop();
+                    clip.close();
+                }
+            }
+        });
+
         // Iniciar música
         reproducirMusica("imagen/musica.wav");
     }
@@ -68,7 +79,6 @@ public class PantallaCreditos extends JFrame {
             clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY); // Para que se repita la música
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
