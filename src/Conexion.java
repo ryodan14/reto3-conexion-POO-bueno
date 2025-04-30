@@ -21,12 +21,12 @@ public class Conexion{
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
             System.out.println("*********************************************************************\n");
             System.out.println("       1-Obtener conexión                 6-Cerrar conexión");
-            System.out.println("       2-Consultar la tabla               7-Cambiar tamaño cmd");
+            System.out.println("       2-Consultar tablas                 7-Cambiar tamaño cmd");
             System.out.println("       3-Añadir/Borrar datos              8-Cambiar color");
-            System.out.println("       4-Ver tablas                       9-Limpiar pantalla");
-            System.out.println("       5-Mostrar socios paginando         10-Salir de la aplicación");
+            System.out.println("       4-Modificar tablas                 9-Limpiar pantalla");
+            System.out.println("       5-Consultas especiales             10-Salir de la aplicación");
             System.out.println("                                          11-Creditos");
-            System.out.println("Elige la opción:");
+            System.out.println("\nElige la opción:");
             
     
             eleccion = teclado.nextInt();
@@ -72,7 +72,7 @@ public class Conexion{
                         System.out.println("       4-Insertar Autores                   9-Borrar Autores");
                         System.out.println("       5-Insertar Penalizaciones            10-Borrar Penalizaciones");
                         System.out.println("       11-prestamo entregado                12-Volver al inicio             ");
-                        System.out.println("Elige la opción:");
+                        System.out.println("\nElige la opción:");
                         eleccion = teclado.nextInt();
                         switch (eleccion) {
                             case 1:
@@ -151,12 +151,51 @@ public class Conexion{
                     }
                     break;
 
-                //Paginar Tablas
+                //Modificar Tablas
                 case 4:
-                    Function.mensa("Introduce el nombre de la tabla: ");
-                    String tabla = teclado.next();
-                    TestConsultarTabla.paginarTabla(conn, tabla);
-                    break;
+                while (eleccion!=12) {
+                    System.out.println("\n                                                           " + fechaHoraActual.format(formato));
+                    System.out.println("*********************************************************************");
+                    System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
+                    System.out.println("*********************************************************************\n");
+                    System.out.println("       1-Modificar Socios                   2-Modificar Libros");
+                    System.out.println("       3-Modificar Prestamos                4-Modificar Autores");
+                    System.out.println("       5-Volver al inicio                    ");
+                    System.out.println("\nElige la opción:");
+                    eleccion = teclado.nextInt();
+                    switch (eleccion) {
+                        case 1:
+                            Insert.InsertSocios(conn);
+                            System.out.println("Presiona Enter para continuar...");
+                            teclado.nextLine(); // Limpia el \n después de nextInt
+                            teclado.nextLine(); // Espera que el usuario pulse Enter
+                            break;
+                        case 2:
+                            Insert.InsertLibros(conn);
+                            System.out.println("Presiona Enter para continuar...");
+                            teclado.nextLine(); // Limpia el \n después de nextInt
+                            teclado.nextLine(); // Espera que el usuario pulse Enter
+                            break;
+                        case 3:
+                            Insert.InsertPrestamos(conn);
+                            System.out.println("Presiona Enter para continuar...");
+                            teclado.nextLine(); // Limpia el \n después de nextInt
+                            teclado.nextLine(); // Espera que el usuario pulse Enter
+                            break;
+                        case 4:
+                            Insert.InsertAutores(conn);
+                            System.out.println("Presiona Enter para continuar...");
+                            teclado.nextLine(); // Limpia el \n después de nextInt
+                            teclado.nextLine(); // Espera que el usuario pulse Enter
+                            break;
+                        case 5: 
+                            Insert.InsertPenalizaciones(conn);
+                            System.out.println("Presiona Enter para continuar...");
+                            teclado.nextLine(); // Limpia el \n después de nextInt
+                            teclado.nextLine(); // Espera que el usuario pulse Enter
+                            break;
+                    }
+                }
                 //Mostrar socios paginando
                 case 5:
 
