@@ -16,9 +16,9 @@ public class PantallaCreditos extends JFrame {
         setTitle("D4RK 3NT3RPR1S3");
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null); // Centrar ventana
+        setLocationRelativeTo(null);
 
-        // Cambia el icono
+        
         ImageIcon iconoVentana = new ImageIcon("imagen/dark_logo.jpg");
         setIconImage(iconoVentana.getImage());
 
@@ -29,9 +29,9 @@ public class PantallaCreditos extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(10, 10, 10, 10); // Espaciado
+        gbc.insets = new Insets(10, 10, 10, 10); 
 
-        // Texto centrado en JLabel (con HTML)
+        // Texto centrado en JLabel
         JLabel textoCreditos = new JLabel("<html><div style='text-align: center;'>"
                 + "<h1 style='color:white; width: 400px; font-size: 30px;'>🥇​ Créditos 🥇​</h1>"
                 + "<p style='color:white;font-size: 10px;'>Asier Uriarte​</p>"
@@ -42,10 +42,9 @@ public class PantallaCreditos extends JFrame {
                 + "</div></html>");
         textoCreditos.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Añadir texto
         panel.add(textoCreditos, gbc);
 
-        // Imagen (abajo del texto)
+        // Imagen 
         gbc.gridy = 1;
         ImageIcon icono = new ImageIcon("imagen/dark_logo.jpg");
 
