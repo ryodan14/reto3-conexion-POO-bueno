@@ -44,9 +44,33 @@ public class PantallaCreditos extends JFrame {
 
         panel.add(textoCreditos, gbc);
 
-        // Imagen 
-        gbc.gridy = 1;
+        panel.add(textoCreditos, gbc);
+
+        // Enlace debajo de los créditos y arriba de la imagen
+        gbc.gridy++;
+        JLabel linkLabel = new JLabel("<html><a href='' style='color:white;'>Página web</a></html>");
+        linkLabel.setForeground(Color.CYAN);
+        linkLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        linkLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Evento de clic para abrir navegador
+        linkLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new java.net.URI("https://enekoo8.github.io/biblioteca-municipal/")); // ← Cambia a tu URL
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        panel.add(linkLabel, gbc);
+
+        // Imagen
+        gbc.gridy++;
         ImageIcon icono = new ImageIcon("imagen/dark_logo.jpg");
+
 
         // Escalado opcional de imagen si es muy grande
         Image imagenEscalada = icono.getImage().getScaledInstance(400, 200, Image.SCALE_SMOOTH);
