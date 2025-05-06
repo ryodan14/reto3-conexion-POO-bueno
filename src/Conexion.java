@@ -5,9 +5,9 @@ import java.time.format.DateTimeFormatter;
 
 public class Conexion{
     public static void main(String[] args) throws InterruptedException{
-        String url = "jdbc:mysql://bdbiblioteca.c9aw28oeio79.eu-north-1.rds.amazonaws.com:3306/bdbiblioteca";
+        String url = "jdbc:mysql://bibliotecamuskiz.cb2cweukck18.eu-north-1.rds.amazonaws.com:3306/bdbiblioteca";
         String user = "admin";
-        String password = "D4rk-1234";
+        String password = "d4rk1234";
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
         int eleccion=0;
