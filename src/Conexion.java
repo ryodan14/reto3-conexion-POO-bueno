@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Conexion{
     public static void main(String[] args) throws InterruptedException{
-        String url = "jdbc:mysql://bdbiblioteca.c9aw28oeio79.eu-north-1.rds.amazonaws.com:3306/bdbiblioteca";
+        String url = "jdbc:mysql://bibliotecamuskiz.cb2cweukck18.eu-north-1.rds.amazonaws.com:3306/bdbiblioteca";
         String user = "admin";
         String password = "d4rk1234";
         Connection conn = null;
@@ -189,10 +189,9 @@ public class Conexion{
                             teclado.nextLine(); // Espera que el usuario pulse Enter
                             break;
                         case 5: 
-                            Insert.InsertPenalizaciones(conn);
-                            System.out.println("Presiona Enter para continuar...");
-                            teclado.nextLine(); // Limpia el \n después de nextInt
-                            teclado.nextLine(); // Espera que el usuario pulse Enter
+                            Function.mensa("Saliendo de la modificacion");
+                            break;
+                        default: 
                             break;
                     }
                 }
