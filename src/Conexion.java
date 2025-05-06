@@ -212,7 +212,7 @@ public class Conexion{
 
                 //Cambiar tamaño CMD
                 case 7:
-                    Function.tamañoCMD();
+
                     break;
 
                 //Cambiar color

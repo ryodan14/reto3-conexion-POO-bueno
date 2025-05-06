@@ -59,17 +59,6 @@ public class Function {
         }
         System.out.println("Color cambiado con exito!!!!");
     }
-        //arreglar
-    public static void tamañoCMD(){
-        try {
-            // Cambia columnas (ancho) y líneas (alto)
-            String comando = "cmd /c mode con: cols=200 lines=60";
-            Runtime.getRuntime().exec(comando);
-            System.out.println("Tamaño de consola cambiado a 120x40");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static void cls() {
         for (int i = 0; i < 50; i++) {
