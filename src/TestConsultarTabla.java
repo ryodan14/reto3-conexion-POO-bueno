@@ -465,8 +465,7 @@ public class TestConsultarTabla {
                         else System.out.println("Ya estás en la primera página.");
                         break;
                     case "S":
-                        salir = true;
-                        break;
+                        return;
                     default:
                         System.out.println("Opción no válida.");
                 }
