@@ -234,10 +234,29 @@ public class Conexion{
                             break;
                     }
                 }
-                //Mostrar socios paginando
+                //Consultas especiales 
                 case 5:
+                while (eleccion!=12) {
+                    System.out.println("\n                                                           " + fechaHoraActual.format(formato));
+                    System.out.println("*********************************************************************");
+                    System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
+                    System.out.println("*********************************************************************\n");
+                    System.out.println("       1-Contar empleados                   2-Modificar Libros");
+                    System.out.println("       3-Modificar Prestamos                4-Modificar Autores");
+                    System.out.println("       5-Volver al inicio                    ");
+                    System.out.println("\nElige la opción:");
+                    eleccion = teclado.nextInt();
+                    switch (eleccion) {
+                        case 1:
+                            System.out.println("Contamos con " + Consultas.contarEmpleados(conn) + " empleados en nuestra biblioteca.");
+                            System.out.println("Presiona Enter para continuar...");
+                            teclado.nextLine(); // Limpia el \n después de nextInt
+                            teclado.nextLine(); // Espera que el usuario pulse Enter
+                            break;
 
+                    }
                     break;
+                }
 
                 //Cerrar conexion
                 case 6:
