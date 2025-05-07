@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -395,9 +394,5 @@ public class Function {
     public static String mayusculas(String palabra) {
         palabra=palabra.toUpperCase();
         return palabra;
-    }
-
-    public static void actualizarPenalizacion(Connection conn, String penalizado) {
-        String sql = "Update socios Set penalizado = 'S' where id_socio in (select ID_Docio from penalizaciones)";
     }
 }
