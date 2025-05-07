@@ -160,13 +160,10 @@ public class Delete {
 
             System.out.print("Introduce el codigo del prestamos: ");
             String id = sc.nextLine();
-            System.out.print("Introduce la fecha de inicio: ");
-            String fecha_inicio = sc.nextLine();
 
-            sql = "DELETE FROM prestamos WHERE codigo = ? AND fecha_inicio = ?";
+            sql = "DELETE FROM prestamos WHERE codigo = ? ";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
-            pstmt.setString(2, fecha_inicio);
 
             int filas = pstmt.executeUpdate();
 
