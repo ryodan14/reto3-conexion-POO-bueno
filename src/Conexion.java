@@ -53,12 +53,51 @@ public class Conexion{
                 //Consultar tabla
                 case 2:
                     Function.mensa("Consultando tabla...");
-                    
-                    TestConsultarTabla.mostrarTabla(conn);
-                    teclado.nextLine(); // Limpia el \n
-                    teclado.nextLine(); // Espera Enter
+                    while (eleccion!=6) {
+                        System.out.println("\n                                                           " + fechaHoraActual.format(formato));
+                        System.out.println("*********************************************************************");
+                        System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
+                        System.out.println("*********************************************************************\n");
+                        System.out.println("       1-Tabla Socios                    4-Tabla Autores ");
+                        System.out.println("       2-Tabla Libros                    5-Tabla Penalizaciones");
+                        System.out.println("       3-Tabla Prestamos                 6-Volver al inicio");
+                        System.out.println("\nElige la opción:");
+                        eleccion = teclado.nextInt();
+                        switch (eleccion) {
+                            case 1:
+                                TestConsultarTabla testConsultarTabla = new TestConsultarTabla();
+                                testConsultarTabla.consultarTablaSocios(conn);
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
+                                break;
+                            case 2:
+                                TestConsultarTabla testConsultarTabla2 = new TestConsultarTabla();
+                                testConsultarTabla2.consultarTablaLibros(conn);
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
+                                break;
+                            case 3:
+                                TestConsultarTabla testConsultarTabla3 = new TestConsultarTabla();
+                                testConsultarTabla3.consultarTablaPrestamos(conn);
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
+                                break;
+                            case 4:
+                                TestConsultarTabla testConsultarTabla4 = new TestConsultarTabla();
+                                testConsultarTabla4.consultarTablaAutores(conn);
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
+                                break;
+                            case 5:
+                                TestConsultarTabla testConsultarTabla5 = new TestConsultarTabla();
+                                testConsultarTabla5.consultarTablaPenalizaciones(conn);
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
+                                break;
+                            case 6:
+                                Function.mensa("Saliendo de la consulta...");
+                                break;
+                            default:
+                                Function.mensa("Elige una de las opciones que se dan.\n");
+                                break;
+                        }
+                    }
                     break;
-                    
                 //insert
                 case 3:
                     while (eleccion!=12) {
