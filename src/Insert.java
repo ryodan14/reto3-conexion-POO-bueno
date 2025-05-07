@@ -121,13 +121,16 @@ public class Insert {
                 System.out.println("Entrada no válida. Introduce solo números.");
             }
         }
-        
+        String fecha_alta = null;
+        if (fecha_alta == null || fecha_alta.trim().isEmpty()) {
+        fecha_alta = LocalDate.now().toString(); // yyyy-MM-dd
+        }
             
 
 
 
-        String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social,fecha_alta) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -141,6 +144,7 @@ public class Insert {
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
             pstmt.setObject(10, seguridad_social, java.sql.Types.BIGINT);
+            pstmt.setString(11, fecha_alta);
 
             int filas = pstmt.executeUpdate();
 
@@ -154,7 +158,6 @@ public class Insert {
         } catch (SQLException e) {
             System.out.println("Error al insertar el socio: " + e.getMessage());
         }
-
     }
 //INSERT DE LIBROS
 public static void InsertLibros(Connection conn) {
@@ -197,14 +200,23 @@ public static void InsertLibros(Connection conn) {
             break;
         }
     }
+    int numPags;
+    System.out.println("número de páginas: ");
+    numPags = Integer.parseInt(sc.nextLine());
 
-    String sql = "INSERT INTO libros (id_libro, titulo, isbn) VALUES (?, ?, ?)";
+    int anioPubli;
+    System.out.println("año de publicación: ");
+    anioPubli = Integer.parseInt(sc.nextLine());
+
+    String sql = "INSERT INTO libros (id_libro, titulo, isbn,numPags,anioPubli) VALUES (?,?,?, ?, ?)";
 
     try {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, id_libro);
         pstmt.setString(2, titulo);
         pstmt.setString(3, isbn);
+        pstmt.setInt(4, numPags);
+        pstmt.setInt(5, anioPubli);
 
         int filas = pstmt.executeUpdate();
 
@@ -354,9 +366,9 @@ public static void InsertPrestamos(Connection conn) {
 
             pstmt.close();
         } catch (SQLException e) {
-            System.out.println("Error al insertar el autor: " + e.getMessage());    
-    }
+            System.out.println("Error al insertar el autor: " + e.getMessage());
         }
+    }
     
 
 
@@ -451,5 +463,4 @@ public static void InsertPrestamos(Connection conn) {
             System.out.println("Error al marcar el préstamo como entregado: " + e.getMessage());
         }
     }
-    
 }
