@@ -129,8 +129,8 @@ public class Insert {
 
 
 
-        String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social,fecha_alta) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social,penalizado,fecha_alta) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -144,7 +144,8 @@ public class Insert {
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
             pstmt.setObject(10, seguridad_social, java.sql.Types.BIGINT);
-            pstmt.setString(11, fecha_alta);
+            pstmt.setString(11, "N"); // Penalizado por defecto
+            pstmt.setString(12, fecha_alta);
 
             int filas = pstmt.executeUpdate();
 
