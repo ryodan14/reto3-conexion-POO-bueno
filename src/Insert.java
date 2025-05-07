@@ -121,6 +121,8 @@ public class Insert {
                 System.out.println("Entrada no válida. Introduce solo números.");
             }
         }
+        String penalizado = "N"; 
+
         String fecha_alta = null;
         if (fecha_alta == null || fecha_alta.trim().isEmpty()) {
         fecha_alta = LocalDate.now().toString(); // yyyy-MM-dd
@@ -144,7 +146,7 @@ public class Insert {
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
             pstmt.setObject(10, seguridad_social, java.sql.Types.BIGINT);
-            pstmt.setString(11, "N"); // Penalizado por defecto
+            pstmt.setString(11, penalizado); // Penalizado por defecto
             pstmt.setString(12, fecha_alta);
 
             int filas = pstmt.executeUpdate();
