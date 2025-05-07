@@ -33,7 +33,7 @@ public class Update {
         }
 
         sc.close();
-        io.cerrarConexion(conn);
+        Function.cerrarConexion(conn);
     }
 
     public static boolean modificarUsuario(Connection conn, String id, String nombre, String apellido, String dni) {
