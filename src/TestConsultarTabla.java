@@ -2,14 +2,14 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class TestConsultarTabla {
-
+    Scanner teclado = new Scanner(System.in);
     public void consultarTablaSocios(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
 
-        Scanner teclado = new Scanner(System.in);
+        
         int offset = 0;
         int limit = 5;
         String sql = "SELECT * FROM socios ORDER BY id_socio LIMIT ? OFFSET ?";
@@ -105,8 +105,6 @@ public class TestConsultarTabla {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner teclado = new Scanner(System.in);
         int offset = 0;
         int limit = 5;
         String sql = "SELECT * FROM libros ORDER BY id_libro LIMIT ? OFFSET ?";
@@ -201,8 +199,6 @@ public class TestConsultarTabla {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner teclado = new Scanner(System.in);
         int offset = 0;
         int limit = 5;
         String sql = "SELECT * FROM prestamos ORDER BY codigo LIMIT ? OFFSET ?";
@@ -297,8 +293,6 @@ public class TestConsultarTabla {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-
-        Scanner teclado = new Scanner(System.in);
         int offset = 0;
         int limit = 5;
         String sql = "SELECT * FROM autores ORDER BY id LIMIT ? OFFSET ?";
@@ -481,7 +475,7 @@ public class TestConsultarTabla {
                 System.out.println("Error al consultar: " + e.getMessage());
             }
         }
-
+        teclado.close();
         System.out.println("\nSaliendo de la paginación...");
     }
 }
