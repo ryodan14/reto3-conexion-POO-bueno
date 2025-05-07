@@ -3,21 +3,20 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class Insert {
-    public static final Scanner sc=new Scanner(System.in);
+    public static final Scanner sc = new Scanner(System.in);
 
-    //INSERTAR SOCIOS
+    // INSERTAR SOCIOS
     public static void InsertSocios(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-    
+
         String id_socio;
-    
         while (true) {
             System.out.print("ID: ");
             id_socio = sc.nextLine();
-    
+
             if (Function.comprobarIdSocio(conn, id_socio)) {
                 System.out.println("ID ya existe. Introduzca otro ID.");
             } else {
@@ -26,111 +25,75 @@ public class Insert {
         }
 
         System.out.print("Nombre: ");
-        String nombre = sc.nextLine();
-        nombre=Function.mayusculas(nombre);
+        String nombre = Function.mayusculas(sc.nextLine());
 
         System.out.print("Apellido: ");
-        String apellido = sc.nextLine();
-        apellido=Function.mayusculas(apellido);
+        String apellido = Function.mayusculas(sc.nextLine());
 
-        String dni = "";
+        String dni;
         while (true) {
             System.out.print("DNI: ");
-            dni = sc.nextLine();
-            dni=Function.mayusculas(dni);
-        
+            dni = Function.mayusculas(sc.nextLine());
+
             if (!Function.validarDNI(dni)) {
                 System.out.println("DNI no válido.");
                 continue;
             }
-            System.out.println("comprobando si el DNI no esta repetido...");
-            // Comprobar si el DNI ya existe en la base de datos
+
             if (Function.dniYaExiste(conn, dni)) {
                 System.out.println("El DNI ya existe. Introduzca otro DNI.");
-                continue;
+            } else {
+                break;
             }
-        
-            System.out.println("DNI válido y único.");
-            break; // Sale del bucle
         }
-        
-        
 
         System.out.print("Dirección: ");
-        String direccion = sc.nextLine();
-        direccion=Function.mayusculas(direccion);
+        String direccion = Function.mayusculas(sc.nextLine());
 
-        String tlfn = "";
+        String tlfn;
         while (true) {
             System.out.print("Teléfono: ");
-            tlfn = sc.nextLine(); 
-            tlfn=Function.mayusculas(tlfn);
-            if (Function.validarTelf(tlfn)) {
-                break;
-            } else {
-                System.out.println("Teléfono no válido. Introduzca un teléfono válido.");
-            }
+            tlfn = Function.mayusculas(sc.nextLine());
+            if (Function.validarTelf(tlfn)) break;
+            System.out.println("Teléfono no válido.");
         }
-        
-        String correo;
 
+        String correo;
         while (true) {
             System.out.print("Correo: ");
-            correo = sc.nextLine();
-            correo=Function.mayusculas(correo);
-            if (Function.validarCorreo(correo)) {
-                break;
-            } else {
-                System.out.println("Correo no válido. Introduzca un correo electrónico válido.");
-            }
-            
+            correo = Function.mayusculas(sc.nextLine());
+            if (Function.validarCorreo(correo)) break;
+            System.out.println("Correo no válido.");
         }
 
-
         System.out.print("Usuario: ");
-        String usuario = sc.nextLine();
-        usuario=Function.mayusculas(usuario);
+        String usuario = Function.mayusculas(sc.nextLine());
 
         System.out.print("Contraseña: ");
-        String contraseña = sc.nextLine();
-        contraseña=Function.mayusculas(contraseña);
-        
-        
-        Long seguridad_social ;
+        String contraseña = Function.mayusculas(sc.nextLine());
 
+        Long seguridad_social;
         while (true) {
-            System.out.print("Seguridad Social: ");
+            System.out.print("Seguridad Social (opcional): ");
             String input = sc.nextLine().trim();
-        
             if (input.isEmpty()) {
-                // Vacío, lo tomamos como válido y opcional
                 seguridad_social = null;
                 break;
             }
-        
             try {
                 seguridad_social = Long.parseLong(input);
-        
-                if (Function.validarSs(seguridad_social)) {
-                    break;
-                } else {
-                    System.out.println("Número no válido. Debe tener 12 dígitos.");
-                }
-        
+                if (Function.validarSs(seguridad_social)) break;
+                else System.out.println("Número inválido. Debe tener 12 dígitos.");
             } catch (NumberFormatException e) {
-                System.out.println("Entrada no válida. Introduce solo números.");
+                System.out.println("Entrada no válida. Solo números.");
             }
         }
-        
-            
 
+        String fecha_alta = LocalDate.now().toString();
 
+        String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social, fecha_alta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String sql = "INSERT INTO socios (id_socio, dni, nombre, apellido, direccion, tlfn, correo, usuario, contraseña, seguridad_social) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, id_socio);
             pstmt.setString(2, dni);
             pstmt.setString(3, nombre);
@@ -140,168 +103,130 @@ public class Insert {
             pstmt.setString(7, correo);
             pstmt.setString(8, usuario);
             pstmt.setString(9, contraseña);
-            pstmt.setObject(10, seguridad_social, java.sql.Types.BIGINT);
+            if (seguridad_social != null) {
+                pstmt.setLong(10, seguridad_social);
+            } else {
+                pstmt.setNull(10, Types.BIGINT);
+            }
+            pstmt.setString(11, fecha_alta);
 
             int filas = pstmt.executeUpdate();
-
-            if (filas > 0) {
-                System.out.println("Socio insertado correctamente.");
-            } else {
-                System.out.println("No se pudo insertar el socio.");
-            }
-
-            pstmt.close();
+            System.out.println(filas > 0 ? "Socio insertado correctamente." : "No se pudo insertar el socio.");
         } catch (SQLException e) {
             System.out.println("Error al insertar el socio: " + e.getMessage());
         }
-
-    }
-//INSERT DE LIBROS
-public static void InsertLibros(Connection conn) {
-    if (conn == null) {
-        System.out.println("No hay conexión con la base de datos.");
-        return;
     }
 
-    String id_libro;
-    while (true) {
-        System.out.print("ID: ");
-        id_libro = sc.nextLine();
-        if (Function.comprobarIdLibro(conn, id_libro)) {
-            System.out.println("ID ya existe. Introduzca otro ID.");
-        } else {
-            break;
-        }
-    }
-
-    String titulo;
-    while (true) {
-        System.out.print("Titulo: ");
-        titulo = sc.nextLine();
-        titulo=Function.mayusculas(titulo);
-        if (Function.comprobarTituloLibro(conn, titulo)) {
-            System.out.println("El libro ya está insertado. Por favor introduzca otro.");
-        } else {
-            break;
-        }
-    }
-
-    String isbn;
-    while (true) {
-        System.out.print("ISBN: ");
-        isbn = sc.nextLine();
-        isbn=Function.mayusculas(isbn);
-        if (Function.comprobarISBNLibro(conn, isbn)) {
-            System.out.println("El ISBN ya está insertado. Por favor introduzca otro.");
-        } else {
-            break;
-        }
-    }
-
-    String sql = "INSERT INTO libros (id_libro, titulo, isbn) VALUES (?, ?, ?)";
-
-    try {
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, id_libro);
-        pstmt.setString(2, titulo);
-        pstmt.setString(3, isbn);
-
-        int filas = pstmt.executeUpdate();
-
-        if (filas > 0) {
-            System.out.println("Libro insertado correctamente.");
-        } else {
-            System.out.println("No se pudo insertar el libro.");
-        }
-
-        pstmt.close();
-    } catch (SQLException e) {
-        System.out.println("Error al insertar el libro: " + e.getMessage());
-    }
-}
-
-
-// INSERT DE PRÉSTAMOS
-public static void InsertPrestamos(Connection conn) {
-    if (conn == null) {
-        System.out.println("No hay conexión con la base de datos.");
-        return;
-    }
-
-
-
-    String codigo;
-    while (true) {
-        System.out.print("Código: ");
-        codigo = sc.nextLine();
-        if (Function.comprobarIdPrestamo(conn, codigo)) {
-            System.out.println("El préstamo con código " + codigo + " ya existe. Por favor, introduzca otro.");
-        } else {
-            break;
-        }
-    }
-
-    String fecha_inicio = null;
-    if (fecha_inicio == null || fecha_inicio.trim().isEmpty()) {
-    fecha_inicio = LocalDate.now().toString(); // yyyy-MM-dd
-}
-
-
-
-    // Verificación del ID del socio
-    System.out.print("ID del socio: ");
-    String socio = sc.nextLine();
-
-    // Comprobar si el socio está penalizado
-    String penalizadoSql = "SELECT penalizado FROM socios WHERE id_socio = ?";
-    try (PreparedStatement penalizadoStmt = conn.prepareStatement(penalizadoSql)) {
-        penalizadoStmt.setString(1, socio);
-        ResultSet rs = penalizadoStmt.executeQuery();
-        if (rs.next()) {
-            String estadoPenalizado = rs.getString("penalizado");
-            if (estadoPenalizado != null && estadoPenalizado.equalsIgnoreCase("S")) {
-                System.out.println("El socio con ID " + socio + " está penalizado y no puede realizar préstamos.");
-                return;
-            }
-        } else {
-            System.out.println("No se encontró el socio con ID " + socio + ".");
+    // INSERT DE LIBROS
+    public static void InsertLibros(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
             return;
         }
-    } catch (SQLException e) {
-        System.out.println("Error al comprobar si el socio está penalizado: " + e.getMessage());
-        return;
-    }
 
-    // Comprobar si tiene 3 préstamos sin devolver
-    if (Function.comprobarIdSocioPrestamo(conn, socio)) {
-        System.out.println("El socio con código " + socio + " ya tiene 3 préstamos sin devolver. No se le admiten más.");
-        return;
-    }
-
-    // Si pasa todas las comprobaciones, procedemos con la inserción
-    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, socio) VALUES (?, ?, ?)";
-
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setString(1, codigo);
-        pstmt.setString(2, fecha_inicio);
-        pstmt.setString(3, socio);
-    
-
-        int filas = pstmt.executeUpdate();
-
-        if (filas > 0) {
-            System.out.println("Préstamo insertado correctamente.");
-        } else {
-            System.out.println("No se pudo insertar el préstamo.");
+        String id_libro;
+        while (true) {
+            System.out.print("ID: ");
+            id_libro = sc.nextLine();
+            if (!Function.comprobarIdLibro(conn, id_libro)) break;
+            System.out.println("ID ya existe.");
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error al insertar el préstamo: " + e.getMessage());
+        String titulo;
+        while (true) {
+            System.out.print("Título: ");
+            titulo = Function.mayusculas(sc.nextLine());
+            if (!Function.comprobarTituloLibro(conn, titulo)) break;
+            System.out.println("Libro ya existente.");
+        }
+
+        String isbn;
+        while (true) {
+            System.out.print("ISBN: ");
+            isbn = Function.mayusculas(sc.nextLine());
+            if (!Function.comprobarISBNLibro(conn, isbn)) break;
+            System.out.println("ISBN ya existente.");
+        }
+
+        System.out.print("Número de páginas: ");
+        int numPags = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Año de publicación: ");
+        int anioPubli = Integer.parseInt(sc.nextLine());
+
+        String sql = "INSERT INTO libros (id_libro, titulo, isbn, numPags, anioPubli) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, id_libro);
+            pstmt.setString(2, titulo);
+            pstmt.setString(3, isbn);
+            pstmt.setInt(4, numPags);
+            pstmt.setInt(5, anioPubli);
+
+            int filas = pstmt.executeUpdate();
+            System.out.println(filas > 0 ? "Libro insertado correctamente." : "No se pudo insertar el libro.");
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el libro: " + e.getMessage());
+        }
     }
-}
 
+    // INSERT DE PRÉSTAMOS
+    public static void InsertPrestamos(Connection conn) {
+        if (conn == null) {
+            System.out.println("No hay conexión con la base de datos.");
+            return;
+        }
 
-//INSERT DE AUTOR
+        String codigo;
+        while (true) {
+            System.out.print("Código: ");
+            codigo = sc.nextLine();
+            if (!Function.comprobarIdPrestamo(conn, codigo)) break;
+            System.out.println("Código ya existente.");
+        }
+
+        String fecha_inicio = LocalDate.now().toString();
+
+        System.out.print("ID del socio: ");
+        String socio = sc.nextLine();
+
+        String sqlPenalizado = "SELECT penalizado FROM socios WHERE id_socio = ?";
+        try (PreparedStatement penalizadoStmt = conn.prepareStatement(sqlPenalizado)) {
+            penalizadoStmt.setString(1, socio);
+            ResultSet rs = penalizadoStmt.executeQuery();
+            if (rs.next()) {
+                if ("S".equalsIgnoreCase(rs.getString("penalizado"))) {
+                    System.out.println("El socio está penalizado.");
+                    return;
+                }
+            } else {
+                System.out.println("Socio no encontrado.");
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar penalización: " + e.getMessage());
+            return;
+        }
+
+        if (Function.comprobarIdSocioPrestamo(conn, socio)) {
+            System.out.println("El socio tiene 3 préstamos sin devolver.");
+            return;
+        }
+
+        String sql = "INSERT INTO prestamos (codigo, fecha_inicio, socio) VALUES (?, ?, ?)";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, codigo);
+            pstmt.setString(2, fecha_inicio);
+            pstmt.setString(3, socio);
+            int filas = pstmt.executeUpdate();
+            System.out.println(filas > 0 ? "Préstamo insertado correctamente." : "No se pudo insertar el préstamo.");
+        } catch (SQLException e) {
+            System.out.println("Error al insertar el préstamo: " + e.getMessage());
+        }
+    }
+
+    // INSERTAR AUTOR
     public static void InsertAutores(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -312,54 +237,39 @@ public static void InsertPrestamos(Connection conn) {
         while (true) {
             System.out.print("ID del autor: ");
             idAutor = sc.nextLine();
-            if (Function.comprobarIdAutor(conn,idAutor)) {
-                System.out.println("El Id de autor " + idAutor + " ya existe. Por favor, introduzca otro.");
-            } else {
-                break;
-            }
+            if (!Function.comprobarIdAutor(conn, idAutor)) break;
+            System.out.println("ID ya existe.");
         }
 
-
         System.out.print("Nombre: ");
-        String nombre = sc.nextLine();
-        nombre=Function.mayusculas(nombre);
-        
+        String nombre = Function.mayusculas(sc.nextLine());
+
         System.out.print("Primer apellido: ");
-        String apellido1 = sc.nextLine();
-        apellido1=Function.mayusculas(apellido1);
+        String apellido1 = Function.mayusculas(sc.nextLine());
 
         System.out.print("Segundo apellido: ");
-        String apellido2 = sc.nextLine();
-        apellido2=Function.mayusculas(apellido2);
+        String apellido2 = Function.mayusculas(sc.nextLine());
 
-        if(Function.comprobarNombreAutor(conn,nombre,apellido1,apellido2)) { 
-            System.out.println("El autor con nombre " + nombre + " " +apellido1 +" "+ apellido2 + " ya existe. Por favor, introduzca otro.");
-            return; // Salir de la función sin continuar con la inserción
+        if (Function.comprobarNombreAutor(conn, nombre, apellido1, apellido2)) {
+            System.out.println("Autor ya existe.");
+            return;
         }
 
         String sql = "INSERT INTO autores (id, nombre, apellido1, apellido2) VALUES (?, ?, ?, ?)";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, idAutor);
             pstmt.setString(2, nombre);
             pstmt.setString(3, apellido1);
             pstmt.setString(4, apellido2);
-
             int filas = pstmt.executeUpdate();
-
-            if (filas < 0) {
-                System.out.println("No se pudo insertar el autor.");
-            }
-
-            pstmt.close();
+            System.out.println(filas > 0 ? "Autor insertado correctamente." : "No se pudo insertar el autor.");
         } catch (SQLException e) {
-            System.out.println("Error al insertar el autor: " + e.getMessage());    
-    }
+            System.out.println("Error al insertar el autor: " + e.getMessage());
         }
-    
+    }
 
-
+    // INSERTAR PENALIZACIÓN
     public static void InsertPenalizaciones(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -369,87 +279,60 @@ public static void InsertPrestamos(Connection conn) {
         System.out.print("Código de penalización: ");
         String codigo = sc.nextLine();
 
-        System.out.print("Descripción de la penalización: ");
-        String descripcion = sc.nextLine();
-        descripcion=Function.mayusculas(descripcion);
+        System.out.print("Descripción: ");
+        String descripcion = Function.mayusculas(sc.nextLine());
 
-        System.out.print("Tipo de penalización: ");
-        String tipo = sc.nextLine();
-        tipo=Function.mayusculas(tipo);
+        System.out.print("Tipo: ");
+        String tipo = Function.mayusculas(sc.nextLine());
 
-        System.out.println("Id del socio: ");
+        System.out.print("ID del socio: ");
         String ID_Socio = sc.nextLine();
 
-        // OJO: columna 'decripcion' estaba mal escrita
         String sql = "INSERT INTO penalizaciones (codigo, descripcion, tipo, ID_Socio) VALUES (?, ?, ?, ?)";
 
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, codigo);
             pstmt.setString(2, descripcion);
             pstmt.setString(3, tipo);
             pstmt.setString(4, ID_Socio);
-
-            int filas = pstmt.executeUpdate();
-
-            if (filas > 0) {
-                System.out.println("Penalización insertada correctamente.");
-            } else {
-                System.out.println("No se pudo insertar la penalización.");
-            }
-            
-            pstmt.close();
+            pstmt.executeUpdate();
+            System.out.println("Penalización insertada.");
         } catch (SQLException e) {
-            System.out.println("Error al insertar la penalización: " + e.getMessage());
+            System.out.println("Error al insertar penalización: " + e.getMessage());
         }
-        // Después de insertar la penalización, actualizamos la columna 'penalizado' en la tabla 'socios'
+
+        // Actualizar estado penalizado
         String updateSql = "UPDATE socios SET penalizado = 'S' WHERE id_socio = ?";
-
-        try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-            updateStmt.setString(1, ID_Socio);
-            int updateFilas = updateStmt.executeUpdate();
-
-            if (updateFilas > 0) {
-                System.out.println("Socio marcado como penalizado ('S').");
-            } else {
-                System.out.println("No se pudo marcar el socio como penalizado.");
-            }
+        try (PreparedStatement pstmt = conn.prepareStatement(updateSql)) {
+            pstmt.setString(1, ID_Socio);
+            pstmt.executeUpdate();
+            System.out.println("Socio marcado como penalizado.");
         } catch (SQLException e) {
-            System.out.println("Error al actualizar estado de penalización del socio: " + e.getMessage());
+            System.out.println("Error al actualizar penalización: " + e.getMessage());
         }
-
     }
 
-    public static void PrestamoEntregado (Connection conn){
+    // MARCAR PRÉSTAMO COMO ENTREGADO
+    public static void PrestamoEntregado(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
             return;
         }
-    
+
         System.out.print("Código del préstamo: ");
         String codigo = sc.nextLine();
-    
-        String fecha_devolucion = LocalDate.now().toString(); // yyyy-MM-dd
-    
+        String fecha_devolucion = LocalDate.now().toString();
+
         String sql = "UPDATE prestamos SET entregado = 'S', fecha_devolucion = ? WHERE codigo = ?";
-    
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, fecha_devolucion);  
-            pstmt.setString(2, codigo);           
-    
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, fecha_devolucion);
+            pstmt.setString(2, codigo);
             int filas = pstmt.executeUpdate();
-    
-            if (filas > 0) {
-                System.out.println("Préstamo marcado como entregado.");
-            } else {
-                System.out.println("No se pudo marcar el préstamo como entregado.");
-            }
-    
-            pstmt.close();
+            System.out.println(filas > 0 ? "Préstamo entregado." : "No se pudo entregar el préstamo.");
         } catch (SQLException e) {
-            System.out.println("Error al marcar el préstamo como entregado: " + e.getMessage());
+            System.out.println("Error al entregar préstamo: " + e.getMessage());
         }
     }
-    
 }
+
