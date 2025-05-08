@@ -211,7 +211,12 @@ public static void InsertLibros(Connection conn) {
     System.out.println("año de publicación: ");
     anioPubli = Integer.parseInt(sc.nextLine());
 
-    String sql = "INSERT INTO libros (id_libro, titulo, isbn,numPags,anioPubli) VALUES (?,?,?, ?, ?)";
+    int ejemplares;
+    System.out.println("Cuantos ejemplares hay: ");
+    ejemplares = Integer.parseInt(sc.nextLine());
+    
+
+    String sql = "INSERT INTO libros (id_libro, titulo, isbn,numPags,anioPubli,ejemplares) VALUES (?,?,?, ?, ?,?)";
 
     try {
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -220,6 +225,7 @@ public static void InsertLibros(Connection conn) {
         pstmt.setString(3, isbn);
         pstmt.setInt(4, numPags);
         pstmt.setInt(5, anioPubli);
+        pstmt.setInt(6, ejemplares);
 
         int filas = pstmt.executeUpdate();
 
@@ -243,8 +249,6 @@ public static void InsertPrestamos(Connection conn) {
         return;
     }
 
-
-
     String codigo;
     while (true) {
         System.out.print("Código: ");
@@ -258,10 +262,8 @@ public static void InsertPrestamos(Connection conn) {
 
     String fecha_inicio = null;
     if (fecha_inicio == null || fecha_inicio.trim().isEmpty()) {
-    fecha_inicio = LocalDate.now().toString(); // yyyy-MM-dd
-}
-
-
+        fecha_inicio = LocalDate.now().toString(); // yyyy-MM-dd
+    }
 
     // Verificación del ID del socio
     System.out.print("ID del socio: ");
@@ -293,14 +295,38 @@ public static void InsertPrestamos(Connection conn) {
         return;
     }
 
+    String titulo;
+    System.out.print("Título del libro: ");
+    titulo = sc.nextLine();
+    titulo=Function.mayusculas(titulo);
+
+    
+    int id_libro = obtenerIdLibroPorTitulo(conn, titulo);
+
+    if (id_libro == 0) {
+        System.out.println("No se encontró ningún libro con ese título.");
+        return;
+    }
+
+    // Obtener los ejemplares disponibles del libro
+    int ejemplares = obtenerEjemplares(conn, id_libro);
+
+    if (ejemplares <= 0) {
+        System.out.println("No hay ejemplares disponibles del libro " + titulo + " para prestar.");
+        return;
+    }
+
+    // Si hay ejemplares disponibles, restar 1
+    actualizarEjemplares(conn, id_libro, ejemplares - 1);
+
     // Si pasa todas las comprobaciones, procedemos con la inserción
-    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, socio) VALUES (?, ?, ?)";
+    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, socio, id_libro) VALUES (?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
         pstmt.setString(1, codigo);
         pstmt.setString(2, fecha_inicio);
         pstmt.setString(3, socio);
-    
+        pstmt.setInt(4, id_libro);
 
         int filas = pstmt.executeUpdate();
 
@@ -316,7 +342,8 @@ public static void InsertPrestamos(Connection conn) {
 }
 
 
-//INSERT DE AUTOR
+
+    //INSERT DE AUTOR
     public static void InsertAutores(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -464,6 +491,48 @@ public static void InsertPrestamos(Connection conn) {
             pstmt.close();
         } catch (SQLException e) {
             System.out.println("Error al marcar el préstamo como entregado: " + e.getMessage());
+        }
+    }
+
+
+    public static int obtenerIdLibroPorTitulo (Connection conn, String titulo) {
+        String sql = "SELECT id_libro FROM libros WHERE UPPER(titulo) = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, titulo.toUpperCase()); // Asegura coincidencia sin importar mayúsculas
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_libro");
+            } else {
+                return 0; // No se encontró ningún libro con ese título
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ID del libro: " + e.getMessage());
+            return 0; // Error en la consulta
+        }
+    }
+    public static int obtenerEjemplares(Connection conn, int id_libro) {
+        String sql = "SELECT ejemplares FROM libros WHERE id_libro = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id_libro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ejemplares");
+            } else {
+                return -1; // No existe el libro
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los ejemplares del libro: " + e.getMessage());
+            return -2; // Error en la consulta
+        }
+    }
+    public static void actualizarEjemplares(Connection conn, int id_libro, int ejemplares) {
+        String sql = "UPDATE libros SET ejemplares = ? WHERE id_libro = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, ejemplares);
+            pstmt.setInt(2, id_libro);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar los ejemplares del libro: " + e.getMessage());
         }
     }
 }
