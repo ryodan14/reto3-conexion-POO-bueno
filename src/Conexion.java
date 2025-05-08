@@ -174,6 +174,7 @@ public class Conexion{
                                     break;
                             
                                 default:
+                                    System.out.println("Elige una de las opciones que se dan.\n");
                                     break;
                             }
                         }
@@ -220,6 +221,7 @@ public class Conexion{
                                 Function.mensa("Saliendo de la modificacion");
                                 break;
                             default: 
+                                System.out.println("Elige una de las opciones que se dan.\n");
                                 break;
                         }
                     }
@@ -253,9 +255,13 @@ public class Conexion{
                                 break;
                             case 5: 
                                 break;
+                            default:
+                                System.out.println("Elige una de las opciones que se dan.\n");
+                                break;
+                            
                         }
                     }
-
+                    
                     //Cerrar conexion
                     case 6:
                         Function.mensa("Cerrando la conexión...\n");
