@@ -472,6 +472,25 @@ public static void InsertPrestamos(Connection conn) {
         String codigo = sc.nextLine();
     
         String fecha_devolucion = LocalDate.now().toString(); // yyyy-MM-dd
+
+        int id_libro = obtenerIdLibroPorPrestamo (conn, codigo);
+
+        if (id_libro == 0) {
+            System.out.println("No se encontró ningún libro con ese título.");
+            return;
+        }
+    
+        // Obtener los ejemplares disponibles del libro
+        int ejemplares = obtenerEjemplares(conn, id_libro);
+    
+        if (ejemplares <= 0) {
+            System.out.println("No hay ejemplares disponibles del libro " + codigo + " para prestar.");
+            return;
+        }
+    
+        // Si hay ejemplares disponibles, restar 1
+        actualizarEjemplares(conn, id_libro, ejemplares + 1);
+
     
         String sql = "UPDATE prestamos SET entregado = 'S', fecha_devolucion = ? WHERE codigo = ?";
     
@@ -533,6 +552,22 @@ public static void InsertPrestamos(Connection conn) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al actualizar los ejemplares del libro: " + e.getMessage());
+        }
+    }
+
+    public static int obtenerIdLibroPorPrestamo (Connection conn, String codigo) {
+        String sql = "SELECT id_libro FROM libros WHERE id_libro in(select id_libro from prestamos where codigo = ?) ";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, codigo);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_libro");
+            } else {
+                return 0; // No se encontró ningún libro con ese título
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ID del libro: " + e.getMessage());
+            return 0; // Error en la consulta
         }
     }
 }
