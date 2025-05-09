@@ -16,10 +16,10 @@ public class Conexion{
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         
 
-        while (principal!=10) {
+        while (eleccion!=10) {
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
-            System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
+            System.out.println("***/                  BIBLIOTECA MUSKIZ               |"+ fechaHoraActual.format(formato)+"|***");
             System.out.println("*********************************************************************\n");
             System.out.println("       1-Obtener conexión                 6-Cerrar conexión");
             System.out.println("       2-Consultar tablas                 7-Cambiar color");
