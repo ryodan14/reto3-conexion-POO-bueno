@@ -47,22 +47,26 @@ public class Consultas{
         }
     }
 
-    public static int mesesDeAlta(Connection conn){
-        int meses = 0;
-            
-        String sql = "SELECT MONTHS_BETWEEN(sysdate, fecha_alta) FROM socios";
+    public static void mesesDeAlta(Connection conn) {
+        String sql = "SELECT nombre, apellido, TIMESTAMPDIFF(MONTH, fecha_alta, CURDATE()) AS meses_alta FROM socios";
     
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
-        ResultSet rs = pstmt.executeQuery()) {
+            ResultSet rs = pstmt.executeQuery()) {
+    
+            System.out.printf("%-20s %-25s %-10s%n", "Nombre", "Apellido", "Meses Alta");
+            System.out.println("--------------------------------------------------------------");
     
             while (rs.next()) {
-                meses = (int) rs.getDouble(1);
-            } 
-
-            } catch (SQLException e) {
-                    System.out.println("Error al contar tiempo de alta" + e.getMessage());
+                String nombre = rs.getString("nombre");
+                String apellidos = rs.getString("apellido");
+                int mesesAlta = rs.getInt("meses_alta");
+    
+                System.out.printf("%-20s %-25s %-10d%n", nombre, apellidos, mesesAlta);
             }
-        return meses;
+    
+        } catch (SQLException e) {
+            System.out.println("Error al obtener meses de alta por socio: " + e.getMessage());
+        }
     }
 }
 

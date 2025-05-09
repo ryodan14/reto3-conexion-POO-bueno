@@ -247,7 +247,7 @@ public class Conexion{
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 3:
-                                System.out.println(Consultas.mesesDeAlta(conn)); 
+                                Consultas.mesesDeAlta(conn); 
                                 System.out.println("Presiona Enter para continuar...");
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
