@@ -469,4 +469,15 @@ public class Function {
         }
     }
     
+    public static int validarnumero(){
+    Scanner scanner = new Scanner(System.in);
+    int numero;
+    if (scanner.hasNextInt()){
+        numero = scanner.nextInt();
+    }else{
+        numero = 0;
+    }
+    return numero;
+    }
+    //gracias Ander por el metodo
 }

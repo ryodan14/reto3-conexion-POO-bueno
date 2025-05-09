@@ -27,10 +27,7 @@ public class Conexion{
             System.out.println("       5-Consultas especiales             10-Creditos");
             System.out.println("\nElige la opción:");
             
-            String entrada = teclado.nextLine();
-
-            try {
-                eleccion = Integer.parseInt(entrada);
+            eleccion = Function.validarnumero();
     
                 switch (eleccion) {
 
@@ -61,7 +58,7 @@ public class Conexion{
                             System.out.println("       2-Tabla Libros                    5-Tabla Penalizaciones");
                             System.out.println("       3-Tabla Prestamos                 6-Volver al inicio");
                             System.out.println("\nElige la opción:");
-                            eleccion = teclado.nextInt();
+                            eleccion = Function.validarnumero();
                             switch (eleccion) {
                                 case 1:
                                     TestConsultarTabla testConsultarTabla = new TestConsultarTabla();
@@ -93,6 +90,8 @@ public class Conexion{
                                     break;
                                 default:
                                     Function.mensa("Elige una de las opciones que se dan.\n");
+                                    System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                             }
                         }
@@ -111,85 +110,72 @@ public class Conexion{
                             System.out.println("       5-Insertar Penalizaciones            10-Borrar Penalizaciones");
                             System.out.println("       11-prestamo entregado                12-Volver al inicio             ");
                             System.out.println("\nElige la opción:");
-                            eleccion = teclado.nextInt();
+                            eleccion = Function.validarnumero();
                             switch (eleccion) {
                                 case 1:
                                     Insert.InsertSocios(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 2:
                                     Insert.InsertLibros(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 3:
                                     Insert.InsertPrestamos(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 4:
                                     Insert.InsertAutores(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 5: 
                                     Insert.InsertPenalizaciones(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 6:
                                     Delete.DeleteSocios(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 7:
                                     Delete.DeleteLibros(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;  
                                 case 8:
                                     Delete.DeletePrestamos(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 9:
                                     Delete.DeleteAutores(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 10:
                                     Delete.DeletePenalizaciones(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 11:
                                     Insert.PrestamoEntregado(conn);
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 12:
                                     Function.mensa("Saliendo de la opción de inserción...");
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                             
                                 default:
                                     System.out.println("Elige una de las opciones que se dan.\n");
                                     System.out.println("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                             }
@@ -198,7 +184,7 @@ public class Conexion{
 
                     //Modificar Tablas
                     case 4:
-                    while (eleccion!=12) {
+                    while (eleccion!=5) {
                         System.out.println("\n                                                           " + fechaHoraActual.format(formato));
                         System.out.println("*********************************************************************");
                         System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
@@ -207,12 +193,11 @@ public class Conexion{
                         System.out.println("       3-Modificar Prestamos                4-Modificar Autores");
                         System.out.println("       5-Volver al inicio                    ");
                         System.out.println("\nElige la opción:");
-                        eleccion = teclado.nextInt();
+                        eleccion = Function.validarnumero();
                         switch (eleccion) {
                             case 1:
                                 Insert.InsertSocios(conn);
                                 System.out.println("Presiona Enter para continuar...");
-                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 Thread.sleep(2000);
                                 break;
@@ -220,32 +205,33 @@ public class Conexion{
                                 Insert.InsertLibros(conn);
                                 System.out.println("Presiona Enter para continuar...");
                                 Thread.sleep(5000);
-                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 3:
                                 Insert.InsertPrestamos(conn);
                                 System.out.println("Presiona Enter para continuar...");
-                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 4:
                                 Insert.InsertAutores(conn);
                                 System.out.println("Presiona Enter para continuar...");
-                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 5: 
                                 Function.mensa("Saliendo de la modificacion");
+                                System.out.println("Presiona Enter para continuar...");
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             default: 
                                 System.out.println("Elige una de las opciones que se dan.\n");
+                                System.out.println("Presiona Enter para continuar...");
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                         }
                     }
                     //Consultas especiales 
                     case 5:
-                    while (eleccion!=12) {
+                    while (eleccion!=5) {
                         System.out.println("\n                                                           " + fechaHoraActual.format(formato));
                         System.out.println("*********************************************************************");
                         System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
@@ -277,6 +263,8 @@ public class Conexion{
                                 Consultas.buscarNombresPorLetra(conn);
                             default:
                                 System.out.println("Elige una de las opciones que se dan.\n");
+                                System.out.println("Presiona Enter para continuar...");
+                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 break;
                             
                         }
@@ -316,16 +304,12 @@ public class Conexion{
                     //Por si el usuario no mete la opción correcta
                     default:
                         Function.mensa("Elige una de las opciones que se dan.\n");
+                        System.out.println("Presiona Enter para continuar...");
                         teclado.nextLine(); // Limpia el \n después de nextInt
-                        teclado.nextLine(); // Espera que el usuario pulse Enter
                         break;
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("¡Error! Debes introducir un número válido.");
-                teclado.nextLine(); // Espera que el usuario pulse Enter
-            }
-        }
-        teclado.close();
     }
 }
+}
+
 
