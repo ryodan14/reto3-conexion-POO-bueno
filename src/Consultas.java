@@ -2,6 +2,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
 
 public class Consultas{
     public static int contarEmpleados(Connection conn){
@@ -25,9 +27,6 @@ public class Consultas{
         return cont;
     }
 
-    public static void tiempoTrabajado(){
-        
-    }
 
     public static void hayPrestamosActivos(Connection conn){
         int cont = 0;
@@ -68,5 +67,113 @@ public class Consultas{
             System.out.println("Error al obtener meses de alta por socio: " + e.getMessage());
         }
     }
+
+    /*Metodo para calcular libro con mas paginas, libro con menos paginas y media de paginas de todos los libros*/
+    public static void calcLibros(Connection conn){
+        String tituloMax = "";
+        String tituloMin = "";
+        int max = 0;
+        int min = 0;
+        double media = 0;
+
+        // Libro con más páginas
+        String sqlMax = "SELECT titulo, numPags\n" + //
+                        "FROM libros\n" + //
+                        "WHERE numPags = (SELECT MAX(numPags) FROM libros);";
+        // Libro con menos páginas
+        String sqlMin = "SELECT titulo, numPags\n" + //
+                        "FROM libros\n" + //
+                        "WHERE numPags = (SELECT MIN(numPags) FROM libros);";
+        // Promedio de páginas
+        String sqlAvg = "SELECT AVG(numPags) AS avgPags FROM libros";
+
+        try (Statement stmt = conn.createStatement(); ResultSet rsMax = stmt.executeQuery(sqlMax)) {
+            if (rsMax.next()) {
+                tituloMax = rsMax.getString("titulo");
+                max = rsMax.getInt("numPags");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el libro con más páginas: " + e.getMessage());
+        }
+
+        try (Statement stmt = conn.createStatement(); ResultSet rsMin = stmt.executeQuery(sqlMin)) {
+            if (rsMin.next()) {
+                tituloMin = rsMin.getString("titulo");
+                min = rsMin.getInt("numPags");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el libro con menos páginas: " + e.getMessage());
+        }
+
+        try (Statement stmt = conn.createStatement(); ResultSet rsAvg = stmt.executeQuery(sqlAvg)) {
+            if (rsAvg.next()) {
+                media = rsAvg.getDouble("avgPags");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al calcular la media de páginas: " + e.getMessage());
+        }
+
+        // Mostrar resultados
+        System.out.println("Libro con más páginas: " + tituloMax + " (" + max + " páginas)");
+        System.out.println("Libro con menos páginas: " + tituloMin + " (" + min + " páginas)");
+        System.out.printf("Promedio de páginas: %.2f%n", media);
+    }
+
+    public static void penalPorTipo(Connection conn) {
+        String sql = "SELECT tipo, COUNT(*) AS total FROM sanciones GROUP BY tipo";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String tipo = rs.getString("tipo");
+                int total = rs.getInt("total");
+                System.out.println("Hay " + total + " penalizaciones del tipo " + tipo);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las penalizaciones por tipo: " + e.getMessage());
+        }
+    }
+
+    public static void buscarNombresPorLetra(Connection conn) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingresa una letra: ");
+        String letra = scanner.nextLine().toUpperCase(); 
+
+        if (letra.isEmpty() || letra.length() != 1 || !Character.isLetter(letra.charAt(0))) {
+            System.out.println("Error: Debes ingresar exactamente una letra.");
+            return;  
+        }
+
+        String sql = "SELECT nombre, apellido FROM socios WHERE nombre LIKE ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + letra + "%"); 
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                System.out.println("Socios cuyo nombre contenga la letra '" + letra + "':");
+
+                boolean encontrado = false;
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    String apellido = rs.getString("apellido");
+
+                    System.out.println(nombre + " " + apellido);
+                    encontrado = true;
+                }
+
+                if (!encontrado) {
+                    System.out.println("No se encontraron socios con esa letra.");
+                }
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar socios: " + e.getMessage());
+            e.printStackTrace();  // Print the stack trace for better debugging
+        }
+    }
 }
+
 

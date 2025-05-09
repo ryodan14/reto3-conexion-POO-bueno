@@ -232,8 +232,8 @@ public class Conexion{
                         System.out.println("*********************************************************************");
                         System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
                         System.out.println("*********************************************************************\n");
-                        System.out.println("       1-Contar empleados                   2-Modificar Libros");
-                        System.out.println("       3-Modificar Prestamos                4-Modificar Autores");
+                        System.out.println("       1-Contar empleados                   2-Prestamos activos");
+                        System.out.println("       3-Meses dados de alta                4-Min/Max/Avg paginas");
                         System.out.println("       5-Volver al inicio                    ");
                         System.out.println("\nElige la opción:");
                         eleccion = teclado.nextInt();
@@ -253,8 +253,10 @@ public class Conexion{
                                 System.out.println("Presiona Enter para continuar...");
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
+                            case 4: 
+                                Consultas.calcLibros(conn);
                             case 5: 
-                                break;
+                                Consultas.buscarNombresPorLetra(conn);
                             default:
                                 System.out.println("Elige una de las opciones que se dan.\n");
                                 break;
