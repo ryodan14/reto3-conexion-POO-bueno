@@ -255,10 +255,10 @@ public class Function {
     }
 
     //comprobacion codigo prestamo
-    public static boolean comprobarIdPrestamo(Connection conn, String idPrestamo) {
+    public static boolean comprobarIdPrestamo(Connection conn, int idPrestamo) {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE codigo = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, idPrestamo);
+            pstmt.setInt(1, idPrestamo);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro

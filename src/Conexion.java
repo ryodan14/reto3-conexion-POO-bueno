@@ -198,10 +198,12 @@ public class Conexion{
                                 System.out.println("Presiona Enter para continuar...");
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
+                                Thread.sleep(2000);
                                 break;
                             case 2:
                                 Insert.InsertLibros(conn);
                                 System.out.println("Presiona Enter para continuar...");
+                                Thread.sleep(5000);
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;

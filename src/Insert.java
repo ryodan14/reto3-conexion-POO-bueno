@@ -392,7 +392,7 @@ public static void InsertPrestamos(Connection conn) {
         try {
             codigo = Integer.parseInt(input);
     
-            if (Function.comprobarIdSocio(conn, codigo)) {
+            if (Function.comprobarIdPrestamo(conn, codigo)) {
                 System.out.println("ID ya existe. Introduzca otro ID.");
             } else {
                 break; // ID válido y no duplicado
@@ -462,12 +462,7 @@ public static void InsertPrestamos(Connection conn) {
         }
     
         titulo = Function.mayusculas(titulo);
-    
-        if (Function.comprobarTituloLibro(conn, titulo)) {
-            System.out.println("El título ya existe. Introduzca otro título.");
-        } else {
-            break; // Campo no vacío y ID no duplicado
-        }
+        break; // Exit the loop when the title is valid
     }
     
     int id_libro = Function.obtenerIdLibroPorTitulo(conn, titulo);
