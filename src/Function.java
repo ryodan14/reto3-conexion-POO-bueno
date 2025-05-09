@@ -395,4 +395,62 @@ public class Function {
         palabra=palabra.toUpperCase();
         return palabra;
     }
+    public static int obtenerIdLibroPorTitulo (Connection conn, String titulo) {
+        String sql = "SELECT id_libro FROM libros WHERE UPPER(titulo) = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, titulo.toUpperCase()); // Asegura coincidencia sin importar mayúsculas
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_libro");
+            } else {
+                return 0; // No se encontró ningún libro con ese título
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ID del libro: " + e.getMessage());
+            return 0; // Error en la consulta
+        }
+    }
+    
+    public static int obtenerEjemplares(Connection conn, int id_libro) {
+        String sql = "SELECT ejemplares FROM libros WHERE id_libro = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id_libro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ejemplares");
+            } else {
+                return -1; // No existe el libro
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los ejemplares del libro: " + e.getMessage());
+            return -2; // Error en la consulta
+        }
+    }
+    public static void actualizarEjemplares(Connection conn, int id_libro, int ejemplares) {
+        String sql = "UPDATE libros SET ejemplares = ? WHERE id_libro = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, ejemplares);
+            pstmt.setInt(2, id_libro);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar los ejemplares del libro: " + e.getMessage());
+        }
+    }
+
+    public static int obtenerIdLibroPorPrestamo (Connection conn, String codigo) {
+        String sql = "SELECT id_libro FROM libros WHERE id_libro in(select id_libro from prestamos where codigo = ?) ";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, codigo);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_libro");
+            } else {
+                return 0; // No se encontró ningún libro con ese título
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ID del libro: " + e.getMessage());
+            return 0; // Error en la consulta
+        }
+    }
+    
 }

@@ -13,11 +13,15 @@ public class Insert {
         }
     
         String id_socio;
-    
         while (true) {
-            System.out.print("ID: ");
-            id_socio = sc.nextLine();
-    
+            System.out.print("id_socio: ");
+            id_socio = sc.nextLine().trim();
+            if (!id_socio.isEmpty()) {
+                id_socio = Function.mayusculas(id_socio);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
             if (Function.comprobarIdSocio(conn, id_socio)) {
                 System.out.println("ID ya existe. Introduzca otro ID.");
             } else {
@@ -25,13 +29,31 @@ public class Insert {
             }
         }
 
-        System.out.print("Nombre: ");
-        String nombre = sc.nextLine();
-        nombre=Function.mayusculas(nombre);
+        String nombre;
+        while (true) {
+            System.out.print("Nombre: ");
+            nombre = sc.nextLine().trim();
+            if (!nombre.isEmpty()) {
+                nombre = Function.mayusculas(nombre);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
-        System.out.print("Apellido: ");
-        String apellido = sc.nextLine();
-        apellido=Function.mayusculas(apellido);
+        String apellidos;
+        while (true) {
+            System.out.print("Apellidos: ");
+            apellidos = sc.nextLine().trim();
+            if (!apellidos.isEmpty()) {
+                apellidos = Function.mayusculas(apellidos);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
         String dni = "";
         while (true) {
@@ -56,9 +78,18 @@ public class Insert {
         
         
 
-        System.out.print("Dirección: ");
-        String direccion = sc.nextLine();
-        direccion=Function.mayusculas(direccion);
+        String direccion;
+        while (true) {
+            System.out.print("Dirección: ");
+            direccion = sc.nextLine().trim();
+            if (!direccion.isEmpty()) {
+                direccion = Function.mayusculas(direccion);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
         String tlfn = "";
         while (true) {
@@ -87,13 +118,31 @@ public class Insert {
         }
 
 
-        System.out.print("Usuario: ");
-        String usuario = sc.nextLine();
-        usuario=Function.mayusculas(usuario);
+        String usuario;
+        while (true) {
+            System.out.print("Usuario: ");
+            usuario = sc.nextLine().trim();
+            if (!usuario.isEmpty()) {
+                usuario = Function.mayusculas(usuario);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
-        System.out.print("Contraseña: ");
-        String contraseña = sc.nextLine();
-        contraseña=Function.mayusculas(contraseña);
+        String contraseña;
+        while (true) {
+            System.out.print("Contraseña: ");
+            contraseña = sc.nextLine().trim();
+            if (!contraseña.isEmpty()) {
+                contraseña = Function.mayusculas(contraseña);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
         
         
         Long seguridad_social ;
@@ -139,7 +188,7 @@ public class Insert {
             pstmt.setString(1, id_socio);
             pstmt.setString(2, dni);
             pstmt.setString(3, nombre);
-            pstmt.setString(4, apellido);
+            pstmt.setString(4, apellidos);
             pstmt.setString(5, direccion);
             pstmt.setString(6, tlfn);
             pstmt.setString(7, correo);
@@ -211,7 +260,12 @@ public static void InsertLibros(Connection conn) {
     System.out.println("año de publicación: ");
     anioPubli = Integer.parseInt(sc.nextLine());
 
-    String sql = "INSERT INTO libros (id_libro, titulo, isbn,numPags,anioPubli) VALUES (?,?,?, ?, ?)";
+    int ejemplares;
+    System.out.println("Cuantos ejemplares hay: ");
+    ejemplares = Integer.parseInt(sc.nextLine());
+    
+
+    String sql = "INSERT INTO libros (id_libro, titulo, isbn,numPags,anioPubli,ejemplares) VALUES (?,?,?, ?, ?,?)";
 
     try {
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -220,6 +274,7 @@ public static void InsertLibros(Connection conn) {
         pstmt.setString(3, isbn);
         pstmt.setInt(4, numPags);
         pstmt.setInt(5, anioPubli);
+        pstmt.setInt(6, ejemplares);
 
         int filas = pstmt.executeUpdate();
 
@@ -243,8 +298,6 @@ public static void InsertPrestamos(Connection conn) {
         return;
     }
 
-
-
     String codigo;
     while (true) {
         System.out.print("Código: ");
@@ -258,10 +311,8 @@ public static void InsertPrestamos(Connection conn) {
 
     String fecha_inicio = null;
     if (fecha_inicio == null || fecha_inicio.trim().isEmpty()) {
-    fecha_inicio = LocalDate.now().toString(); // yyyy-MM-dd
-}
-
-
+        fecha_inicio = LocalDate.now().toString(); // yyyy-MM-dd
+    }
 
     // Verificación del ID del socio
     System.out.print("ID del socio: ");
@@ -293,14 +344,38 @@ public static void InsertPrestamos(Connection conn) {
         return;
     }
 
+    String titulo;
+    System.out.print("Título del libro: ");
+    titulo = sc.nextLine();
+    titulo=Function.mayusculas(titulo);
+
+    
+    int id_libro = Function.obtenerIdLibroPorTitulo(conn, titulo);
+
+    if (id_libro == 0) {
+        System.out.println("No se encontró ningún libro con ese título.");
+        return;
+    }
+
+    // Obtener los ejemplares disponibles del libro
+    int ejemplares = Function.obtenerEjemplares(conn, id_libro);
+
+    if (ejemplares <= 0) {
+        System.out.println("No hay ejemplares disponibles del libro " + titulo + " para prestar.");
+        return;
+    }
+
+    // Si hay ejemplares disponibles, restar 1
+    Function.actualizarEjemplares(conn, id_libro, ejemplares - 1);
+
     // Si pasa todas las comprobaciones, procedemos con la inserción
-    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, socio) VALUES (?, ?, ?)";
+    String sql = "INSERT INTO prestamos (codigo, fecha_inicio, socio, id_libro) VALUES (?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
         pstmt.setString(1, codigo);
         pstmt.setString(2, fecha_inicio);
         pstmt.setString(3, socio);
-    
+        pstmt.setInt(4, id_libro);
 
         int filas = pstmt.executeUpdate();
 
@@ -316,7 +391,8 @@ public static void InsertPrestamos(Connection conn) {
 }
 
 
-//INSERT DE AUTOR
+
+    //INSERT DE AUTOR
     public static void InsertAutores(Connection conn) {
         if (conn == null) {
             System.out.println("No hay conexión con la base de datos.");
@@ -445,6 +521,25 @@ public static void InsertPrestamos(Connection conn) {
         String codigo = sc.nextLine();
     
         String fecha_devolucion = LocalDate.now().toString(); // yyyy-MM-dd
+
+        int id_libro = Function.obtenerIdLibroPorPrestamo (conn, codigo);
+
+        if (id_libro == 0) {
+            System.out.println("No se encontró ningún libro con ese título.");
+            return;
+        }
+    
+        // Obtener los ejemplares disponibles del libro
+        int ejemplares = Function.obtenerEjemplares(conn, id_libro);
+    
+        if (ejemplares <= 0) {
+            System.out.println("No hay ejemplares disponibles del libro " + codigo + " para prestar.");
+            return;
+        }
+    
+        // Si hay ejemplares disponibles, restar 1
+        Function.actualizarEjemplares(conn, id_libro, ejemplares + 1);
+
     
         String sql = "UPDATE prestamos SET entregado = 'S', fecha_devolucion = ? WHERE codigo = ?";
     
