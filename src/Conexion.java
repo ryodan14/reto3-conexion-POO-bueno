@@ -116,64 +116,81 @@ public class Conexion{
                                 case 1:
                                     Insert.InsertSocios(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 2:
                                     Insert.InsertLibros(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 3:
                                     Insert.InsertPrestamos(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 4:
                                     Insert.InsertAutores(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 5: 
                                     Insert.InsertPenalizaciones(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 6:
                                     Delete.DeleteSocios(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 7:
                                     Delete.DeleteLibros(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;  
                                 case 8:
                                     Delete.DeletePrestamos(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 9:
                                     Delete.DeleteAutores(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 10:
                                     Delete.DeletePenalizaciones(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 11:
                                     Insert.PrestamoEntregado(conn);
                                     System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                                 case 12:
                                     Function.mensa("Saliendo de la opción de inserción...");
+                                    System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
+                                    teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                             
                                 default:
                                     System.out.println("Elige una de las opciones que se dan.\n");
+                                    System.out.println("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
+                                    teclado.nextLine(); // Espera que el usuario pulse Enter
                                     break;
                             }
                         }
