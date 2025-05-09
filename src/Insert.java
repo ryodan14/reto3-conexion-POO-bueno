@@ -13,11 +13,15 @@ public class Insert {
         }
     
         String id_socio;
-    
         while (true) {
-            System.out.print("ID: ");
-            id_socio = sc.nextLine();
-    
+            System.out.print("id_socio: ");
+            id_socio = sc.nextLine().trim();
+            if (!id_socio.isEmpty()) {
+                id_socio = Function.mayusculas(id_socio);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
             if (Function.comprobarIdSocio(conn, id_socio)) {
                 System.out.println("ID ya existe. Introduzca otro ID.");
             } else {
@@ -25,13 +29,31 @@ public class Insert {
             }
         }
 
-        System.out.print("Nombre: ");
-        String nombre = sc.nextLine();
-        nombre=Function.mayusculas(nombre);
+        String nombre;
+        while (true) {
+            System.out.print("Nombre: ");
+            nombre = sc.nextLine().trim();
+            if (!nombre.isEmpty()) {
+                nombre = Function.mayusculas(nombre);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
-        System.out.print("Apellido: ");
-        String apellido = sc.nextLine();
-        apellido=Function.mayusculas(apellido);
+        String apellidos;
+        while (true) {
+            System.out.print("Apellidos: ");
+            apellidos = sc.nextLine().trim();
+            if (!apellidos.isEmpty()) {
+                apellidos = Function.mayusculas(apellidos);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
         String dni = "";
         while (true) {
@@ -56,9 +78,18 @@ public class Insert {
         
         
 
-        System.out.print("Dirección: ");
-        String direccion = sc.nextLine();
-        direccion=Function.mayusculas(direccion);
+        String direccion;
+        while (true) {
+            System.out.print("Dirección: ");
+            direccion = sc.nextLine().trim();
+            if (!direccion.isEmpty()) {
+                direccion = Function.mayusculas(direccion);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
         String tlfn = "";
         while (true) {
@@ -87,13 +118,31 @@ public class Insert {
         }
 
 
-        System.out.print("Usuario: ");
-        String usuario = sc.nextLine();
-        usuario=Function.mayusculas(usuario);
+        String usuario;
+        while (true) {
+            System.out.print("Usuario: ");
+            usuario = sc.nextLine().trim();
+            if (!usuario.isEmpty()) {
+                usuario = Function.mayusculas(usuario);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
 
-        System.out.print("Contraseña: ");
-        String contraseña = sc.nextLine();
-        contraseña=Function.mayusculas(contraseña);
+        String contraseña;
+        while (true) {
+            System.out.print("Contraseña: ");
+            contraseña = sc.nextLine().trim();
+            if (!contraseña.isEmpty()) {
+                contraseña = Function.mayusculas(contraseña);
+                break;
+            } else {
+                System.out.println("El nombre no puede estar en blanco.");
+            }
+        }
+        
         
         
         Long seguridad_social ;
@@ -139,7 +188,7 @@ public class Insert {
             pstmt.setString(1, id_socio);
             pstmt.setString(2, dni);
             pstmt.setString(3, nombre);
-            pstmt.setString(4, apellido);
+            pstmt.setString(4, apellidos);
             pstmt.setString(5, direccion);
             pstmt.setString(6, tlfn);
             pstmt.setString(7, correo);
@@ -512,7 +561,4 @@ public static void InsertPrestamos(Connection conn) {
             System.out.println("Error al marcar el préstamo como entregado: " + e.getMessage());
         }
     }
-
-
-
 }
