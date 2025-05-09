@@ -177,10 +177,10 @@ public class Function {
     }
 
     //comprobacion id socios
-    public static boolean comprobarIdSocio(Connection conn, String idSocio) {
+    public static boolean comprobarIdSocio(Connection conn, int idSocio) {
         String sql = "SELECT COUNT(*) FROM socios WHERE id_socio = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, idSocio);
+            pstmt.setInt(1, idSocio);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
@@ -270,10 +270,10 @@ public class Function {
     }
 
     //comprobacion de que el socio no lleva 3 prestamos
-    public static boolean comprobarIdSocioPrestamo(Connection conn, String idSocioPrestamo) {
+    public static boolean comprobarIdSocioPrestamo(Connection conn, int idSocioPrestamo) {
         String sql = "SELECT COUNT(*) FROM prestamos WHERE socio = ? and entregado = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, idSocioPrestamo);
+            pstmt.setInt(1, idSocioPrestamo);
             pstmt.setString(2, "N");
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -281,6 +281,22 @@ public class Function {
             } 
         } catch (SQLException e) {
             System.out.println("Error al comprobar el codigo del socio: " + e.getMessage());
+        }
+        return false;
+    }
+
+    
+    //comprobacion codigo prestamo
+    public static boolean comprobarIdPenalizado(Connection conn, int idPenalizado) {
+        String sql = "SELECT COUNT(*) FROM penalizaciones WHERE codigo = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idPenalizado);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
+            } 
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar el codigo del prestamo: " + e.getMessage());
         }
         return false;
     }
@@ -410,7 +426,7 @@ public class Function {
             return 0; // Error en la consulta
         }
     }
-    
+
     public static int obtenerEjemplares(Connection conn, int id_libro) {
         String sql = "SELECT ejemplares FROM libros WHERE id_libro = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -437,10 +453,10 @@ public class Function {
         }
     }
 
-    public static int obtenerIdLibroPorPrestamo (Connection conn, String codigo) {
+    public static int obtenerIdLibroPorPrestamo (Connection conn, int codigo) {
         String sql = "SELECT id_libro FROM libros WHERE id_libro in(select id_libro from prestamos where codigo = ?) ";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, codigo);
+            pstmt.setInt(1, codigo);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("id_libro");
