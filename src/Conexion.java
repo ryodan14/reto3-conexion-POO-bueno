@@ -11,11 +11,12 @@ public class Conexion{
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
         int eleccion=0;
+        int principal=0;
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         
 
-        while (eleccion!=10) {
+        while (principal!=10) {
             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
@@ -27,9 +28,9 @@ public class Conexion{
             System.out.println("       5-Consultas especiales             10-Creditos");
             System.out.println("\nElige la opción:");
             
-            eleccion = Function.validarnumero();
+            principal = Function.validarnumero();
     
-                switch (eleccion) {
+                switch (principal) {
 
                     // Conexión a la base de datos
                     case 1:
