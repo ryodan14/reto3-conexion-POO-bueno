@@ -15,7 +15,7 @@ public class Conexion{
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         
 
-        while (eleccion!=10) {
+        while (eleccion!=9) {
             System.out.println("*********************************************************************");
             System.out.println("***/                  BIBLIOTECA MUSKIZ               |"+ fechaHoraActual.format(formato)+"|***");
             System.out.println("*********************************************************************\n");
@@ -327,4 +327,3 @@ public class Conexion{
         teclado.close();
     }
 }
-
