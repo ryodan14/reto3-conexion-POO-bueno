@@ -120,7 +120,7 @@ public class Consultas{
     }
 
     public static void penalPorTipo(Connection conn) {
-        String sql = "SELECT tipo, COUNT(*) AS total FROM sanciones GROUP BY tipo";
+        String sql = "SELECT tipo, COUNT(*) AS total FROM penalizaciones GROUP BY tipo";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery()) {
