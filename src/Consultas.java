@@ -143,6 +143,7 @@ public class Consultas{
 
         if (letra.isEmpty() || letra.length() != 1 || !Character.isLetter(letra.charAt(0))) {
             System.out.println("Error: Debes ingresar exactamente una letra.");
+            scanner.close();
             return;  
         }
 
@@ -173,6 +174,7 @@ public class Consultas{
             System.out.println("Error al buscar socios: " + e.getMessage());
             e.printStackTrace();  // Print the stack trace for better debugging
         }
+        scanner.close();
     }
 }
 
