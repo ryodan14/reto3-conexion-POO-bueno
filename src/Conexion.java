@@ -17,7 +17,6 @@ public class Conexion{
         
 
         while (eleccion!=10) {
-            System.out.println("\n                                                           " + fechaHoraActual.format(formato));
             System.out.println("*********************************************************************");
             System.out.println("***/                  BIBLIOTECA MUSKIZ               |"+ fechaHoraActual.format(formato)+"|***");
             System.out.println("*********************************************************************\n");
@@ -311,6 +310,4 @@ public class Conexion{
                 }
     }
 }
-}
-
 
