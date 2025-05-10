@@ -11,11 +11,12 @@ public class Conexion{
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
         int eleccion=0;
+        int principal=0;
         LocalDateTime fechaHoraActual = LocalDateTime.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         
 
-        while (eleccion!=9) {
+        while (principal!=9) {
             System.out.println("*********************************************************************");
             System.out.println("***/                  BIBLIOTECA MUSKIZ               |"+ fechaHoraActual.format(formato)+"|***");
             System.out.println("*********************************************************************\n");
@@ -29,9 +30,9 @@ public class Conexion{
             String entrada = teclado.nextLine();
 
             try {
-                eleccion = Integer.parseInt(entrada);
+                principal = Integer.parseInt(entrada);
     
-                switch (eleccion) {
+                switch (principal) {
 
                     // Conexión a la base de datos
                     case 1:
