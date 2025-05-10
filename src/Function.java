@@ -469,15 +469,20 @@ public class Function {
         }
     }
     
-    public static int validarnumero(){
-    Scanner scanner = new Scanner(System.in);
-    int numero;
-    if (scanner.hasNextInt()){
-        numero = scanner.nextInt();
-    }else{
-        numero = 0;
+    public static int validarnumero() {
+        Scanner scanner = new Scanner(System.in);
+        int numero;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                numero = scanner.nextInt();
+                scanner.nextLine(); // limpia el salto de línea
+                return numero;
+            } else {
+                System.out.println("Por favor, introduce un número válido:");
+                scanner.nextLine(); // limpia el texto incorrecto
+            }
+        }
     }
-    return numero;
-    }
-    //gracias Ander por el metodo
+
+    //gracias Ander por el metodo:))
 }

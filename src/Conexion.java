@@ -11,6 +11,7 @@ public class Conexion{
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
         int eleccion=0;
+        int eleccion1=0;
         int eleccion2=0;
         int eleccion3=0;
         int principal=0;
@@ -29,10 +30,9 @@ public class Conexion{
             System.out.println("       5-Consultas especiales             10-Creditos");
             System.out.println("\nElige la opción:");
             
-            int entrada = Function.validarnumero();
+            principal = Function.validarnumero();
 
             try {
-                principal = entrada;
     
                 switch (principal) {
 
@@ -50,6 +50,7 @@ public class Conexion{
                     //Consultar tabla
                     case 2:
                         Function.mensa("Consultando tabla...");
+                        eleccion=0;
                         while (eleccion!=6) {
                             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
                             System.out.println("*********************************************************************");
@@ -59,7 +60,7 @@ public class Conexion{
                             System.out.println("       2-Tabla Libros                    5-Tabla Penalizaciones");
                             System.out.println("       3-Tabla Prestamos                 6-Volver al inicio");
                             System.out.println("\nElige la opción:");
-                            eleccion = teclado.nextInt();
+                            eleccion = Function.validarnumero();
                             switch (eleccion) {
                                 case 1:
                                     TestConsultarTabla testConsultarTabla = new TestConsultarTabla();
@@ -99,7 +100,8 @@ public class Conexion{
                         break;
                     //insert
                     case 3:
-                        while (eleccion!=12) {
+                        eleccion1=0;
+                        while (eleccion1!=12) {
                             System.out.println("\n                                                           " + fechaHoraActual.format(formato));
                             System.out.println("*********************************************************************");
                             System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
@@ -111,8 +113,8 @@ public class Conexion{
                             System.out.println("       5-Insertar Penalizaciones            10-Borrar Penalizaciones");
                             System.out.println("       11-prestamo entregado                12-Volver al inicio             ");
                             System.out.println("\nElige la opción:");
-                            eleccion = teclado.nextInt();
-                            switch (eleccion) {
+                            eleccion1 = Function.validarnumero();
+                            switch (eleccion1) {
                                 case 1:
                                     Insert.InsertSocios(conn);
                                     teclado.nextLine(); // Limpia el \n después de nextInt
@@ -172,6 +174,7 @@ public class Conexion{
 
                     //Modificar Tablas
                     case 4:
+                    eleccion2=0;
                     while (eleccion2!=5) {
                         System.out.println("\n                                                           " + fechaHoraActual.format(formato));
                         System.out.println("*********************************************************************");
@@ -181,7 +184,7 @@ public class Conexion{
                         System.out.println("       3-Modificar Prestamos                4-Modificar Autores");
                         System.out.println("       5-Volver al inicio                    ");
                         System.out.println("\nElige la opción:");
-                        eleccion2 = teclado.nextInt();
+                        eleccion2 = Function.validarnumero();
                         switch (eleccion2) {
                             case 1:
                                 Insert.InsertSocios(conn);
@@ -222,6 +225,7 @@ public class Conexion{
                     break;
                     //Consultas especiales 
                     case 5:
+                    eleccion3=0;
                     while (eleccion3!=6) {
                         System.out.println("\n                                                           " + fechaHoraActual.format(formato));
                         System.out.println("*********************************************************************");
@@ -229,9 +233,9 @@ public class Conexion{
                         System.out.println("*********************************************************************\n");
                         System.out.println("       1-Contar empleados                   2-Prestamos activos");
                         System.out.println("       3-Meses dados de alta                4-Min/Max/Avg paginas");
-                        System.out.println("       5-Volver al inicio                   6-Volver al inicio ");
+                        System.out.println("       5-buscar socios por nombre??         6-Volver al inicio ");
                         System.out.println("\nElige la opción:");
-                        eleccion3 = teclado.nextInt();
+                        eleccion3 = Function.validarnumero();
                         switch (eleccion3) {
                             case 1:
                                 System.out.println("Contamos con " + Consultas.contarEmpleados(conn) + " empleados en nuestra biblioteca.");
@@ -306,8 +310,6 @@ public class Conexion{
                     //Por si el usuario no mete la opción correcta
                     default:
                         Function.mensa("Elige una de las opciones que se dan.\n");
-                        teclado.nextLine(); // Limpia el \n después de nextInt
-                        teclado.nextLine(); // Espera que el usuario pulse Enter
                         break;
                 }
             
