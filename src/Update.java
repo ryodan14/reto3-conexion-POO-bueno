@@ -37,7 +37,7 @@ public class Update {
         System.out.println("Introduce la nueva contraseña del socio:");
         contraseña = sc.nextLine();
 
-        String sql = "UPDATE socios (nombre, apellidos, direccion, telefono, email, contraseña) VALUES (?, ?, ?, ?, ?, ?) where id = ?";
+        String sql = "UPDATE socios (nombre, apellidos, direccion, telefono, email, contraseña) SET (?, ?, ?, ?, ?, ?) where id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             pstmt.setString(2, apellidos);
@@ -56,6 +56,7 @@ public class Update {
         } catch (SQLException e) {
             System.out.println("Error al modificar el socio: " + e.getMessage());
         }
+        sc.close();
     }
 
     public static void modificarLibros(Connection conn) {
@@ -88,7 +89,7 @@ public class Update {
         int ejemplares;
         System.out.println("Introduce el nuevo numero de ejemplares del libro:");
         ejemplares = sc.nextInt();
-        String sql = "UPDATE libros (titulo, ISBN, numPags, anioPublicacion, ejemplares) VALUES (?, ?, ?, ?, ?) where id = ?";
+        String sql = "UPDATE libros (titulo, ISBN, numPags, anioPublicacion, ejemplares) SET (?, ?, ?, ?, ?) where id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, titulo);
             pstmt.setInt(2, ISBN);
@@ -106,6 +107,7 @@ public class Update {
         } catch (SQLException e) {
             System.out.println("Error al modificar el libro: " + e.getMessage());
         }
+        sc.close();
     }
 
     public static void modificarPrestamos(Connection conn) {
@@ -146,7 +148,7 @@ public class Update {
         System.out.println("Introduce el id del libro al que se hizo el prestamo a modificar:");
         idLibro = sc.nextInt();
 
-        String sql = "UPDATE prestamos (fecha_prestamo, fecha_devolucion, entregado,id, id_libro) VALUES (?, ?, ?, ?, ?) where id = ?";
+        String sql = "UPDATE prestamos (fecha_prestamo, fecha_devolucion, entregado,id, id_libro) SET (?, ?, ?, ?, ?) where id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setDate(1, fechaPrestamo);
             pstmt.setDate(2, fechaDevolucion);
@@ -163,6 +165,7 @@ public class Update {
         } catch (SQLException e) {
             System.out.println("Error al modificar el prestamo: " + e.getMessage());
         }
+        sc.close();
     }
 
     public static void modificarAutores(Connection conn) {
@@ -173,6 +176,7 @@ public class Update {
         int id;
         System.out.println("introduce el id del autor a modificar:");
         Scanner sc = new Scanner(System.in); 
+        id= sc.nextInt();
         
         String nombre;
         System.out.println("Introduce el nuevo nombre del autor:");
@@ -186,7 +190,7 @@ public class Update {
         System.out.println("Introduce el nuevo apellido2 del autor:");
         apellido2 = sc.nextLine();
 
-        String sql = "UPDATE INTO autores (id, nombre, apellido1, apellido2) VALUES (?, ?, ?, ?)";
+        String sql = "UPDATE INTO autores (id, nombre, apellido1, apellido2) SET (?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(2, nombre);
@@ -202,6 +206,7 @@ public class Update {
         } catch (SQLException e) {
             System.out.println("Error al modificar el autor: " + e.getMessage());
         }
+        sc.close();
     }
 }
 
