@@ -8,55 +8,94 @@ public class Update {
             System.out.println( "No hay conexión");
             return;
         }
-
-        System.out.println("introduce el id del socio a modificar:");
         Scanner sc = new Scanner(System.in);
-        int id = sc.nextInt();
+        String sql = "UPDATE socios SET ";
+        boolean ponerAND=false;
+        String And="AND ";
+        int decision=sc.nextInt();
+        System.out.println("******************************************************");
+        System.out.println("*****             Biblioteca Muskiz               ****");
+        System.out.println("******************************************************");
+        System.out.println("    1-ID                        4-Dirección");
+        System.out.println("    2-Nombre                    5-Telefono");
+        System.out.println("    3-Apellidos                 6-Email");
+        System.out.println("    7-Volver al inicio");
 
-        String nombre;
-        System.out.println("Introduce el nuevo nombre del socio:");
-        nombre = sc.nextLine();
+        switch (decision) {
+            case 1:
+                int id;
+                System.out.println("\nIntroduce el id del socio a modificar:");
+                id = sc.nextInt();
 
-        String apellidos;
-        System.out.println("Introduce los nuevos apellidos del socio:");
-        apellidos = sc.nextLine();
+                if (ponerAND) {
+                    sql+=And;
+                }
+                break;
 
-        String direccion;
-        System.out.println("Introduce la nueva direccion del socio:");
-        direccion = sc.nextLine();
+            case 2:
+                String nombre;
+                System.out.println("Introduce el nuevo nombre del socio:");
+                nombre = sc.nextLine();
 
-        String telefono;
-        System.out.println("Introduce el nuevo telefono del socio:");
-        telefono = sc.nextLine();
+                if (ponerAND) {
+                    sql+=And;
+                }
+                break;
 
-        String email;
-        System.out.println("Introduce el nuevo email del socio:");
-        email = sc.nextLine();
+            case 3:
+                String apellidos;
+                System.out.println("Introduce los nuevos apellidos del socio:");
+                apellidos = sc.nextLine();
 
-        String contraseña;
-        System.out.println("Introduce la nueva contraseña del socio:");
-        contraseña = sc.nextLine();
+                if (ponerAND) {
+                    sql+=And;
+                }
+                break;
 
-        String sql = "UPDATE socios (nombre, apellidos, direccion, telefono, email, contraseña) SET (?, ?, ?, ?, ?, ?) where id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nombre);
-            pstmt.setString(2, apellidos);
-            pstmt.setString(3, direccion);
-            pstmt.setString(4, telefono);
-            pstmt.setString(5, email);
-            pstmt.setString(6, contraseña);
-            pstmt.setInt(7, id);
+            case 4:
+                String direccion;
+                System.out.println("Introduce la nueva direccion del socio:");
+                direccion = sc.nextLine();
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Socio modificado correctamente.");
-            } else {
-                System.out.println("No se encontró el socio con el ID proporcionado.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al modificar el socio: " + e.getMessage());
+                if (ponerAND) {
+                    sql+=And;
+                }
+                break;
+
+            case 5:
+                String telefono;
+                System.out.println("Introduce el nuevo telefono del socio:");
+                telefono = sc.nextLine();
+
+                if (ponerAND) {
+                    sql+=And;
+                }
+                break;
+
+            case 6:
+                String email;
+                System.out.println("Introduce el nuevo email del socio:");
+                email = sc.nextLine();
+
+                if (ponerAND) {
+                    sql+=And;
+                }
+                break;
+
+            case 7:
+                String contraseña;
+                System.out.println("Introduce la nueva contraseña del socio:");
+                contraseña = sc.nextLine();
+
+                if (ponerAND) {
+                    sql+=And;
+                }
+                break;
+        
+            default:
+                System.out.println("Escoge una opción de las dadas");
+                break;
         }
-        sc.close();
     }
 
     public static void modificarLibros(Connection conn) {
