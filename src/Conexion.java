@@ -189,21 +189,21 @@ public class Conexion{
                         eleccion2 = Function.validarnumero(teclado);
                         switch (eleccion2) {
                             case 1:
-                                Insert.InsertSocios(conn);
+                                Update.modificarSocios(conn);
                                 System.out.println("Presiona Enter para continuar...");
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 Thread.sleep(2000);
                                 break;
                             case 2:
-                                Insert.InsertLibros(conn);
+                                Update.modificarLibros(conn);
                                 System.out.println("Presiona Enter para continuar...");
                                 Thread.sleep(5000);
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 3:
-                                Insert.InsertPrestamos(conn);
+                                Update.modificarPrestamos(conn);
                                 System.out.println("Presiona Enter para continuar...");
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
