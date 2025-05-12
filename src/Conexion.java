@@ -326,9 +326,10 @@ public class Conexion{
         System.out.println("Presiona Enter para continuar...");
         teclado.nextLine(); // Espera Enter del usuario
     
-}
-}
-}
+    }
+    }
+    teclado.close();
+    }
 }
 
 
