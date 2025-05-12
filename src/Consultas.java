@@ -145,22 +145,22 @@ public class Consultas{
 
     public static void buscarNombresPorLetra(Connection conn) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingresa una letra: ");
-        String letra = scanner.nextLine().toUpperCase(); 
+        System.out.print("Ingresa una letra o cadena: ");
+        String cadena = scanner.nextLine().toUpperCase().trim();  // Convertir a mayúsculas y eliminar espacios extra
 
-        if (letra.isEmpty() || letra.length() != 1 || !Character.isLetter(letra.charAt(0))) {
-            System.out.println("Error: Debes ingresar exactamente una letra.");
-            scanner.close();
-            return;  
+        // Validar que la entrada no esté vacía y no contenga números o espacios adicionales
+        if (cadena.isEmpty() || !cadena.matches("[a-zA-Z]+")) {
+            System.out.println("Error: Debes ingresar solo letras.");
+            return;
         }
 
         String sql = "SELECT nombre, apellido FROM socios WHERE nombre LIKE ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, "%" + letra + "%"); 
+            pstmt.setString(1, "%" + cadena + "%");  // Buscar por la cadena introducida
 
             try (ResultSet rs = pstmt.executeQuery()) {
-                System.out.println("Socios cuyo nombre contenga la letra '" + letra + "':");
+                System.out.println("Socios cuyo nombre contenga '" + cadena + "':");
 
                 boolean encontrado = false;
                 while (rs.next()) {
@@ -172,16 +172,15 @@ public class Consultas{
                 }
 
                 if (!encontrado) {
-                    System.out.println("No se encontraron socios con esa letra.");
+                    System.out.println("No se encontraron socios con esa cadena.");
                 }
 
             }
 
         } catch (SQLException e) {
             System.out.println("Error al buscar socios: " + e.getMessage());
-            e.printStackTrace();  // Print the stack trace for better debugging
+            e.printStackTrace();  // Para depurar el error con más detalle
         }
-        scanner.close();
     }
 }
 

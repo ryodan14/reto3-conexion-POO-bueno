@@ -235,7 +235,7 @@ public class Conexion{
                         System.out.println("*********************************************************************\n");
                         System.out.println("       1-Contar empleados                   2-Prestamos activos");
                         System.out.println("       3-Meses dados de alta                4-Min/Max/Avg paginas");
-                        System.out.println("       5-buscar socios por nombre??         6-Penalizaciones por tipo ");
+                        System.out.println("       5-Buscador socios por nom            6-Penalizaciones por tipo ");
                         System.out.println("       7-Volver al inicio                                            ");
                         System.out.println("\nElige la opción:");
                         eleccion3 = Function.validarnumero(teclado);
@@ -262,9 +262,13 @@ public class Conexion{
                                 break;
                             case 5: 
                                 Consultas.buscarNombresPorLetra(conn);
+                                System.out.println("Presiona Enter para continuar...");
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 6: 
                                 Consultas.penalPorTipo(conn);
+                                System.out.println("Presiona Enter para continuar...");
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 7:
                                 Function.mensa("Saliendo de la consulta especial...");
@@ -316,18 +320,18 @@ public class Conexion{
                         break;
                 }
             
-    } catch (InputMismatchException ime) {
-        System.out.println("Por favor, introduce un número válido.");
-        teclado.nextLine(); // Limpiar buffer
-    } catch (Exception e) {
-        System.out.println("Error inesperado: " + e.getMessage());
-        teclado.nextLine(); // Evitar bucle infinito si se produce excepción
-    } finally {
-    System.out.println("Presiona Enter para continuar...");
-    if (teclado.hasNextLine()) {
-        teclado.nextLine();
-    }
-    }
+            } catch (InputMismatchException ime) {
+                System.out.println("Por favor, introduce un número válido.");
+                teclado.nextLine(); // Limpiar buffer
+        } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
+            teclado.nextLine(); // Evitar bucle infinito si se produce excepción
+        } finally {
+            System.out.println("Presiona Enter para continuar...");
+            if (teclado.hasNextLine()) {
+                teclado.nextLine();
+            }
+        }
     }
     }
 }
