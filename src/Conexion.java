@@ -226,42 +226,45 @@ public class Conexion{
                     //Consultas especiales 
                     case 5:
                     eleccion3=0;
-                    while (eleccion3!=6) {
+                    while (eleccion3!=7) {
                         System.out.println("\n                                                           " + fechaHoraActual.format(formato));
                         System.out.println("*********************************************************************");
                         System.out.println("***/                    BIBLIOTECA MUSKIZ                        /***");
                         System.out.println("*********************************************************************\n");
                         System.out.println("       1-Contar empleados                   2-Prestamos activos");
                         System.out.println("       3-Meses dados de alta                4-Min/Max/Avg paginas");
-                        System.out.println("       5-buscar socios por nombre??         6-Volver al inicio ");
+                        System.out.println("       5-buscar socios por nombre??         6-Penalizaciones por tipo ");
+                        System.out.println("       7-Volver al inicio                                            ");
                         System.out.println("\nElige la opción:");
                         eleccion3 = Function.validarnumero();
                         switch (eleccion3) {
                             case 1:
                                 System.out.println("Contamos con " + Consultas.contarEmpleados(conn) + " empleados en nuestra biblioteca.");
                                 System.out.println("Presiona Enter para continuar...");
-                                teclado.nextLine(); // Espera que el usuario pulse Enter
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 break;
                             case 2:
                                 Consultas.hayPrestamosActivos(conn);
                                 System.out.println("Presiona Enter para continuar...");
-                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 3:
                                 Consultas.mesesDeAlta(conn); 
                                 System.out.println("Presiona Enter para continuar...");
-                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 4: 
                                 Consultas.calcLibros(conn);
+                                System.out.println("Presiona Enter para continuar...");
+                                teclado.nextLine(); // Espera que el usuario pulse Enter
                                 break;
                             case 5: 
                                 Consultas.buscarNombresPorLetra(conn);
                                 break;
-                            case 6:
+                            case 6: 
+                                Consultas.penalPorTipo(conn);
+                                break;
+                            case 7:
                                 Function.mensa("Saliendo de la consulta especial...");
                                 teclado.nextLine(); // Limpia el \n después de nextInt
                                 break;
