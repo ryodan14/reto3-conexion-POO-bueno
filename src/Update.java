@@ -8,93 +8,284 @@ public class Update {
             System.out.println( "No hay conexión");
             return;
         }
+        int cont=0;
         Scanner sc = new Scanner(System.in);
         String sql = "UPDATE socios SET ";
-        boolean ponerAND=false;
-        String And="AND ";
-        int decision=sc.nextInt();
+        boolean ponerComa=false;
+        String coma=", ";
+        String id="";
+        String nombre="";
+        String apellidos="";
+        String direccion="";
+        String telefono="";
+        String email="";
+        int decision=0;
+        while (decision!=8) {
         System.out.println("******************************************************");
-        System.out.println("*****             Biblioteca Muskiz               ****");
+        System.out.println("*****     ¿Que desea cambiar?     "+cont+" cambio/s ****");
         System.out.println("******************************************************");
         System.out.println("    1-ID                        4-Dirección");
         System.out.println("    2-Nombre                    5-Telefono");
         System.out.println("    3-Apellidos                 6-Email");
-        System.out.println("    7-Volver al inicio");
+        System.out.println("    7-Siguiente paso            8-Volver al inicio");
+        decision=sc.nextInt();
+            switch (decision) {
+                case 1:
+                    if(id==""){
+                        System.out.println("\nIntroduce el id del socio a modificar:");
+                        id = sc.nextLine();
 
-        switch (decision) {
-            case 1:
-                int id;
-                System.out.println("\nIntroduce el id del socio a modificar:");
-                id = sc.nextInt();
+                        if (ponerComa) {
+                            sql+=coma;
+                        }
+                        ponerComa=true;
 
-                if (ponerAND) {
-                    sql+=And;
-                }
-                break;
+                        sql+="id="+id;
+                    }else{
+                        System.out.println("Ya pusiste el ID anteriormente");
+                    }
+                    break;
 
-            case 2:
-                String nombre;
-                System.out.println("Introduce el nuevo nombre del socio:");
-                nombre = sc.nextLine();
+                case 2:
+                    if(nombre==""){
+                        System.out.println("Introduce el nuevo nombre del socio:");
+                        nombre = sc.nextLine();
 
-                if (ponerAND) {
-                    sql+=And;
-                }
-                break;
+                        if (ponerComa) {
+                            sql+=coma;
+                        }
+                        ponerComa=true;
 
-            case 3:
-                String apellidos;
-                System.out.println("Introduce los nuevos apellidos del socio:");
-                apellidos = sc.nextLine();
+                        sql+="nombre="+nombre;
+                    }else{
+                        System.out.println("Ya pusiste el nombre anteriormente");
+                    }
+                    break;
 
-                if (ponerAND) {
-                    sql+=And;
-                }
-                break;
+                case 3:
+                    if (apellidos=="") {
+                        System.out.println("Introduce los nuevos apellidos del socio:");
+                        apellidos = sc.nextLine();
 
-            case 4:
-                String direccion;
-                System.out.println("Introduce la nueva direccion del socio:");
-                direccion = sc.nextLine();
+                        if (ponerComa) {
+                            sql+=coma;
+                        }
+                        ponerComa=true;
 
-                if (ponerAND) {
-                    sql+=And;
-                }
-                break;
+                        sql+="apellidos="+apellidos;
+                    } else {
+                        System.out.println("Ya pusiste el/los apellidos anteriormente");
+                    }
+                    break;
 
-            case 5:
-                String telefono;
-                System.out.println("Introduce el nuevo telefono del socio:");
-                telefono = sc.nextLine();
+                case 4:
+                    if (direccion=="") {
+                        System.out.println("Introduce la nueva direccion del socio:");
+                        direccion = sc.nextLine();
 
-                if (ponerAND) {
-                    sql+=And;
-                }
-                break;
+                        if (ponerComa) {
+                            sql+=coma;
+                        }
+                        ponerComa=true;
 
-            case 6:
-                String email;
-                System.out.println("Introduce el nuevo email del socio:");
-                email = sc.nextLine();
+                        sql+="direccion="+direccion;
+                    } else {
+                        System.out.println("Ya pusiste la dirección anteriormente");
+                    }
+                    break;
 
-                if (ponerAND) {
-                    sql+=And;
-                }
-                break;
+                case 5:
+                    if (telefono=="") {
+                        System.out.println("Introduce el nuevo telefono del socio:");
+                        telefono = sc.nextLine();
 
-            case 7:
-                String contraseña;
-                System.out.println("Introduce la nueva contraseña del socio:");
-                contraseña = sc.nextLine();
+                        if (ponerComa) {
+                            sql+=coma;
+                        }
+                        ponerComa=true;
 
-                if (ponerAND) {
-                    sql+=And;
-                }
-                break;
-        
-            default:
-                System.out.println("Escoge una opción de las dadas");
-                break;
+                        sql+="telefono="+telefono;
+                    } else {
+                        System.out.println("Ya pusiste el teléfono anteriormente");
+                    }
+                    break;
+
+                case 6:
+                    if (email=="") {
+                        System.out.println("Introduce el nuevo email del socio:");
+                        email = sc.nextLine();
+
+                        if (ponerComa) {
+                            sql+=coma;
+                        }
+                        ponerComa=true;
+
+                        sql+="email="+email;
+                    } else {
+                        System.out.println("Ya pusiste el email anteriormente");
+                    }
+                    break;
+
+                case 7:
+                    while (decision!=3) {
+                        System.out.println("************************************************");
+                        System.out.println("***  ¿Quieres aplicarlo a todos los campos?  ***");
+                        System.out.println("************************************************");
+                        System.out.println("    1-Si            2-No        3-Volver atras");
+                        decision=sc.nextInt();
+                        switch (decision) {
+                            case 1:
+                                //Se hace directamente el update sin el where
+                                //TODO
+                                break;
+
+                            case 2:
+                                sql+=" WHERE ";
+                                String and=" AND ";
+                                boolean ponerAnd=false;
+                                String idBuscar="";
+                                String nombreBuscar="";
+                                String apellidosBuscar="";
+                                String direccionBuscar="";
+                                String telefonoBuscar="";
+                                String emailBuscar="";
+                                while (decision!=7) {
+                                    System.out.println("************************************************");
+                                    System.out.println("***             ¿A quien buscas?             ***");
+                                    System.out.println("************************************************");
+                                    System.out.println("   1-Por ID                      4-Por dirección");
+                                    System.out.println("   2-Por nombre                  5-Por telefono");
+                                    System.out.println("   3-Por apellidos               6-Por email");
+                                    System.out.println("                                 7-Finalizar");
+                                    decision=sc.nextInt();
+                                    switch (decision) {
+                                        case 1:
+                                            if(idBuscar==""){
+                                                System.out.println("\nIntroduce el id del socio a buscar:");
+                                                idBuscar = sc.nextLine();
+
+                                                if (ponerAnd) {
+                                                    sql+=and;
+                                                }
+                                                ponerAnd=true;
+
+                                                sql+="id="+idBuscar;
+                                            }else{
+                                                System.out.println("Ya pusiste el ID anteriormente");
+                                            }
+                                            break;
+                                    
+                                        case 2:
+                                            if(nombreBuscar==""){
+                                                System.out.println("Introduce el  nombre del socio a buscar:");
+                                                nombreBuscar = sc.nextLine();
+
+                                                if (ponerAnd) {
+                                                    sql+=and;
+                                                }
+                                                ponerAnd=true;
+
+                                                sql+="nombre="+nombreBuscar;
+                                            }else{
+                                                System.out.println("Ya pusiste el nombre anteriormente");
+                                            }
+                                            break;
+
+                                        case 3:
+                                            if (apellidosBuscar=="") {
+                                                System.out.println("Introduce los apellidos del socio a buscar:");
+                                                apellidosBuscar = sc.nextLine();
+
+                                                if (ponerAnd) {
+                                                    sql+=and;
+                                                }
+                                                ponerAnd=true;
+
+                                                sql+="apellidos="+apellidosBuscar;
+                                            } else {
+                                                System.out.println("Ya pusiste el/los apellidos anteriormente");
+                                            }
+                                            break;
+
+                                        case 4:
+                                            if (direccionBuscar=="") {
+                                                System.out.println("Introduce la direccion del socio a buscar:");
+                                                direccionBuscar = sc.nextLine();
+
+                                                if (ponerAnd) {
+                                                    sql+=and;
+                                                }
+                                                ponerAnd=true;
+
+                                                sql+="direccion="+direccionBuscar;
+                                            } else {
+                                                System.out.println("Ya pusiste la dirección anteriormente");
+                                            }
+                                            break;
+
+                                        case 5:
+                                            if (telefonoBuscar=="") {
+                                                System.out.println("Introduce el telefono del socio a buscar:");
+                                                telefonoBuscar = sc.nextLine();
+
+                                                if (ponerAnd) {
+                                                    sql+=and;
+                                                }
+                                                ponerAnd=true;
+
+                                                sql+="telefono="+telefonoBuscar;
+                                            } else {
+                                                System.out.println("Ya pusiste el teléfono anteriormente");
+                                            }
+                                            break;
+
+                                        case 6:
+                                            if (emailBuscar=="") {
+                                                System.out.println("Introduce el email del socio a buscar:");
+                                                emailBuscar = sc.nextLine();
+
+                                                if (ponerAnd) {
+                                                    sql+=and;
+                                                }
+                                                ponerAnd=true;
+
+                                                sql+="email="+emailBuscar;
+                                            } else {
+                                                System.out.println("Ya pusiste el email anteriormente");
+                                            }
+                                            break;
+
+                                        case 7:
+                                            System.out.println("Finalizando.....");
+                                            break;
+                                        default:
+                                            System.out.println("Introduce una de las opciones dadas");
+                                            break;
+                                    }
+                                    sql+=" ;";
+                                    //Se hace el update
+                                    //TODO
+                                }
+                                
+                                break;
+
+                            case 3:
+                                System.out.println("Volviendo atras... ");
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                    }
+                    
+                    return;
+            
+                case 8:
+                    return;
+                default:
+                    System.out.println("Escoge una opción de las dadas");
+                    break;
+            }
         }
     }
 
@@ -104,49 +295,6 @@ public class Update {
             return;
 
         }
-
-        System.out.println("introduce el id del libro a modificar:");
-        Scanner sc = new Scanner(System.in);
-        int id = sc.nextInt();
-
-        String titulo;
-        System.out.println("Introduce el nuevo titulo del libro:");
-        titulo = sc.nextLine();
-
-        int ISBN;
-        System.out.println("Introduce el nuevo ISBN del libro:");
-        ISBN = sc.nextInt();
-
-        int numPags;
-        System.out.println("Introduce el nuevo numero de paginas del libro:");
-        numPags = sc.nextInt();
-
-        int anioPublicacion;
-        System.out.println("Introduce el nuevo año de publicacion del libro:");
-        anioPublicacion = sc.nextInt();
-
-        int ejemplares;
-        System.out.println("Introduce el nuevo numero de ejemplares del libro:");
-        ejemplares = sc.nextInt();
-        String sql = "UPDATE libros (titulo, ISBN, numPags, anioPublicacion, ejemplares) SET (?, ?, ?, ?, ?) where id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, titulo);
-            pstmt.setInt(2, ISBN);
-            pstmt.setInt(3, numPags);
-            pstmt.setInt(4, anioPublicacion);
-            pstmt.setInt(5, ejemplares);
-            pstmt.setInt(6, id);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Libro modificado correctamente.");
-            } else {
-                System.out.println("No se encontró el libro con el ID proporcionado.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al modificar el libro: " + e.getMessage());
-        }
-        sc.close();
     }
 
     public static void modificarPrestamos(Connection conn) {
@@ -154,57 +302,6 @@ public class Update {
             System.out.println( "No hay conexión");
             return;
         }
-
-        int id;
-        System.out.println("Introduce el id del prestamo a modificar:");
-        Scanner sc = new Scanner(System.in);
-        sc.nextLine();
-
-
-        Date fechaPrestamo = null;
-        System.out.println("Introduce la nueva fecha de prestamo (YYYY-MM-DD):");
-        String fechaPrestamoStr = sc.nextLine();
-        try {
-            fechaPrestamo = Date.valueOf(fechaPrestamoStr);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Formato de fecha inválido. Usando valor por defecto.");
-        }
-
-        Date fechaDevolucion = null;
-        fechaDevolucion = Function.fechaDevolucion(conn, fechaDevolucion);
-        if (fechaDevolucion != null) 
-        System.out.println("Introduce la nueva fecha de devolucion (YYYY-MM-DD):");
-        String fechaDevolucionStr = sc.nextLine();
-
-        String entregado;
-        System.out.println("Introduce el nuevo estado de entrega (S/N):");
-        entregado = sc.nextLine();
-
-        System.out.println("Introduce el id del socio al que se hizo el prestamo a modificar:");
-        id = sc.nextInt();
-
-        int idLibro;
-        System.out.println("Introduce el id del libro al que se hizo el prestamo a modificar:");
-        idLibro = sc.nextInt();
-
-        String sql = "UPDATE prestamos (fecha_prestamo, fecha_devolucion, entregado,id, id_libro) SET (?, ?, ?, ?, ?) where id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setDate(1, fechaPrestamo);
-            pstmt.setDate(2, fechaDevolucion);
-            pstmt.setString(3, entregado);
-            pstmt.setInt(4, id);
-            pstmt.setInt(5, idLibro);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Prestamo modificado correctamente.");
-            } else {
-                System.out.println("No se encontró el prestamo con los datos proporcionados.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al modificar el prestamo: " + e.getMessage());
-        }
-        sc.close();
     }
 
     public static void modificarAutores(Connection conn) {
@@ -212,40 +309,6 @@ public class Update {
             System.out.println( "No hay conexión");
             return;
         }
-        int id;
-        System.out.println("introduce el id del autor a modificar:");
-        Scanner sc = new Scanner(System.in); 
-        id= sc.nextInt();
-        
-        String nombre;
-        System.out.println("Introduce el nuevo nombre del autor:");
-        nombre = sc.nextLine();
-
-        String apellido1;
-        System.out.println("Introduce el nuevo apellido1 del autor:");
-        apellido1 = sc.nextLine();
-
-        String apellido2;
-        System.out.println("Introduce el nuevo apellido2 del autor:");
-        apellido2 = sc.nextLine();
-
-        String sql = "UPDATE INTO autores (id, nombre, apellido1, apellido2) SET (?, ?, ?, ?)";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(2, nombre);
-            pstmt.setString(3, apellido1);
-            pstmt.setString(4, apellido2);
-
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Autor modificado correctamente.");
-            } else {
-                System.out.println("No se encontró el autor con el ID proporcionado.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al modificar el autor: " + e.getMessage());
-        }
-        sc.close();
     }
 }
 
