@@ -47,26 +47,33 @@ public class Consultas{
     }
 
     public static void mesesDeAlta(Connection conn) {
-        String sql = "SELECT nombre, apellido, TIMESTAMPDIFF(MONTH, fecha_alta, CURDATE()) AS meses_alta FROM socios";
-    
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()) {
-    
-            System.out.printf("%-20s %-25s %-10s%n", "Nombre", "Apellido", "Meses Alta");
-            System.out.println("--------------------------------------------------------------");
-    
-            while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                String apellidos = rs.getString("apellido");
-                int mesesAlta = rs.getInt("meses_alta");
-    
-                System.out.printf("%-20s %-25s %-10d%n", nombre, apellidos, mesesAlta);
-            }
-    
-        } catch (SQLException e) {
-            System.out.println("Error al obtener meses de alta por socio: " + e.getMessage());
+    String sql = "SELECT nombre, apellido, " +
+                "TIMESTAMPDIFF(MONTH, fecha_alta, CURDATE()) AS meses_alta, " +
+                "TIMESTAMPDIFF(DAY, fecha_alta, CURDATE()) AS dias_alta " +
+                "FROM socios";
+
+    try (PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery()) {
+
+        System.out.printf("%-20s %-25s %-15s%n", "Nombre", "Apellido", "Tiempo de Alta");
+        System.out.println("------------------------------------------------------------------");
+
+        while (rs.next()) {
+            String nombre = rs.getString("nombre");
+            String apellidos = rs.getString("apellido");
+            int mesesAlta = rs.getInt("meses_alta");
+            int diasAlta = rs.getInt("dias_alta");
+
+            String tiempoAlta = (mesesAlta == 0) ? diasAlta + " días" : mesesAlta + " meses";
+
+            System.out.printf("%-20s %-25s %-15s%n", nombre, apellidos, tiempoAlta);
         }
+
+    } catch (SQLException e) {
+        System.out.println("Error al obtener meses de alta por socio: " + e.getMessage());
     }
+}
+
 
     /*Metodo para calcular libro con mas paginas, libro con menos paginas y media de paginas de todos los libros*/
     public static void calcLibros(Connection conn){
