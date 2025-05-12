@@ -209,10 +209,10 @@ public class Function {
     }
     
     //comprobacion id libros
-    public static boolean comprobarIdLibro(Connection conn, String idLibro) {
+    public static boolean comprobarIdLibro(Connection conn, int idLibro) {
         String sql = "SELECT COUNT(*) FROM libros WHERE id_libro = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, idLibro);
+            pstmt.setInt(1, idLibro);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
@@ -324,10 +324,10 @@ public class Function {
 
 
     //comprobacion id autores
-    public static boolean comprobarIdAutor(Connection conn, String idAutor) {
+    public static boolean comprobarIdAutor(Connection conn, int idAutor) {
         String sql = "SELECT COUNT(*) FROM autores WHERE id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, idAutor);
+            pstmt.setInt(1, idAutor);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1) > 0; // Devuelve true si existe al menos un registro
@@ -469,14 +469,13 @@ public class Function {
         }
     }
     
-    public static int validarnumero() {
+    public static int validarnumero(Scanner teclado) {
         Scanner scanner = new Scanner(System.in);
         int numero;
         while (true) {
             if (scanner.hasNextInt()) {
                 numero = scanner.nextInt();
                 scanner.nextLine(); // limpia el salto de línea
-                scanner.close();
                 return numero;
             } else {
                 System.out.println("Por favor, introduce un número válido:");

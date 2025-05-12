@@ -226,29 +226,29 @@ public static void InsertLibros(Connection conn) {
         return;
     }
 
-    int id_libro;
-    while (true) {
-        System.out.print("ID del libro: ");
-        String input = sc.nextLine().trim();
-    
-        if (input.isEmpty()) {
-            System.out.println("El ID no puede estar en blanco.");
-            continue;
-        }
-    
-        try {
-            id_libro = Integer.parseInt(input);
-    
-            if (Function.comprobarIdSocio(conn, id_libro)) {
-                System.out.println("ID ya existe. Introduzca otro ID.");
-            } else {
-                break; // ID válido y no duplicado
+        int id_libro;
+        while (true) {
+            System.out.print("ID del libro: ");
+            String input = sc.nextLine().trim();
+        
+            if (input.isEmpty()) {
+                System.out.println("El ID no puede estar en blanco.");
+                continue;
             }
-    
-        } catch (NumberFormatException e) {
-            System.out.println("ID no válido. Introduzca solo números.");
+        
+            try {
+                id_libro = Integer.parseInt(input);
+        
+                if (Function.comprobarIdLibro(conn, id_libro)) {
+                    System.out.println("ID ya existe. Introduzca otro ID.");
+                } else {
+                    break; // ID válido y no duplicado
+                }
+        
+            } catch (NumberFormatException e) {
+                System.out.println("ID no válido. Introduzca solo números.");
+            }
         }
-    }
 
     String titulo;
     while (true) {
@@ -525,7 +525,7 @@ public static void InsertPrestamos(Connection conn) {
             try {
                 id = Integer.parseInt(input);
         
-                if (Function.comprobarIdSocio(conn, id)) {
+                if (Function.comprobarIdAutor(conn, id)) {
                     System.out.println("ID ya existe. Introduzca otro ID.");
                 } else {
                     break; // ID válido y no duplicado
@@ -645,7 +645,7 @@ public static void InsertPrestamos(Connection conn) {
 
         String tipo;
         while (true) {
-            System.out.print("ripo de penalización: ");
+            System.out.print("Tipo de penalización: ");
             tipo = sc.nextLine().trim();
             if (!tipo.isEmpty()) {
                 tipo = Function.mayusculas(tipo);

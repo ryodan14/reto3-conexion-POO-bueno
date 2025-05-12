@@ -12,6 +12,7 @@ public class Update {
 
         Scanner sc = new Scanner(System.in);
 
+        
         System.out.println("Introduce el ID del usuario a modificar: ");
         String id = sc.nextLine().trim();
 

@@ -30,7 +30,7 @@ public class Conexion{
             System.out.println("       5-Consultas especiales             10-Creditos");
             System.out.println("\nElige la opción:");
             
-            principal = Function.validarnumero();
+            principal = Function.validarnumero(teclado);
 
             try {
     
@@ -60,7 +60,7 @@ public class Conexion{
                             System.out.println("       2-Tabla Libros                    5-Tabla Penalizaciones");
                             System.out.println("       3-Tabla Prestamos                 6-Volver al inicio");
                             System.out.println("\nElige la opción:");
-                            eleccion = Function.validarnumero();
+                            eleccion = Function.validarnumero(teclado);
                             switch (eleccion) {
                                 case 1:
                                     TestConsultarTabla testConsultarTabla = new TestConsultarTabla();
@@ -89,6 +89,8 @@ public class Conexion{
                                     break;
                                 case 6:
                                     Function.mensa("Saliendo de la consulta...");
+                                    Function.mensa("Presiona Enter para continuar...");
+                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     teclado.nextLine(); // Limpia el \n después de nextInt
                                     break;
                                 default:
@@ -113,7 +115,7 @@ public class Conexion{
                             System.out.println("       5-Insertar Penalizaciones            10-Borrar Penalizaciones");
                             System.out.println("       11-prestamo entregado                12-Volver al inicio             ");
                             System.out.println("\nElige la opción:");
-                            eleccion1 = Function.validarnumero();
+                            eleccion1 = Function.validarnumero(teclado);
                             switch (eleccion1) {
                                 case 1:
                                     Insert.InsertSocios(conn);
@@ -129,6 +131,7 @@ public class Conexion{
                                     break;
                                 case 4:
                                     Insert.InsertAutores(conn);
+                                    Function.mensa("Presiona Enter para continuar...");
                                     teclado.nextLine(); // Limpia el \n después de nextInt
                                     break;
                                 case 5: 
@@ -161,7 +164,6 @@ public class Conexion{
                                     break;
                                 case 12:
                                     Function.mensa("Saliendo de la opción de inserción...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     break;
                             
                                 default:
@@ -184,7 +186,7 @@ public class Conexion{
                         System.out.println("       3-Modificar Prestamos                4-Modificar Autores");
                         System.out.println("       5-Volver al inicio                    ");
                         System.out.println("\nElige la opción:");
-                        eleccion2 = Function.validarnumero();
+                        eleccion2 = Function.validarnumero(teclado);
                         switch (eleccion2) {
                             case 1:
                                 Insert.InsertSocios(conn);
@@ -236,7 +238,7 @@ public class Conexion{
                         System.out.println("       5-buscar socios por nombre??         6-Penalizaciones por tipo ");
                         System.out.println("       7-Volver al inicio                                            ");
                         System.out.println("\nElige la opción:");
-                        eleccion3 = Function.validarnumero();
+                        eleccion3 = Function.validarnumero(teclado);
                         switch (eleccion3) {
                             case 1:
                                 System.out.println("Contamos con " + Consultas.contarEmpleados(conn) + " empleados en nuestra biblioteca.");
@@ -266,7 +268,6 @@ public class Conexion{
                                 break;
                             case 7:
                                 Function.mensa("Saliendo de la consulta especial...");
-                                teclado.nextLine(); // Limpia el \n después de nextInt
                                 break;
                             default:
                                 System.out.println("Elige una de las opciones que se dan.\n");
@@ -302,7 +303,6 @@ public class Conexion{
                     //Cerrar conexion y programa
                     case 9:
                         Function.mostrarTextoLento("Gracias por usar la aplicación!!!! - © D4RK");
-                        teclado.nextLine(); // Espera que el usuario pulse Enter
                         break;
 
                     //Creditos
@@ -323,12 +323,12 @@ public class Conexion{
         System.out.println("Error inesperado: " + e.getMessage());
         teclado.nextLine(); // Evitar bucle infinito si se produce excepción
     } finally {
-        System.out.println("Presiona Enter para continuar...");
-        teclado.nextLine(); // Espera Enter del usuario
-    
+    System.out.println("Presiona Enter para continuar...");
+    if (teclado.hasNextLine()) {
+        teclado.nextLine();
     }
     }
-    teclado.close();
+    }
     }
 }
 
