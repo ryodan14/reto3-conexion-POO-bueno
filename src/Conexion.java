@@ -325,6 +325,7 @@ public class Conexion{
     
 }
 }
+teclado.close();
 }
 }
 
