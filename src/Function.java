@@ -476,7 +476,6 @@ public class Function {
             if (scanner.hasNextInt()) {
                 numero = scanner.nextInt();
                 scanner.nextLine(); // limpia el salto de línea
-                scanner.close();
                 return numero;
             } else {
                 System.out.println("Por favor, introduce un número válido:");
@@ -484,6 +483,21 @@ public class Function {
             }
         }
     }
-
     //gracias Ander por el metodo:))
+
+    public static java.sql.Date fechaDevolucion(Connection conn, java.sql.Date FechaDevolucion){
+        String sql = "SELECT fecha_devolucion FROM prestamos WHERE codigo = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setDate(1, FechaDevolucion);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDate("fecha_devolucion");
+            } else {
+                return null; // No se encontró ningún libro con ese título
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el ID del libro: " + e.getMessage());
+            return null; // Error en la consulta
+        }
+    }
 }
