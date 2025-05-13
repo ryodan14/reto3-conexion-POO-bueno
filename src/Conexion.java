@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 public class Conexion{
     public static void main(String[] args) throws InterruptedException{
         String url = "jdbc:mysql://bibliotecamuskiz.cb2cweukck18.eu-north-1.rds.amazonaws.com:3306/bdbiblioteca";
-        String user = "admin";
-        String password = "d4rk1234";
+        String user = " ";
+        String password = " ";
         Connection conn = null;
         Scanner teclado = new Scanner(System.in);
         int eleccion=0;
@@ -38,14 +38,27 @@ public class Conexion{
 
                     // Conexión a la base de datos
                     case 1:
-                        Function.mensa("Intentando conectar...");
-                        conn = Function.ConexionBaseDeDatos(url, user, password);
-                        if (conn == null) {
-                            Function.mensa("No se pudo establecer la conexión");
-                        }else{
-                        System.out.println("Conexión exitosa a la base de datos.\n");
+                        System.out.println("Introduce el usuario:");
+                        user = teclado.nextLine();
+                        System.out.println("Introduce la contraseña:");
+                        password = teclado.nextLine();
+
+                        try {
+                            conn = DriverManager.getConnection(url, user, password);
+                            System.out.println("Conexión exitosa a la base de datos.\n");
+                        } catch (SQLException e) {
+                            // Código de error común para user/pass incorrectos: 1045 en MySQL
+                            if (e.getErrorCode() == 1045) {
+                                System.out.println("Usuario o contraseña incorrectos.");
+                            } else if (e.getErrorCode() == 0) {
+                                System.out.println("No se pudo conectar con el servidor de la base de datos.");
+                            } else {
+                                System.out.println(" Error inesperado al conectar: " + e.getMessage());
+                            }
+                            conn = null;
                         }
                         break;
+
 
                     //Consultar tabla
                     case 2:
