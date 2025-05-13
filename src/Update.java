@@ -328,6 +328,10 @@ public class Update {
                 case 4:
                     System.out.print("Nuevo teléfono: ");
                     String telefono = sc.nextLine();
+                    while (Function.validarTelf(telefono)!=true) {
+                        System.out.println("El télefono no es válido: ");
+                        telefono = sc.nextLine();
+                    }
                     if (setHasValue) setClause.append(", ");
                     setClause.append("telefono=").append(telefono);
                     setHasValue = true;
@@ -335,6 +339,10 @@ public class Update {
                 case 5:
                     System.out.print("Nuevo email: ");
                     String email = sc.nextLine();
+                    while (Function.validarCorreo(email)!=true) {
+                        System.out.println("El correo no es válido: ");
+                        email = sc.nextLine();
+                    }
                     if (setHasValue) setClause.append(", ");
                     setClause.append("email='").append(email).append("'");
                     setHasValue = true;
