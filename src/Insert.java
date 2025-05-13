@@ -738,10 +738,11 @@ public static void InsertPrestamos(Connection conn) {
             try {
                 codigo = Integer.parseInt(input);
         
-                if (Function.comprobarIdSocio(conn, codigo)) {
-                    System.out.println("ID ya existe. Introduzca otro ID.");
+                if (Function.comprobarIdPrestamo(conn, codigo)) {
+                    break;
                 } else {
-                    break; // ID válido y no duplicado
+                    System.out.println("ID no existe. Introduzca otro ID.");
+                    
                 }
         
             } catch (NumberFormatException e) {
