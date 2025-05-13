@@ -89,9 +89,6 @@ public class Conexion{
                                     break;
                                 case 6:
                                     Function.mensa("Saliendo de la consulta...");
-                                    Function.mensa("Presiona Enter para continuar...");
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
-                                    teclado.nextLine(); // Limpia el \n después de nextInt
                                     break;
                                 default:
                                     Function.mensa("Elige una de las opciones que se dan.\n");
