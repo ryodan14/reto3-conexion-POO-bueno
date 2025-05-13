@@ -7,6 +7,7 @@ public class Update {
             System.out.println( "No hay conexión");
             return;
         }
+        //Idea original
         /*
         int cont=0;
         Scanner sc = new Scanner(System.in);
