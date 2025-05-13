@@ -476,7 +476,6 @@ public class Function {
             if (scanner.hasNextInt()) {
                 numero = scanner.nextInt();
                 scanner.nextLine(); // limpia el salto de línea
-                scanner.close();
                 return numero;
             } else {
                 System.out.println("Por favor, introduce un número válido:");
