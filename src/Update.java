@@ -425,7 +425,6 @@ public class Update {
                     break;
             }
         }
-        sc.close();
     }
 
     public static void modificarLibros(Connection conn) {
