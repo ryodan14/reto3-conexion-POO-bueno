@@ -292,7 +292,7 @@ public class Update {
 
         // Recogida de campos a modificar
         while (decision != 7 && decision != 8) {
-            System.out.println("******************************************************");
+            System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
             System.out.println("       1-Nombre                 2-Apellidos");
@@ -306,7 +306,7 @@ public class Update {
             switch (decision) {
                 case 1:
                     System.out.print("Nuevo nombre: ");
-                    String nombre = sc.nextLine();
+                    String nombre = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("nombre='").append(nombre).append("'");
                     setHasValue = true;
@@ -349,7 +349,7 @@ public class Update {
                     break;
                 case 6:
                     // ¿Aplicar a todos o a uno solo?
-                    System.out.println("************************************************");
+                    System.out.println("\n************************************************");
                     System.out.println("***   ¿Aplicar cambios a todos los socios?   ***");
                     System.out.println("************************************************");
                     System.out.println("        1-Sí     2-No (filtrar con condiciones)");
@@ -359,7 +359,7 @@ public class Update {
                     if (aplicarTodos == 2) {
                         boolean hasCond = false;
                         while (true) {
-                            System.out.println("******************************************************");
+                            System.out.println("\n******************************************************");
                             System.out.println("***         Condiciones para buscar socios         ***");
                             System.out.println("******************************************************");
                             System.out.println("          1-ID                  2-Nombre");
@@ -449,7 +449,7 @@ public class Update {
 
         // Recogida de campos a modificar
         while (decision != 7 && decision != 8) {
-            System.out.println("******************************************************");
+            System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
             System.out.println("       1-Título                 2-ISBN");
@@ -498,7 +498,7 @@ public class Update {
                     break;
                 case 6:
                     // ¿Aplicar a todos o a uno solo?
-                    System.out.println("************************************************");
+                    System.out.println("\n************************************************");
                     System.out.println("***   ¿Aplicar cambios a todos los libros?   ***");
                     System.out.println("************************************************");
                     System.out.println("        1-Sí     2-No (filtrar con condiciones)");
@@ -508,7 +508,7 @@ public class Update {
                     if (aplicarTodos == 2) {
                         boolean hasCond = false;
                         while (true) {
-                            System.out.println("******************************************************");
+                            System.out.println("\n******************************************************");
                             System.out.println("***         Condiciones para buscar libros         ***");
                             System.out.println("******************************************************");
                             System.out.println("          1-ID                  2-Título");
@@ -598,7 +598,7 @@ public class Update {
 
         // Recogida de campos a modificar
         while (decision != 7 && decision != 8) {
-            System.out.println("******************************************************");
+            System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
             System.out.println("       1-Fecha de inicio        2-Fecha de devolución");
@@ -647,7 +647,7 @@ public class Update {
                     break;
                 case 6:
                     // ¿Aplicar a todos o a uno solo?
-                    System.out.println("************************************************");
+                    System.out.println("\n************************************************");
                     System.out.println("***  ¿Aplicar cambios a todos los préstamos? ***");
                     System.out.println("************************************************");
                     System.out.println("        1-Sí     2-No (filtrar con condiciones)");
@@ -657,7 +657,7 @@ public class Update {
                     if (aplicarTodos == 2) {
                         boolean hasCond = false;
                         while (true) {
-                            System.out.println("******************************************************");
+                            System.out.println("\n******************************************************");
                             System.out.println("***         Condiciones para buscar préstamos      ***");
                             System.out.println("******************************************************");
                             System.out.println("          1-ID                  2-Fecha de inicio");
@@ -747,7 +747,7 @@ public class Update {
 
         // Recogida de campos a modificar
         while (decision != 7 && decision != 8) {
-            System.out.println("******************************************************");
+            System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
             System.out.println("       1-Nombre                 2-Primer apellido");
@@ -781,7 +781,7 @@ public class Update {
                     break;
                 case 4:
                     // ¿Aplicar a todos o a uno solo?
-                    System.out.println("************************************************");
+                    System.out.println("\n************************************************");
                     System.out.println("***   ¿Aplicar cambios a todos los autores?  ***");
                     System.out.println("************************************************");
                     System.out.println("        1-Sí     2-No (filtrar con condiciones)");
@@ -791,7 +791,7 @@ public class Update {
                     if (aplicarTodos == 2) {
                         boolean hasCond = false;
                         while (true) {
-                            System.out.println("******************************************************");
+                            System.out.println("\n******************************************************");
                             System.out.println("***         Condiciones para buscar autores        ***");
                             System.out.println("******************************************************");
                             System.out.println("        1-ID                    2-Nombre");
