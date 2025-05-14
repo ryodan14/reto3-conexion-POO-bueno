@@ -313,14 +313,14 @@ public class Update {
                     break;
                 case 2:
                     System.out.print("Nuevos apellidos: ");
-                    String apellidos = sc.nextLine();
+                    String apellidos = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("apellidos='").append(apellidos).append("'");
                     setHasValue = true;
                     break;
                 case 3:
                     System.out.print("Nueva dirección: ");
-                    String direccion = sc.nextLine();
+                    String direccion = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("direccion='").append(direccion).append("'");
                     setHasValue = true;
@@ -338,10 +338,10 @@ public class Update {
                     break;
                 case 5:
                     System.out.print("Nuevo email: ");
-                    String email = sc.nextLine();
+                    String email = sc.nextLine().toUpperCase();
                     while (Function.validarCorreo(email)!=true) {
                         System.out.println("El correo no es válido: ");
-                        email = sc.nextLine();
+                        email = sc.nextLine().toUpperCase();
                     }
                     if (setHasValue) setClause.append(", ");
                     setClause.append("email='").append(email).append("'");
@@ -464,14 +464,14 @@ public class Update {
             switch (decision) {
                 case 1:
                     System.out.print("Nuevo título: ");
-                    String titulo = sc.nextLine();
+                    String titulo = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("titulo='").append(titulo).append("'");
                     setHasValue = true;
                     break;
                 case 2:
                     System.out.print("Nuevos ISBN: ");
-                    String isbn = sc.nextLine();
+                    String isbn = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("isbn=").append(isbn);
                     setHasValue = true;
@@ -761,21 +761,21 @@ public class Update {
             switch (decision) {
                 case 1:
                     System.out.print("Nuevo nombre: ");
-                    String nombre = sc.nextLine();
+                    String nombre = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("nombre='").append(nombre).append("'");
                     setHasValue = true;
                     break;
                 case 2:
                     System.out.print("Nuevo primer apellido: ");
-                    String apellidoUno = sc.nextLine();
+                    String apellidoUno = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("apellido1='").append(apellidoUno).append("'");
                     setHasValue = true;
                     break;
                 case 3:
                     System.out.print("Nuevo segundo apellido: ");
-                    String apellidoDos = sc.nextLine();
+                    String apellidoDos = sc.nextLine().toUpperCase();
                     if (setHasValue) setClause.append(", ");
                     setClause.append("apellido2='").append(apellidoDos).append("'");
                     setHasValue = true;
