@@ -14,7 +14,7 @@ public class Update {
         int decision = 0;
 
         // Recogida de campos a modificar
-        while (decision != 7 && decision != 8) {
+        while (decision != 7) {
             System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
@@ -172,7 +172,7 @@ public class Update {
         int decision = 0;
 
         // Recogida de campos a modificar
-        while (decision != 7 && decision != 8) {
+        while (decision != 7) {
             System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
@@ -321,7 +321,7 @@ public class Update {
         int decision = 0;
 
         // Recogida de campos a modificar
-        while (decision != 7 && decision != 8) {
+        while (decision != 7) {
             System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
@@ -470,7 +470,7 @@ public class Update {
         int decision = 0;
 
         // Recogida de campos a modificar
-        while (decision != 7 && decision != 8) {
+        while (decision != 7) {
             System.out.println("\n******************************************************");
             System.out.println("*****           ¿Qué deseas cambiar?             *****");
             System.out.println("******************************************************");
