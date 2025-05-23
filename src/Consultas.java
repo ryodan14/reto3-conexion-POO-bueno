@@ -151,7 +151,6 @@ public class Consultas{
         // Validar que la entrada no esté vacía y no contenga números o espacios adicionales
         if (cadena.isEmpty() || !cadena.matches("[a-zA-Z]+")) {
             System.out.println("Error: Debes ingresar solo letras.");
-            scanner.close();
             return;
         }
 
@@ -182,7 +181,6 @@ public class Consultas{
             System.out.println("Error al buscar socios: " + e.getMessage());
             e.printStackTrace();  // Para depurar el error con más detalle
         }
-        scanner.close();
     }
 }
 
